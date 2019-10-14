@@ -1,0 +1,34 @@
+
+.demo-iframe {
+  border: none;
+  width: 600px;
+  height: 400px;
+  clear: both;
+  display: none;
+}
+.text-input
+{
+  height: 23px;
+  width: 150px;
+}
+.register-table
+{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.register-table td, 
+.register-table tr
+{
+  border-spacing: 0px;
+  border-collapse: collapse;
+  font-family: Verdana;
+  font-size: 12px;
+}
+h3 
+{
+  display: inline-block;
+  margin: 0px;
+}
+.prompt {
+  margin-top: 10px; font-size: 10px;
+}
