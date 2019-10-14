@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="resources/css/master.css">
+    <link rel="stylesheet" href="jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jqwidgets/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>
+
+
+    <script type="text/javascript" src="supplier_login.js"></script>
+    <script type="text/php" src="supplier_login.php"></script>
+    <title>Supplier Login</title>
+
+    
+  </head>
+  <body>
+    <div style="height: 219px; display: block; font-size: 13px; font-family: Verdana;">
+      <form class="form" id="form" target="form-iframe" method="post" action="login.php" style="width: 650px;">
+          <div>
+              <h2>Supplier Login</h2>
+          </div>
+          <label>Username:</label>
+          <div>
+              <input type="text" id="username" name="username" />
+          </div>
+          <label>Password:</label>
+          <div>
+              <input type="password" id="password" name="password" />
+          </div>
+          <div>
+              <div name="rememberme" id="rememberme">Remember Me</div>
+          </div>
+          <div>
+              <input id="loginButton" type="submit" value="Login" />
+          </div>
+          <div class="prompt">*For successful login, username=admin, password=admin123</div>
+      </form>
+      <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
+  </div>
+    
+    
+  </body>
+</html>

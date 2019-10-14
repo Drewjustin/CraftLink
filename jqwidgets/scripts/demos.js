@@ -321,7 +321,7 @@ function getDemoTheme() {
 	}
 
     var url = "../../../jqwidgets/styles/jqx." + theme + '.css';
-    if (window.location.href.toString().indexOf("angularjs") >= 0) {
+    /*if (window.location.href.toString().indexOf("angularjs") >= 0) {
         var loc = window.location.href.toString();
         url = "../../jqwidgets/styles/jqx." + theme + '.css';
          
@@ -340,13 +340,13 @@ function getDemoTheme() {
 					url = "../../../jqwidgets/styles/jqx." + theme + '.css';
 				}
 		}
-    }
+    }*/
     if (window.location.href.toString().indexOf("typescript") >= 0) {
         url = "../../../jqwidgets/styles/jqx." + theme + '.css';
     }
-    if (window.location.href.toString().indexOf("angularjs2") >= 0) {
+    /*if (window.location.href.toString().indexOf("angularjs2") >= 0) {
         url = "../../jqwidgets/styles/jqx." + theme + '.css';
-    }
+    }*/
     if (document.createStyleSheet != undefined) {
         var hasStyle = false;
         $.each(document.styleSheets, function (index, value) {
@@ -433,5 +433,4 @@ try {
 }
 catch (error) {
     var er = error;
-
 }

@@ -32,3 +32,14 @@ h3
 .prompt {
   margin-top: 10px; font-size: 10px;
 }
+
+
+.form #password, .form #username {
+  height: 24px;
+  margin-top: 5px;
+  width: 150px;
+}
+.form #rememberme {
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
