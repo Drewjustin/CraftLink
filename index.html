@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <script type="text/javascript" src="jqwidgets/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxinput.js"></script>
     <meta charset="utf-8">
     <link rel="stylesheet" href="resources/css/master.css">
     <title>CraftLink.rootbeer</title>
@@ -17,6 +20,15 @@
       <img class="logo" src="https://images.squarespace-cdn.com/content/59da29fe37c581e591cc45a9/1521411081388-ZPV8LUVS1ZFUY9HYIERW/CraftLinkLogoC+%281%29.png"
       alt="Craftlink Logo">
     </div>
-
+    <div id='content'>
+        <script type="text/javascript">
+            $(document).ready(function () {              
+                var drinks = new Array("Root Beer", "Rooty Roots", "Birch Beer", "Ginger Beer");
+                $("#input").jqxInput({placeHolder: "Search Product", height: 30, width: 250, minLength: 1, dropDownWidth: 150, source: drinks });
+            });
+        </script>
+		<br/><br/>
+       <input type="text" id="input"/>
+    </div>
   </body>
 </html>
