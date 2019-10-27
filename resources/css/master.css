@@ -16,7 +16,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.register-table td, 
+.register-table td,
 .register-table tr
 {
   border-spacing: 0px;
@@ -24,7 +24,7 @@
   font-family: Verdana;
   font-size: 12px;
 }
-h3 
+h3
 {
   display: inline-block;
   margin: 0px;
@@ -42,4 +42,45 @@ h3
 .form #rememberme {
   margin-top: 5px;
   margin-bottom: 8px;
+}
+
+/* landing page */
+.landing_page {
+  background-color: #111;
+  color: white;
+}
+.logo {
+  width:400px;
+  height:400px;
+  margin: auto;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+li.right{
+  float: right;
+}
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #edc421;
 }
