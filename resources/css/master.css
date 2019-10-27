@@ -81,3 +81,9 @@ li a:hover {
   background-color: #edc421;
   color: black;
 }
+
+#searchbar{
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
