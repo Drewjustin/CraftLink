@@ -91,3 +91,9 @@ li a:hover {
 h2.sup {
   text-align: center;
 }
+
+
+body {
+  background-color: #000;
+  color: white;
+}
