@@ -3,7 +3,7 @@
     "Product": [
       {
         "ProductID": "1",
-        "ProductName": "Chai",
+        "ProductName": "RB Classic",
         "SupplierID": "1",
         "CategoryID": "1",
         "QuantityPerUnit": "10 boxes x 20 bags",
@@ -15,7 +15,7 @@
       },
       {
         "ProductID": "2",
-        "ProductName": "Chang",
+        "ProductName": "Spicy roots",
         "SupplierID": "1",
         "CategoryID": "1",
         "QuantityPerUnit": "24 - 12 oz bottles",
@@ -27,7 +27,7 @@
       },
       {
         "ProductID": "3",
-        "ProductName": "Aniseed Syrup",
+        "ProductName": "Ginger Beer",
         "SupplierID": "1",
         "CategoryID": "2",
         "QuantityPerUnit": "12 - 550 ml bottles",

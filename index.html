@@ -9,20 +9,27 @@
     <link rel="stylesheet" href="resources/css/master.css">
     <title>CraftLink.rootbeer</title>
   </head>
-  <body class="landing_page">
-    <ul>
-      <li><a class="active" href="#">Home</a></li>
-      <li class="right"><a href="#">Sign Up</a></li>
-      <li class="right"><a href="#">Login</a></li>
-      <li><a href="#">About</a></li>
-    </ul>
 
+  <body class="landing_page">
+    <!-- NAVBAR -->
+    <div class="nav">
+      <a href="index.html">
+        <img class="nav-logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">
+      </a>
+      <ul>
+        <li><a class="active" href="#">Home</a></li>
+        <li class="right"><a href="create_account.html">Sign Up</a></li>
+        <li class="right"><a href="supplier_login.html">Login Root Brewers</a></li>
+        <li class="right"><a href="">Login Consumers</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </div>
     <div class="logo">
-      <img class="logo" src="resources/logo.png" alt="Craftlink Logo">
+      <img class="logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">
     </div>
     <div id='searchbar'>
         <script type="text/javascript">
-            $(document).ready(function () {              
+            $(document).ready(function () {
                 var drinks = new Array("Root Beer", "Rooty Roots", "Birch Beer", "Ginger Beer");
                 $("#input").jqxInput({placeHolder: "Search Product", height: 30, width: 250, minLength: 1, dropDownWidth: 150, source: drinks });
             });

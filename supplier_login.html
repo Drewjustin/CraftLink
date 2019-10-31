@@ -19,10 +19,22 @@
 
   </head>
   <body>
-    <div style="width: 50%;margin: auto; height: 219px; display: block; font-size: 13px; font-family: Verdana;">
+    <!-- NAVBAR -->
+    <div class="nav">
+      <a href="index.html">
+        <img class="nav-logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">
+      </a>
+      <ul>
+        <li><a class="active" href="index.html">Home</a></li>
+        <li class="right"><a href="create_account.html">Sign Up</a></li>
+        <li class="right"><a href="">Login Consumers</a></li>
+        <li><a href="#">About</a></li>
+      </ul>
+    </div>
+    <div class="register-block" style="font-size: 13px; font-family: Verdana;">
       <form class="form" id="form" target="form-iframe" method="post" action="login.php" style="width: 650px;">
           <div>
-              <h2 class="sup">Supplier Login</h2>
+              <h2 class="centerMe">Supplier Login</h2>
           </div>
           <label>Username:</label>
           <div>
@@ -37,6 +49,8 @@
           </div>
           <div>
               <input id="loginButton" type="submit" value="Login" />
+              <!-- ADDED BUTTON FOR DEMO PURPOSES -->
+              <button type="button" name="button" onclick="window.location.href='supplier.html'">Demo login</button>
           </div>
           <div class="prompt">*For successful login, username=admin, password=admin123</div>
       </form>

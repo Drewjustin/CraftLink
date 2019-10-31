@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Products>
   <Product ProductID="1">
-    <ProductName>Chai</ProductName>
+    <ProductName>Root Beer Classic</ProductName>
     <SupplierID>1</SupplierID>
     <CategoryID>1</CategoryID>
     <QuantityPerUnit>10 boxes x 20 bags</QuantityPerUnit>
@@ -12,7 +12,7 @@
     <Discontinued>false</Discontinued>
   </Product>
   <Product ProductID="2">
-    <ProductName>Chang</ProductName>
+    <ProductName>Spicy Roots</ProductName>
     <SupplierID>1</SupplierID>
     <CategoryID>1</CategoryID>
     <QuantityPerUnit>24 - 12 oz bottles</QuantityPerUnit>
@@ -23,7 +23,7 @@
     <Discontinued>false</Discontinued>
   </Product>
   <Product ProductID="3">
-    <ProductName>Aniseed Syrup</ProductName>
+    <ProductName>Ginger Beer</ProductName>
     <SupplierID>1</SupplierID>
     <CategoryID>2</CategoryID>
     <QuantityPerUnit>12 - 550 ml bottles</QuantityPerUnit>
@@ -34,7 +34,7 @@
     <Discontinued>false</Discontinued>
   </Product>
   <Product ProductID="4">
-    <ProductName>Chef Anton's Cajun Seasoning</ProductName>
+    <ProductName>Chef Anton's Cajun Root Beer</ProductName>
     <SupplierID>2</SupplierID>
     <CategoryID>2</CategoryID>
     <QuantityPerUnit>48 - 6 oz jars</QuantityPerUnit>
@@ -45,7 +45,7 @@
     <Discontinued>false</Discontinued>
   </Product>
   <Product ProductID="5">
-    <ProductName>Chef Anton's Gumbo Mix</ProductName>
+    <ProductName>Peach Twang RB</ProductName>
     <SupplierID>2</SupplierID>
     <CategoryID>2</CategoryID>
     <QuantityPerUnit>36 boxes</QuantityPerUnit>
