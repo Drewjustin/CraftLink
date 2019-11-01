@@ -67,9 +67,10 @@ h3
 /*** Navbar css ***/
 .nav{
   background-color: #111;
+  height: 50px;
 }
 .nav-logo {
-  width: 85px;
+  height: 50px;
   float: left;
 }
 ul {
