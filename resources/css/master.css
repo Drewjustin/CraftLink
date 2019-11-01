@@ -44,7 +44,7 @@ h3
   margin-bottom: 8px;
 }
 
-/* creaete_account.html styling  */
+/***** creaete_account.html styling  *****/
 .register-block {
   padding: 50px;
   color: black;
@@ -55,7 +55,7 @@ h3
   border-radius: 5px;
 }
 
-/* index.html styling */
+/***** index.html styling ******/
 .landing_page {
   background-color: #000;
   color: white;
@@ -64,7 +64,7 @@ h3
   width:600px;
   margin: auto;
 }
-/* Navbar css */
+/*** Navbar css ***/
 .nav{
   background-color: #111;
 }
@@ -106,6 +106,20 @@ li a:hover {
 /* Centering H2 tags */
 h2.centerMe {
   text-align: center;
+}
+
+/***** consumer.html styling ****/
+.results {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  background-color: #FDC100;
+  border-radius: 10px;
+
+}
+
+.result {
+
 }
 
 
