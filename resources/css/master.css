@@ -11,6 +11,10 @@
   height: 23px;
   width: 150px;
 }
+.text-input-billing
+{
+    height: 24px;
+}
 .register-table
 {
   margin-top: 10px;
@@ -127,4 +131,26 @@ h2.centerMe {
 body {
   background-color: #000;
   color: white;
+}
+
+/* billing.html */
+.form-label
+{
+  vertical-align: baseline;
+  font-weight: bold;
+  font-size: 13px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.form-small-label
+{
+  vertical-align: baseline;
+  font-size: 12px;
+  margin-left: 1px;
+}
+.required
+{
+  vertical-align: baseline;
+  color: red;
+  font-size: 10px;
 }
