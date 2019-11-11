@@ -34,102 +34,103 @@
       </a>
       <ul>
         <li><a class="active" href="index.html">Home</a></li>
-        <li class="right"><a href="supplier_login.html">Login Brewers</a></li>
-        <li class="right"><a href="consumer_login.html">Login Consumers</a></li>
+        <li class="right"><a href="index.html">Logout</a></li>
         <li><a href="#">About</a></li>
       </ul>
     </div>
 
-    <div>
+    <div class="white-block" >
         <form class="form" id="form" target="form-iframe"  method="post" action="billing.php" style="width: 650px;">
             <div>
                 <h2>Enter your Billing Information</h2>
             </div>
-        <div id="paymentFormSection" >
-        <div id="name-wrapper" >
-            <label class="form-label">Name:</label><span class="required"> *</span>
-            <div style="margin-top: 5px; margin-bottom: 5px;"></div>
-            <div style="float: left; width: 120px;" class="firstNameDiv">
-                <input placeHolder="First Name" class="text-input-billing" type="text" id="firstName" style="width: 120px;" name="firstName" value="" />
+            <div id="paymentFormSection" >
+                <div id="name-wrapper" >
+                    <label class="form-label">Name:</label><span class="required"> *</span>
+                    <div style="margin-top: 5px; margin-bottom: 5px;"></div>
+                    <div style="float: left; width: 120px;" class="firstNameDiv">
+                        <input placeHolder="First Name" class="text-input-billing" type="text" id="firstName" style="width: 120px;" name="firstName" value="" />
+                    </div>
+                    <div style="float: left; margin-left: 5px; width: 30px;" class="middleInitialDiv">
+                        <input placeHolder="MI" class="text-input-billing" type="text" style="width: 30px;" name="middleInitial" maxlength="1" value="" />
+                    </div>
+                    <div style="float: left; margin-left: 5px; width: 140px;" class="lastNameDiv">
+                        <input placeHolder="Last Name" class="text-input-billing" type="text" id="lastName" style="width: 160px;" name="lastName" value="" />
+                    </div>
+                </div>
+                <div style="clear:both;">
+                <br/> 
+                    <label class="form-label">Billing Address:</label><span class="required"> *</span>
+                    <div style="margin-top: 5px; margin-bottom: 5px;"></div>
+                    <div>
+                        <input class="text-input-billing" name="billingAddress" id="billingAddress" placeHolder="Street Address" style="width: 355px;" type="text" />
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <input placeHolder="Address Line 2" name="billingAddressLine2" class="text-input-billing" type="text" style="width: 355px;" />
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <input class="text-input-billing" type="text" name="billingCity" id="billingCity" placeHolder="City" style="width: 150px; float: left;" maxlength="15" />
+                        <input class="text-input-billing" type="text" name="billingState" id="billingState" placeHolder="State / Province / Region" style="margin-left: 5px; width: 200px; float: left;" />
+                        <div style="clear:both;"/>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-top: 5px;">
+                        <input class="text-input-billing" name="billingZipCode" id="billingZipCode" placeHolder="Postal / Zip Code" type="text" style="width: 150px; float: left;" maxlength="5" />
+                        <div name="billingCountries"  style='float: left; margin-left: 5px;' id="billingCountries"></div> 
+                        <div style="clear:both;"/>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; clear: both;">
+                    <div name="shippingAddressCheckBox" id="shippingAddressCheckBox">My Shipping Address is different than my billing address</div>  
+                </div>
+                <div id="shippingAddressBlock" style="display: none; clear:both;">
+                <br/> 
+                    <label class="form-label">Shipping Address:</label><span class="required"> *</span>
+                    <div style="margin-top: 5px; margin-bottom: 5px;"></div>
+                    <div>
+                        <input class="text-input-billing" name="shippingAddress" id="shippingAddress" placeHolder="Street Address" style="width: 355px;" type="text" />
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <input placeHolder="Address Line 2" name="shippingAddressLine2" class="text-input-billing" type="text" style="width: 355px;" />
+                    </div>
+                    <div style="margin-top: 5px;">
+                        <input class="text-input-billing" type="text" name="shippingCity" id="shippingCity" placeHolder="City" style="width: 150px; float: left;" maxlength="15" />
+                        <input class="text-input-billing" type="text" name="shippingState" id="shippingState" placeHolder="State / Province / Region" style="margin-left: 5px; width: 200px; float: left;" />
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div style="margin-bottom: 5px; margin-top: 5px;">
+                        <input class="text-input-billing" name="shippingZipCode" id="shippingZipCode" placeHolder="Postal / Zip Code" type="text" style="width: 150px; float: left;" maxlength="5" />
+                        <div name="shippingCountries"  style='float: left; margin-left: 5px;' id="shippingCountries"></div> 
+                        <div style="clear:both;"></div>
+                    </div>
+                </div>
+                <div style="margin-top: 10px;">
+                    <label class="form-label">Billing Information:</label><span class="required"> *</span>
+                    <div name="cardType" style="margin-top: 5px;" id="cardType">
+                    </div>
+                    <div>
+                        <input style="width: 182px; margin-top: 5px;" placeHolder="Card Number" id="cardNumber" name="cardNumber" class="text-input-billing" type="text" maxlength="16" />
+                    </div>
+                    <div style="clear: both; margin-top: 5px;">
+                    <div name="expirationDate" style="float: left;" id="expirationDate"></div>
+                    <div name="expirationYear" style="margin-left: 5px; float: left;" id="expirationYear"></div>
+                    <br/>
+                    </div>
+                    <div style="clear: both; margin-top: 5px;">
+                        <input style="clear: both; margin-top: 5px;" placeHolder="Security Code" class="text-input-billing" type="text" id="securityCode" name="securityCode" maxlength="4" />
+                    </div>
+                </div>
+                <div style="clear: both; margin-top: 5px;">
+                    <div id="acceptTerms" name="acceptTerms">I agree to the Terms and Conditions</div>
+                </div>
+                <div style="clear: both; margin-top: 5px;">
+                    <input id="sendButton" value="Checkout" type="button"/>
+                </div>
             </div>
-            <div style="float: left; margin-left: 5px; width: 30px;" class="middleInitialDiv">
-                <input placeHolder="MI" class="text-input-billing" type="text" style="width: 30px;" name="middleInitial" maxlength="1" value="" />
-            </div>
-            <div style="float: left; margin-left: 5px; width: 140px;" class="lastNameDiv">
-                <input placeHolder="Last Name" class="text-input-billing" type="text" id="lastName" style="width: 160px;" name="lastName" value="" />
-            </div>
-        </div>
-        <div style="clear:both;">
-        <br/> 
-            <label class="form-label">Billing Address:</label><span class="required"> *</span>
-            <div style="margin-top: 5px; margin-bottom: 5px;"></div>
-            <div>
-                <input class="text-input-billing" name="billingAddress" id="billingAddress" placeHolder="Street Address" style="width: 355px;" type="text" />
-            </div>
-            <div style="margin-top: 5px;">
-                <input placeHolder="Address Line 2" name="billingAddressLine2" class="text-input-billing" type="text" style="width: 355px;" />
-            </div>
-            <div style="margin-top: 5px;">
-                <input class="text-input-billing" type="text" name="billingCity" id="billingCity" placeHolder="City" style="width: 150px; float: left;" maxlength="15" />
-                <input class="text-input-billing" type="text" name="billingState" id="billingState" placeHolder="State / Province / Region" style="margin-left: 5px; width: 200px; float: left;" />
-                <div style="clear:both;"/>
-            </div>
-            <div style="margin-bottom: 5px; margin-top: 5px;">
-                <input class="text-input-billing" name="billingZipCode" id="billingZipCode" placeHolder="Postal / Zip Code" type="text" style="width: 150px; float: left;" maxlength="5" />
-                <div name="billingCountries"  style='float: left; margin-left: 5px;' id="billingCountries"></div> 
-                <div style="clear:both;"/>
-            </div>
-        </div>
-        <div style="margin-top: 10px; clear: both;">
-            <div name="shippingAddressCheckBox" id="shippingAddressCheckBox">My Shipping Address is different than my billing address</div>  
-        </div>
-        <div id="shippingAddressBlock" style="display: none; clear:both;">
-        <br/> 
-            <label class="form-label">Shipping Address:</label><span class="required"> *</span>
-            <div style="margin-top: 5px; margin-bottom: 5px;"></div>
-            <div>
-                <input class="text-input-billing" name="shippingAddress" id="shippingAddress" placeHolder="Street Address" style="width: 355px;" type="text" />
-            </div>
-            <div style="margin-top: 5px;">
-                <input placeHolder="Address Line 2" name="shippingAddressLine2" class="text-input-billing" type="text" style="width: 355px;" />
-            </div>
-            <div style="margin-top: 5px;">
-                <input class="text-input-billing" type="text" name="shippingCity" id="shippingCity" placeHolder="City" style="width: 150px; float: left;" maxlength="15" />
-                <input class="text-input-billing" type="text" name="shippingState" id="shippingState" placeHolder="State / Province / Region" style="margin-left: 5px; width: 200px; float: left;" />
-                <div style="clear:both;"></div>
-            </div>
-            <div style="margin-bottom: 5px; margin-top: 5px;">
-                <input class="text-input-billing" name="shippingZipCode" id="shippingZipCode" placeHolder="Postal / Zip Code" type="text" style="width: 150px; float: left;" maxlength="5" />
-                <div name="shippingCountries"  style='float: left; margin-left: 5px;' id="shippingCountries"></div> 
-                <div style="clear:both;"></div>
-            </div>
-        </div>
-        <div style="margin-top: 10px;">
-            <label class="form-label">Billing Information:</label><span class="required"> *</span>
-            <div name="cardType" style="margin-top: 5px;" id="cardType">
-            </div>
-            <div>
-                <input style="width: 182px; margin-top: 5px;" placeHolder="Card Number" id="cardNumber" name="cardNumber" class="text-input-billing" type="text" maxlength="16" />
-            </div>
-            <div style="clear: both; margin-top: 5px;">
-            <div name="expirationDate" style="float: left;" id="expirationDate"></div>
-            <div name="expirationYear" style="margin-left: 5px; float: left;" id="expirationYear"></div>
-            <br/>
-            </div>
-            <div style="clear: both; margin-top: 5px;">
-                <input style="clear: both; margin-top: 5px;" placeHolder="Security Code" class="text-input-billing" type="text" id="securityCode" name="securityCode" maxlength="4" />
-            </div>
-        </div>
-        <div style="clear: both; margin-top: 5px;">
-            <div id="acceptTerms" name="acceptTerms">I agree to the Terms and Conditions</div>
-        </div>
-        <div style="clear: both; margin-top: 5px;">
-            <input id="sendButton" value="Checkout" type="button"/>
-        </div>
-    </div>
         </form>
     </div>
+
     <br/>
+
     <div style="font-size: 13px; font-family: Verdana;">
             <iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe>
     </div>
