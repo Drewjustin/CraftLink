@@ -259,12 +259,12 @@ $(document).ready(function () {
 
   $('#sendButton').jqxButton({ width: 70});
 
-  $('.text-input').addClass('jqx-input');
-  $('.text-input').addClass('jqx-rc-all');
+  $('.text-input-billing').addClass('jqx-input');
+  $('.text-input-billing').addClass('jqx-rc-all');
   if (theme.length > 0) {
-      $('.text-input').addClass('jqx-input-' + theme);
-      $('.text-input').addClass('jqx-widget-content-' + theme);
-      $('.text-input').addClass('jqx-rc-all-' + theme);
+      $('.text-input-billing').addClass('jqx-input-' + theme);
+      $('.text-input-billing').addClass('jqx-widget-content-' + theme);
+      $('.text-input-billing').addClass('jqx-rc-all-' + theme);
   };
 
   $("#billingCountries").jqxComboBox({ promptText: "Select a Country:", source: countries, height: 22, width: 198});
