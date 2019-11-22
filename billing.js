@@ -279,23 +279,24 @@ $(document).ready(function () {
   }
   else $("#shippingAddressBlock").hide('fast');
       });
-  var cardTypes = [{value:"visa", label:"Visa"}, {value:"masterCard", label: "MasterCard"}, {value:"americanExpress", label:"American Express"}, {value:"discover", label:"Discover"}];
-  $("#cardType").jqxComboBox({ selectedIndex: 0, autoDropDownHeight: true, promptText: "Card Type:", source: cardTypes, width: 180, height: 22}); 
+  //var cardTypes = [{value:"visa", label:"Visa"}, {value:"masterCard", label: "MasterCard"}, {value:"americanExpress", label:"American Express"}, {value:"discover", label:"Discover"}];
+  //$("#cardType").jqxComboBox({ selectedIndex: 0, autoDropDownHeight: true, promptText: "Card Type:", source: cardTypes, width: 180, height: 22}); 
   
 
      // create comboboxes.
-  $("#expirationDate").jqxComboBox({ source: months, selectedIndex: 0, height: 22, width: 140});
-  $("#expirationYear").jqxComboBox({ source: years, autoDropDownHeight: true, selectedIndex: 0, height: 22, width: 60});        
+  //$("#expirationDate").jqxComboBox({ source: months, selectedIndex: 0, height: 22, width: 140});
+  //$("#expirationYear").jqxComboBox({ source: years, autoDropDownHeight: true, selectedIndex: 0, height: 22, width: 60});        
 
   $('#form').jqxValidator({
       rules: [
               { input: '#firstName', message: 'First Name is required!', action: 'keyup, blur', rule: 'required' },
               { input: '#lastName', message: 'Last Name is required!', action: 'keyup, blur', rule: 'required' },
+              { input: '#email', message: 'Email is required!', action: 'keyup, blur', rule: 'required' },
               { input: '#billingAddress', message: 'Billing Address is required!', action: 'keyup, blur', rule: 'required' },
               { input: '#billingCity', message: 'Billing City is required!', action: 'keyup, blur', rule: 'required' },
               { input: '#billingZipCode', message: 'Zip Code is required!', action: 'keyup, blur', rule: 'required' },
-              { input: '#cardNumber', message: 'Card Number is required!', action: 'keyup, blur', rule: 'required' },
-              { input: '#securityCode', message: 'Security Code is required!', action: 'keyup, blur', rule: 'required' },
+              //{ input: '#cardNumber', message: 'Card Number is required!', action: 'keyup, blur', rule: 'required' },
+              //{ input: '#securityCode', message: 'Security Code is required!', action: 'keyup, blur', rule: 'required' },
               { input: '#acceptTerms', message: 'You need to accept the terms!', action: 'keyup, blur', rule: 'required'}
       ]
   });
