@@ -30,7 +30,7 @@ $(document).ready(function () {
         input: '#birthInput', message: 'Your birth date must be between 1/1/1900 and 1/1/2012.', action: 'valueChanged', rule: function (input, commit) {
       var date = $('#birthInput').jqxDateTimeInput('getDate');
       $.ajax({
-      url: "registration.php",
+      url: "create_account.php",
       type: 'POST',
       data: {birthInputYear: date.getFullYear()},
       success: function(data)
