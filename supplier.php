@@ -3,7 +3,7 @@
 $servername = "149.28.55.25";
 $username = "websysroot";
 $password = "craftlink.rootbeer";
-$dbname = "craftlink";
+$dbname = "CraftLink";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -15,6 +15,12 @@ if ($conn->connect_error) {
 $sql = "SELECT product_id, product_name, product_dscpt, product_unit product_inStock FROM craftlink";
 $result = $conn->query($sql);
 
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+   if (isset($_POST["Add"]) && $_POST['Add'] =='Add'){
+
+   }
+}
 
  ?>
 
@@ -56,8 +62,8 @@ $result = $conn->query($sql);
              }
              ?>
           </section>
-          <form id="add_product" action="supplier.php" method="post">
-             <input id="add" type="submit" name="Add" value="Add">
+          <form class="add_product" action="supplier.php" method="post">
+             <input id="Add" type="submit" name="Add" value="Add">
           </form>
           <?php
           $conn->close();
