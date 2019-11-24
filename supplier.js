@@ -1,7 +1,8 @@
 $(document).ready(function () {
     $("#add_product").hide();
+    
     $("#add_product_button").click(function () {
-        $("#add_product").show();
+        $("#add_product").toggle();
     });
 
 
