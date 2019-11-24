@@ -1,8 +1,7 @@
 <?php
 $formData = array(
 		"username" => $_POST["username"],
-		"password" => $_POST["password"],
-		"rememberme" => $_POST["rememberme"]
+		"password" => $_POST["password"]
 	);
 	
 	if($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
