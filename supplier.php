@@ -17,7 +17,7 @@ $result = $conn->query($sql);
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-   if (isset($_POST["Add"]) && $_POST['Add'] =='Add'){
+   if (isset($_POST["Submit"]) && $_POST['Submit'] =='Submit'){
 
    }
 }
@@ -67,13 +67,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
           </section>
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
-               <form id="add_product" action="submit" method="post">
+               <form id="add_product" action="supplier.php" method="post">
                   Name:<input type="text" name="name" value="">
                   Description:<input type="text" name="description" value="">
                   Price:<input type="int" name="price" value="">
                   Unit Sold:<input type="text" name="unit_sold" value="">
                   Quantity:<input type="text" name="quantity" value="">
-                  <input type="submit" name="add_" value="Submit">
+                  <input type="submit" name="Submit" value="Submit">
                </form>
             </article>
           <?php
