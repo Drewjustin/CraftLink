@@ -1,4 +1,7 @@
 /* ************ HEX COLOR OF LOGO: #FDC100 ************* */
+@import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
+
+
 .demo-iframe {
   border: none;
   width: 600px;
@@ -8,13 +11,20 @@
 }
 .text-input
 {
-  height: 23px;
+  height: 30px;
   width: 150px;
 }
 .text-input-billing
 {
     height: 24px;
 }
+
+.register-block
+{
+    margin: auto;
+  text-align: center;
+}
+
 .register-table
 {
   margin-top: 10px;
@@ -40,12 +50,20 @@ h3
 
 .form #password, .form #username {
   height: 24px;
+  margin: auto;
   margin-top: 5px;
   width: 150px;
 }
 .form #rememberme {
   margin-top: 5px;
   margin-bottom: 8px;
+  color: white;
+}
+
+#form
+{
+  margin: auto;
+  text-align: center;
 }
 
 /***** creaete_account.html styling  *****/
@@ -57,6 +75,7 @@ h3
   background-color: white;
   display: block;
   border-radius: 5px;
+  text-align: center;
 }
 
 /***** index.html styling ******/
@@ -131,6 +150,7 @@ h2.centerMe {
 body {
   background-color: #000;
   color: white;
+  font-family: 'Work Sans', sans-serif;
 }
 
 /* billing.html */
@@ -153,4 +173,27 @@ body {
   vertical-align: baseline;
   color: red;
   font-size: 10px;
+}
+
+#searchbar input{
+  border-radius: 4px;
+  padding-left: 3px;
+  padding-right: 3px;
+  line-height: 30px;
+  font-size: 25px;
+}
+
+.rememberme_div{
+  text-align: center;
+  margin: auto; 
+  padding-top: 10px;
+   display: inline-block;
+  color: white;
+}
+
+table{
+  display: inline-block;
+}
+td{
+  text-align: left;
 }
