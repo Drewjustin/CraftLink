@@ -62,9 +62,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
              }
              ?>
           </section>
-          <form class="add_product" action="supplier.php" method="post">
-             <input id="Add" type="submit" name="Add" value="Add">
-          </form>
+            <article id="add_product">
+               <form class="" action="submit" method="post">
+                  <input type="text" name="name" value="Name">
+                  <input type="text" name="description" value="Description">
+                  <input type="int" name="price" value="Price">
+                  <input type="text" name="unit_sold" value="Unit Sold">
+                  <input type="int" name="in_stock" value="In stock">
+                  <input type="submit" name="Add" value="Add Product">
+               </form>
+
+            </article>
           <?php
           $conn->close();
            ?>
