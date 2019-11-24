@@ -12,13 +12,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT product_id, product_name, product_dscpt, product_unit product_inStock FROM craftlink";
+$sql = 'SELECT `product_id`, `product_name`, `product_dscpt`, `product_unitinWhichSold` `product_inStock` FROM CraftLink';
 $result = $conn->query($sql);
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
    if (isset($_POST["Submit"]) && $_POST['Submit'] =='Submit'){
-
+      // var_dump($_POST);
+      $sql2 = "INSERT INTO `CraftLink` (`product_name`, `product_dscpt`,
+      `product_price`, `product_unitinWhichSold`) VALUES" . "(". $_POST['name'] . "," . $_POST['description']
+      . $_POST['price'] . "," . $_POST['unit_sold'] . ")";
+      $result2 = $conn->query($sql2);
    }
 }
 
@@ -68,11 +72,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
                <form id="add_product" action="supplier.php" method="post">
-                  Name:<input type="text" name="name" value="">
-                  Description:<input type="text" name="description" value="">
-                  Price:<input type="int" name="price" value="">
-                  Unit Sold:<input type="text" name="unit_sold" value="">
-                  Quantity:<input type="text" name="quantity" value="">
+                  Name:<input type="text" id='p_name' name="name" value="">
+                  Description:<input type="text" id='p_dscpt' name="description" value="">
+                  Price:<input type="int" id='p_price' name="price" value="">
+                  Unit Sold:<input type="text" id='p_unit'name="unit_sold" value="">
                   <input type="submit" name="Submit" value="Submit">
                </form>
             </article>
