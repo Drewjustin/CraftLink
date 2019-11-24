@@ -56,7 +56,7 @@ $result = $conn->query($sql);
              }
              ?>
           </section>
-          <form class="add_product" action="supplier.php" method="post">
+          <form id="add_product" action="supplier.php" method="post">
              <input id="add" type="submit" name="Add" value="Add">
           </form>
           <?php

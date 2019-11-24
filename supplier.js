@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    $("#add_product").hide();
+    $("#add_product_button").click(function () {
+        $("#add_product").show();
+    });
+
+
   var url = "products_example.xml";    // CHANGE
   // ***** does NOT work with Chrome since it is from file system, not web server
   // Microsoft Edge is fine
