@@ -19,9 +19,9 @@ $result = $conn->query($sql);
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
    if (isset($_POST["Submit"]) && $_POST['Submit'] =='Submit'){
       // var_dump($_POST);
-      $sql2 = "INSERT INTO `CraftLink` (`product_name`, `product_dscpt`,
-      `product_price`, `product_unitinWhichSold`) VALUES" . "(". $_POST['name'] . "," . $_POST['description']
-      . $_POST['price'] . "," . $_POST['unit_sold'] . ")";
+      $sql2 = 'INSERT INTO `CraftLink` (`product_name`, `product_dscpt`,
+      `product_price`, `product_unitinWhichSold`) VALUES' . '('. $_POST['name'] . ',' . $_POST['description']
+      . $_POST['price'] . ',' . $_POST['unit_sold'] . ')';
       $result2 = $conn->query($sql2);
    }
 }
