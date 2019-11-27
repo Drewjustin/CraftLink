@@ -30,12 +30,12 @@ $sql = "SELECT * FROM CraftLink.product";
 $resultAddP = NULL;
 if(isset($_POST['addProduct'])){
    $addProduct = $_POST['addProduct'];
-   if($addProduct){
+   if($addProduct == "Submit"){
       $name = $_POST['name'];
       $dscpt = $_POST['description'];
       $price = $_POST['price'];
       $unit = $_POST['unit_sold'];
-      $sqlAddP = "INSERT INTO CraftLink.product (`product_name`, `product_dscpt`, `product_unitinWhichSold`)
+      $sqlAddP = "INSERT INTO CraftLink.product (`product_name`, `product_dscpt`, `product_price`,`product_unitinWhichSold`)
       VALUES ($name, $dscpt, $price, $unit)";
       $resultAddP = $conn->query($sqlAddP);
    }
@@ -120,7 +120,6 @@ $result = $conn->query($sql);
                      . "<td>" . $row["product_name"] . "</td>"
                      . "<td>" . $row["product_dscpt"] . "</td>"
                      . "<td>" . $row["product_price"] . "</td>"
-                     . "<td>" . $row["product_unit"] . "</td>"
                      . "<td>" . $row["product_inStock"] . "</td>"
                      // . "<a href='edit.php?'>edit</a>;"
                      . "</tr>";
