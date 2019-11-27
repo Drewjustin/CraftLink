@@ -13,13 +13,13 @@ if ($conn->connect_error) {
 }
 
 //Grab everything from the craflink table
-$sql = "SELECT * FROM `CraftLink`";
+$sql = "SELECT * FROM CraftLink.product";
 
 
 // if($_SERVER['REQUEST_METHOD'] == 'POST'){
 //    if (isset($_POST["Submit"]) && $_POST['Submit'] =='Submit'){
 //       // var_dump($_POST);
-//       $sql2 = 'INSERT INTO `CraftLink` (`product_name`, `product_dscpt`,
+//       $sql2 = 'INSERT INTO CraftLink.product (`product_name`, `product_dscpt`,
 //       `product_price`, `product_unitinWhichSold`) VALUES' . '('. $_POST['name'] . ',' . $_POST['description']
 //       . $_POST['price'] . ',' . $_POST['unit_sold'] . ')';
 //       $result2 = $conn->query($sql2);
@@ -35,7 +35,7 @@ if(isset($_POST['addProduct'])){
       $dscpt = $_POST['description'];
       $price = $_POST['price'];
       $unit = $_POST['unit_sold'];
-      $sqlAddP = "INSERT INTO `CraftLink` (`product_name`, `product_dscpt`, `product_unitinWhichSold`)
+      $sqlAddP = "INSERT INTO CraftLink.product (`product_name`, `product_dscpt`, `product_unitinWhichSold`)
       VALUES ($name, $dscpt, $price, $unit)";
       $resultAddP = $conn->query($sqlAddP);
    }
@@ -104,7 +104,7 @@ $result = $conn->query($sql);
           
           <section id="product_table">
              <?php
-             if ($result->num_rows > 0) {
+             if (!empty($result) && $result->num_rows > 0) {
                  echo "<table>
                  <tr>
                  <th>ID</th>
