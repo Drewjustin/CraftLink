@@ -1,4 +1,22 @@
 <?php
+  function executePost(&$con,&$sql) {
+   if (mysqli_query($con,$sql)) {
+     echo "Success";
+   } else {
+     echo "Error" . mysqli_error($con);
+   }
+   echo("<br>");
+ }
+ function executeGet(&$con,&$sql,&$result) {
+   $result = mysqli_query($con,$sql);
+   if ($result) {
+     echo "Success";
+   } else {
+     echo "Error" . mysqli_error($con);
+   }
+   echo("<br>");
+ }
+ 
 
 $servername = "149.28.55.25";
 $username = "websysroot";
@@ -31,16 +49,28 @@ $resultAddP = NULL;
 if(isset($_POST['addProduct'])){
    $addProduct = $_POST['addProduct'];
    if($addProduct == "Submit"){
+      $id = $_POST['id'];
       $name = $_POST['name'];
       $dscpt = $_POST['description'];
       $price = $_POST['price'];
       $unit = $_POST['unit_sold'];
-      $sqlAddP = "INSERT INTO CraftLink.product (`product_name`, `product_dscpt`, `product_price`,`product_unitinWhichSold`)
-      VALUES ($name, $dscpt, $price, $unit)";
-      $resultAddP = $conn->query($sqlAddP);
+      echo $name . '<br>';
+      echo $dscpt . '<br>';
+      echo $price . '<br>';
+      echo $unit . '<br>';
+      $sqlAddP = 'INSERT INTO CraftLink.product (`product_id`, `product_name`, `product_dscpt`, `product_price`,`product_inStock`)
+      VALUES (\''
+      . $id . '\',\''
+      . $name . '\',\''
+      . $dscpt . '\',\''
+      . $price . '\',\''
+      . $unit . '\')';
+      //$resultAddP = $conn->query($sqlAddP);
+      executePost($conn, $sqlAddP, $resultAddP);
    }
 }
-$result = $conn->query($sql);
+//$result = $conn->query($sql);
+executeGet($conn, $sql, $result);
 
  ?>
 
@@ -120,6 +150,7 @@ $result = $conn->query($sql);
                      . "<td>" . $row["product_name"] . "</td>"
                      . "<td>" . $row["product_dscpt"] . "</td>"
                      . "<td>" . $row["product_price"] . "</td>"
+                     //. "<td>" . $row["product_unitinWhichSold"] . "</td>"
                      . "<td>" . $row["product_inStock"] . "</td>"
                      // . "<a href='edit.php?'>edit</a>;"
                      . "</tr>";
@@ -133,6 +164,7 @@ $result = $conn->query($sql);
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
                <form id="add_product" action="supplier.php" method="post">
+                  ID:<input type="text" name="id" value="">
                   Name:<input type="text" name="name" value="">
                   Description:<input type="text" name="description" value="">
                   Price:<input type="int"  name="price" value="">
