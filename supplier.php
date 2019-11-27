@@ -47,15 +47,61 @@ $result = $conn->query($sql);
  <!DOCTYPE html>
  <html lang="en" dir="ltr">
     <head>
-       <meta charset="utf-8">
-       <title>Brewer Home</title>
-       <link rel="stylesheet" href="resources/css/master.css">
-       <script type="text/javascript" src="jqwidgets/scripts/jquery-1.11.1.min.js"></script>
-       <script type="text/javascript" src="supplier.js"> </script>
+
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="resources/css/master.css">
+
+      <link rel="stylesheet" href="jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />
+      <script type="text/javascript" src="jqwidgets/scripts/jquery-1.12.4.min.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcore.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdata.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxbuttons.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxscrollbar.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxmenu.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcheckbox.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxlistbox.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdropdownlist.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxgrid.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxgrid.sort.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxgrid.pager.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxgrid.selection.js"></script>
+      <script type="text/javascript" src="jqwidgets/jqwidgets/jqxgrid.edit.js"></script>
+      <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>       <!-- commented out Angular components -->
+      <script type="text/javascript">
+         $(document).ready(function () {
+            $("#add_product").hide();
+            
+            $("#add_product_button").click(function () {
+               $("#add_product").toggle();
+            });
+
+         });
+      </script>
+      <!--script type="text/php" src="supplier.php"></script-->
+      <!-- DEMO EXAMPLE -->   <link href="jqwidgets/demos/Javascript & JQuery/jqxgrid/defaultfunctionality.htm" type="text/html" />
+      <title>Supplier Homepage</title>
     </head>
     <body>
+
+      <div class="nav">
+         <a href="index.html">
+         <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
+         </a>
+         <ul>
+         <li><a class="active" href="#">HOME</a></li>
+         <!-- LOGOUT TAKES YOU BACK TO INDEX LANDING PAGE -->
+         <li class="right"><a href="index.html">LOG OUT</a></li>
+         <li><a href="#">ABOUT</a></li>
+         </ul>
+      </div>
+      <h2 class="centerMe">Rooty Roots Inventory</h2>
+      <div id="grid" style="width:50%; margin:auto;">
+      </div>
        <section class="main">
           <h1>Brewer Home</h1>
+          
           <section id="product_table">
              <?php
              if ($result->num_rows > 0) {
