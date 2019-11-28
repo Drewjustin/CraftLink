@@ -49,18 +49,20 @@ $resultAddP = NULL;
 if(isset($_POST['addProduct'])){
    $addProduct = $_POST['addProduct'];
    if($addProduct == "Submit"){
-      $id = $_POST['id'];
+      $p_id = $_POST['p_id'];
+      $s_id = $_POST['s_id'];
       $name = $_POST['name'];
       $dscpt = $_POST['description'];
       $price = $_POST['price'];
       $unit = $_POST['unit_sold'];
-      echo $name . '<br>';
-      echo $dscpt . '<br>';
-      echo $price . '<br>';
-      echo $unit . '<br>';
-      $sqlAddP = 'INSERT INTO CraftLink.product (`product_id`, `product_name`, `product_dscpt`, `product_price`,`product_inStock`)
+      // echo $name . '<br>';
+      // echo $dscpt . '<br>';
+      // echo $price . '<br>';
+      // echo $unit . '<br>';
+      $sqlAddP = 'INSERT INTO CraftLink.product (`product_id`, `supplier_id`, `product_name`, `product_dscpt`, `product_price`,`product_unitInWhichSold`)
       VALUES (\''
-      . $id . '\',\''
+      . $p_id . '\',\''
+      . $s_id . '\',\''
       . $name . '\',\''
       . $dscpt . '\',\''
       . $price . '\',\''
@@ -137,7 +139,8 @@ executeGet($conn, $sql, $result);
              if (!empty($result) && $result->num_rows > 0) {
                  echo "<table>
                  <tr>
-                 <th>ID</th>
+                 <th>Supplier ID</th>
+                 <th>Product ID</th>
                  <th>Name</th>
                  <th>Description</th>
                  <th>Price</th>
@@ -146,11 +149,12 @@ executeGet($conn, $sql, $result);
                  // output data of each row
                  while($row = $result->fetch_assoc()) {
                      echo "<tr>"
+                     . "<td>" . $row["supplier_id"] . "</td>"
                      . "<td>" . $row["product_id"] . "</td>"
                      . "<td>" . $row["product_name"] . "</td>"
                      . "<td>" . $row["product_dscpt"] . "</td>"
                      . "<td>" . $row["product_price"] . "</td>"
-                     //. "<td>" . $row["product_unitinWhichSold"] . "</td>"
+                     . "<td>" . $row["product_unitinWhichSold"] . "</td>"
                      . "<td>" . $row["product_inStock"] . "</td>"
                      // . "<a href='edit.php?'>edit</a>;"
                      . "</tr>";
@@ -164,7 +168,8 @@ executeGet($conn, $sql, $result);
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
                <form id="add_product" action="supplier.php" method="post">
-                  ID:<input type="text" name="id" value="">
+                  Product ID:<input type="text" name="p_id" value="">
+                  Supplier ID:<input type="text" name="s_id" value="">
                   Name:<input type="text" name="name" value="">
                   Description:<input type="text" name="description" value="">
                   Price:<input type="int"  name="price" value="">
