@@ -405,12 +405,12 @@
       
     <!--img src=LOGO -->
     <div class="nav">
-      <a href="index.html">
+      <a href="index.php">
         <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
       </a>
       <ul>
-        <li><a class="active" href="index.html">Home</a></li>
-        <li class="right"><a href="index.html">Logout</a></li>
+        <li><a class="active" href="index.php">Home</a></li>
+        <li class="right"><a href="index.php">Logout</a></li>
         <li><a href="#">About</a></li>
       </ul>
     </div>

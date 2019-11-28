@@ -72,11 +72,11 @@ $formData = array(
   <body>
     <!-- NAVBAR -->
     <div class="nav">
-      <a href="index.html">
+      <a href="index.php">
         <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
       </a>
       <ul>
-        <li><a class="active" href="index.html">HOME</a></li>
+        <li><a class="active" href="index.php">HOME</a></li>
         <li class="right"><a href="create_account.php">SIGN UP</a></li>
         <li class="right"><a href="#">Login Root Brewers</a></li>
         <li class="right"><a href="consumer_login.php">Login Customers</a></li>

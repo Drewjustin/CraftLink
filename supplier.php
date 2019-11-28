@@ -118,13 +118,13 @@ executeGet($conn, $sql, $result);
     <body>
 
       <div class="nav">
-         <a href="index.html">
+         <a href="index.php">
          <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
          </a>
          <ul>
          <li><a class="active" href="#">HOME</a></li>
          <!-- LOGOUT TAKES YOU BACK TO INDEX LANDING PAGE -->
-         <li class="right"><a href="index.html">LOG OUT</a></li>
+         <li class="right"><a href="index.php">LOG OUT</a></li>
          <li><a href="#">ABOUT</a></li>
          </ul>
       </div>
