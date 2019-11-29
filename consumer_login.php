@@ -12,19 +12,21 @@
       die("Connection failed: " . $conn->connect_error);
   }
   if (isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST'){  
-  $formData = array(
+    $formData = array(
       "username" => $_POST["username"],
       "password" => $_POST["password"]
     );
     
     if($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
       // get the checked state of the checkbox with name - "rememberme". The value could be true - 
-      if($formData['rememberme'] == 'true') {
-        $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
-        }
-      else {
-        $response = "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
-      }
+      // if($formData['rememberme'] == 'true') {
+      //   $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
+      //   }
+      // else {
+         $response = "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
+         session_start();
+         $_SESSION['username'] = $formData['username'];
+      // }
     }
     else {
       $response = "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
@@ -101,7 +103,7 @@
 
     <h2 class="centerMe">Consumer Login</h2>
     <div class="register-block" style="font-size: 13px; font-family: Verdana;">
-      <form class="form" id="form" target="form-iframe" method="post" action="login.php" style="width: 650px;">
+      <form class="form" id="form" target="form-iframe" method="post" action="consumer_login.php" style="width: 650px;">
           
           <label>Username:</label>
           <div>
@@ -122,8 +124,6 @@
           <div class="prompt">*For successful login, username=admin, password=admin123</div>
       </form>
       <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
-  </div>
-
-
+    </div>
   </body>
 </html>

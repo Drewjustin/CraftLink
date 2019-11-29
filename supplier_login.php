@@ -12,26 +12,29 @@
       die("Connection failed: " . $conn->connect_error);
   }
   if (isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST'){ 
-    
+
 $formData = array(
 		"username" => $_POST["username"],
 		"password" => $_POST["password"]
 	);
 	
 	if($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
-		// get the checked state of the checkbox with name - "rememberme". The value could be true - 
-		if($formData['rememberme'] == 'true') {
-			$response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
-			}
-		else {
-			$response = "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
-		}
-	}
+      // get the checked state of the checkbox with name - "rememberme". The value could be true - 
+      // if($formData['rememberme'] == 'true') {
+      //   $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
+      //   }
+      // else {
+         $response = "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
+         session_start();
+         $_SESSION['username'] = $formData['username'];
+      // }
+    }
 	else {
 		$response = "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
 	}
 
 	echo $response;
+  }
 ?>
 
 <!DOCTYPE html>
@@ -122,7 +125,5 @@ $formData = array(
       </form>
       <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
   </div>
-
-
   </body>
 </html>
