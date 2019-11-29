@@ -1,4 +1,18 @@
 <?php
+
+  $servername = "149.28.55.25";
+  $username = "websysroot";
+  $password = "craftlink.rootbeer";
+  $dbname = "CraftLink";
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  // Check connection
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+  if (isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST'){ 
+    
 $formData = array(
 		"username" => $_POST["username"],
 		"password" => $_POST["password"]
