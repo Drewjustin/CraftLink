@@ -16,7 +16,10 @@
       "username" => $_POST["username"],
       "password" => $_POST["password"]
     );
-    
+    //to make sure the username exsists the sql statement is:
+    //SELECT username from User where username = $_POST["username"];
+    //The sql statement to get the hashed password once you have the username is:
+    //SELECT hashedPassword from User where username = $_POST["username"];
     if($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
       // get the checked state of the checkbox with name - "rememberme". The value could be true - 
       // if($formData['rememberme'] == 'true') {
