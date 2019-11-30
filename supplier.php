@@ -154,7 +154,7 @@ executeGet($conn, $sql, $result);
                      . "<td>" . $row["product_name"] . "</td>"
                      . "<td>" . $row["product_dscpt"] . "</td>"
                      . "<td>" . $row["product_price"] . "</td>"
-                     . "<td>" . $row["product_unitinWhichSold"] . "</td>"
+                     . "<td>" . $row["product_unitInWhichSold"] . "</td>"
                      . "<td>" . $row["product_inStock"] . "</td>"
                      // . "<a href='edit.php?'>edit</a>;"
                      . "</tr>";
