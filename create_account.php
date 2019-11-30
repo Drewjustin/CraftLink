@@ -31,11 +31,113 @@ if ($conn->connect_error) {
 	 die("Connection failed: " . $conn->connect_error);
 }
 
-$valid = false;
 //$submitting = false;
+
+?>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="resources/css/master.css">
+    <link rel="stylesheet" href="jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="jqwidgets/scripts/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
+		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxmaskedinput.js"></script>
+		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxradiobutton.js"></script>
+    <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>       <!-- commented out Angular components -->
+   <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
+   
+    <script type="text/javascript" src="create_account.js"></script>  
+		<script type="text/javascript">
+			$(document).ready(function () {
+			
+			$('#sendButton').jqxButton({ width: 120, height: 25});
+			$('#acceptInput').jqxCheckBox({ width: 130});
+			$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
+			$("#supplier").jqxRadioButton({ width: 250, height: 25});
+		
+			$("#phoneInput").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 22});
+			// $("#zipInput").jqxMaskedInput({ mask: '###-##-####', width: 150, height: 22});
+		
+			$('.text-input').addClass('jqx-input');
+			$('.text-input').addClass('jqx-rc-all');
+			if (theme.length > 0) {
+				$('.text-input').addClass('jqx-input-' + theme);
+				$('.text-input').addClass('jqx-widget-content-' + theme);
+				$('.text-input').addClass('jqx-rc-all-' + theme);
+			}
+		
+			var date = new Date();
+			date.setFullYear(1985, 0, 1);
+
+
+
+		
+			// initialize validator.
+			// $('#form').jqxValidator({
+			// 	rules: [
+			// 	{ input: '#userInput', message: 'Username is required!', action: 'keyup, blur', rule: 'required' },
+			// 	{ input: '#userInput', message: 'Your username must be between 3 and 12 characters!', action: 'keyup, blur', rule: 'length=3,12' },
+			// 	{ input: '#passwordInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
+			// 	{ input: '#passwordInput', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' },
+			// 	{ input: '#passwordConfirmInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
+			// 	{ input: '#passwordConfirmInput', message: 'Passwords doesn\'t match!', action: 'keyup, focus', rule: function (input, commit) {
+			// 		// call commit with false, when you are doing server validation and you want to display a validation error on this field. 
+			// 		if (input.val() === $('#passwordInput').val()) {
+			// 			return true;
+			// 		}
+			// 			return false;
+			// 		}
+			// 	},
+			// 	{ input: '#emailInput', message: 'E-mail is required!', action: 'keyup, blur', rule: 'required' },
+			// 	{ input: '#emailInput', message: 'Invalid e-mail!', action: 'keyup', rule: 'email' },
+			// 	{ input: '#phoneInput', message: 'Invalid phone number!', action: 'valuechanged, blur', rule: 'phone' }/*,
+			// { input: '#zipInput', message: 'Invalid zip code!', action: 'valuechanged, blur', rule: 'zipCode' }*/]
+			// });
+		
+			// // validate form.
+			// $("#sendButton").click(function () {
+			// 	var validationResult = function (isValid) {
+			// 		if (isValid) {
+			// 			//$("#form").submit();
+			// 			window.location.href = "create_account.php?valid=" + isValid;
+
+			// 		}
+			// 	}
+			// 	$('#form').jqxValidator('validate', validationResult);
+			// });
+		
+			// $("#form").on('validationSuccess', function () {
+			// 	$("#form-iframe").fadeIn('fast');
+			// });
+		});
+		</script>
+    <title>Create Account</title>
+
+
+  </head>
+  <body>
+
+  	<pre id="errors">
+  		
+ <?php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['realname'])
 		&& isset($_POST['email']) && isset($_POST['phone']) ) {
+
+$valid = true;
+$errorJS = '<script type="text/javascript">';
+$errorMSG = "";
 
 	$formData = array(
 		"username" => $_POST["username"],
@@ -46,12 +148,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
 		"suppliertype" => $_POST["suppliertype"],
 		"consumertype" => $_POST["consumertype"]
 	);
+
+	if(strlen($formData["username"]) > 12 || strlen($formData["username"]) < 4){
+		$valid = false;
+		$errorJS += '$("#userInput").focus(); alert();';
+		$errorMSG += "Username is invalid\n";
+	}
+
 	// check whether the terms are accepted.
 	if ($formData['acceptterms'] != 'true') {
+		$valid = false;
 		$response = "<p><h1>Registration Not Successful</h1></p><p>You need to accept the terms.</p>";
 		echo $response;
 		return;
 	}
+
+	//$errorJS += '$("#errors").append("' + $errorMSG + '");';
+	$errorJS += "</script>";
+
+	if($valid) { // all info is valid
+		// submit the form
+	} else {
+		echo $errorMSG;
+		echo $errorJS;
+	}
+
+	//if(strlen($formData["username"])  
+
 	// the registration is successful only if the username is 'admin' and the password is 'admin123'.
 	/*
 	if ($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
@@ -96,90 +219,9 @@ if ($valid) {
 ?>
 
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="resources/css/master.css">
-    <link rel="stylesheet" href="jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
-    <script type="text/javascript" src="jqwidgets/scripts/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxvalidator.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxbuttons.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcheckbox.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/globalization/globalize.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcalendar.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
-		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxmaskedinput.js"></script>
-		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxradiobutton.js"></script>
-    <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>       <!-- commented out Angular components -->
 
-		<script type="text/javascript">
-			$(document).ready(function () {
-			
-			$('#sendButton').jqxButton({ width: 120, height: 25});
-			$('#acceptInput').jqxCheckBox({ width: 130});
-			$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
-			$("#supplier").jqxRadioButton({ width: 250, height: 25});
-		
-			$("#phoneInput").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 22});
-			// $("#zipInput").jqxMaskedInput({ mask: '###-##-####', width: 150, height: 22});
-		
-			$('.text-input').addClass('jqx-input');
-			$('.text-input').addClass('jqx-rc-all');
-			if (theme.length > 0) {
-				$('.text-input').addClass('jqx-input-' + theme);
-				$('.text-input').addClass('jqx-widget-content-' + theme);
-				$('.text-input').addClass('jqx-rc-all-' + theme);
-			}
-		
-			var date = new Date();
-			date.setFullYear(1985, 0, 1);
-		
-			// initialize validator.
-			$('#form').jqxValidator({
-				rules: [
-				{ input: '#userInput', message: 'Username is required!', action: 'keyup, blur', rule: 'required' },
-				{ input: '#userInput', message: 'Your username must be between 3 and 12 characters!', action: 'keyup, blur', rule: 'length=3,12' },
-				{ input: '#passwordInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
-				{ input: '#passwordInput', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' },
-				{ input: '#passwordConfirmInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
-				{ input: '#passwordConfirmInput', message: 'Passwords doesn\'t match!', action: 'keyup, focus', rule: function (input, commit) {
-					// call commit with false, when you are doing server validation and you want to display a validation error on this field. 
-					if (input.val() === $('#passwordInput').val()) {
-						return true;
-					}
-						return false;
-					}
-				},
-				{ input: '#emailInput', message: 'E-mail is required!', action: 'keyup, blur', rule: 'required' },
-				{ input: '#emailInput', message: 'Invalid e-mail!', action: 'keyup', rule: 'email' },
-				{ input: '#phoneInput', message: 'Invalid phone number!', action: 'valuechanged, blur', rule: 'phone' }/*,
-			{ input: '#zipInput', message: 'Invalid zip code!', action: 'valuechanged, blur', rule: 'zipCode' }*/]
-			});
-		
-			// validate form.
-			$("#sendButton").click(function () {
-				var validationResult = function (isValid) {
-					if (isValid) {
-						//$("#form").submit();
-						window.location.href = "create_account.php?valid=" + isValid;
+  	</pre>
 
-					}
-				}
-				$('#form').jqxValidator('validate', validationResult);
-			});
-		
-			$("#form").on('validationSuccess', function () {
-				$("#form-iframe").fadeIn('fast');
-			});
-		});
-		</script>
-    <title>Create Account</title>
-
-
-  </head>
-  <body>
     <!--img src=LOGO -->
     <div class="nav">
       <a href="index.php">
@@ -219,6 +261,8 @@ if ($valid) {
 						<td>Phone:</td>
 						<td><div name="phone" id="phoneInput"></div></td>
 					</tr>
+					<tr><td>
+							<br><div id="testpls" onclick="phoneTest()">test</div></td></tr>
 					<tr>
 						<td colspan="2" style="text-align: left;">
 							<div name="suppliertype" id="supplier">Supplier</div>
