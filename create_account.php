@@ -1,5 +1,37 @@
 <?php
 // check whether the entered year is in the range of 1900 - 2012
+function executePost(&$con,&$sql) {
+	if (mysqli_query($con,$sql)) {
+		echo "Success";
+	} else {
+		echo "Error" . mysqli_error($con);
+	}
+	echo("<br>");
+}
+function executeGet(&$con,&$sql,&$result) {
+	$result = mysqli_query($con,$sql);
+	if ($result) {
+		echo "Success";
+	} else {
+		echo "Error" . mysqli_error($con);
+	}
+	echo("<br>");
+}
+
+
+$servername = "149.28.55.25";
+$username = "websysroot";
+$password = "craftlink.rootbeer";
+$dbname = "CraftLink";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+	 die("Connection failed: " . $conn->connect_error);
+}
+
+/*
 if (isset($_POST["birthInputYear"]))
 	{
 	$year = $_POST["birthInputYear"];
@@ -13,41 +45,49 @@ if (isset($_POST["birthInputYear"]))
 		echo "true";
 		}
 	return;
+	}*/
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['realname'])
+		&& /*isset($_POST['birthdate']) &&*/ isset($_POST['email']) && isset($_POST['phone']) /*&& isset($_POST['zip'])*/) {
+
+	$formData = array(
+		"username" => $_POST["username"],
+		"password" => $_POST["password"],
+		// "realname" => $_POST["realname"],
+		"birthdate" => $_POST["birthdate"],
+		"email" => $_POST["email"],
+		"phone" => $_POST["phone"],
+		//"zip" => $_POST["zip"],
+		"acceptterms" => $_POST["acceptterms"],
+		"suppliertype" => $_POST["suppliertype"],
+		"consumertype" => $_POST["consumertype"]
+	);
+	// check whether the terms are accepted.
+	if ($formData['acceptterms'] != 'true') {
+		$response = "<p><h1>Registration Not Successful</h1></p><p>You need to accept the terms.</p>";
+		echo $response;
+		return;
 	}
-$formData = array(
-	"username" => $_POST["username"],
-	"password" => $_POST["password"],
-	"realname" => $_POST["realname"],
-	"birthdate" => $_POST["birthdate"],
-	"email" => $_POST["email"],
-	"phone" => $_POST["phone"],
-	"zip" => $_POST["zip"],
-	"acceptterms" => $_POST["acceptterms"]
-);
-// check whether the terms are accepted.
-if ($formData['acceptterms'] != 'true')
-	{
-	$response = "<p><h1>Registration Not Successful</h1></p><p>You need to accept the terms.</p>";
+	// the registration is successful only if the username is 'admin' and the password is 'admin123'.
+	/*
+	if ($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
+		$response = "<p><h1>Registration Successful</h1></p><p></p>";
+		$response.= "Username:" . $formData['username'].= "<br/>";
+		$response.= "Password:" . $formData['password'].= "<br/>";
+		// $response.= "Real name:" . $formData['realname'].= "<br/>";
+		// $response.= "Birth date:" . $formData['birthdate'].= "<br/>";
+		$response.= "E-mail:" . $formData['email'].= "<br/>";
+		$response.= "Phone:" . $formData['phone'].= "<br/>";
+		// $response.= "Zip code:" . $formData['zip'].= "<br/>";
+		$response.= "Supplier?" . $formData['suppliertype'].= "<br/>";
+		$response.= "Consumer?" . $formData['consumertype'].= "<br/>";
+	} else {
+		$response = "<p><h1>Registration Not Successful</h1></p><p>Invalid username or password.</p>";
+	}
 	echo $response;
-	return;
-	}
-// the registration is successful only if the username is 'admin' and the password is 'admin123'.
-if ($formData['username'] == 'admin' && $formData['password'] == 'admin123')
-	{
-	$response = "<p><h1>Registration Successful</h1></p><p></p>";
-	$response.= "Username:" . $formData['username'].= "<br/>";
-	$response.= "Password:" . $formData['password'].= "<br/>";
-	$response.= "Real name:" . $formData['realname'].= "<br/>";
-	$response.= "Birth date:" . $formData['birthdate'].= "<br/>";
-	$response.= "E-mail:" . $formData['email'].= "<br/>";
-	$response.= "Phone:" . $formData['phone'].= "<br/>";
-	$response.= "Zip code:" . $formData['zip'].= "<br/>";
-	}
-  else
-	{
-	$response = "<p><h1>Registration Not Successful</h1></p><p>Invalid username or password.</p>";
-	}
-echo $response;
+	*/
+}
+
 ?>
 
 
@@ -65,7 +105,8 @@ echo $response;
     <script type="text/javascript" src="jqwidgets/jqwidgets/globalization/globalize.js"></script>
     <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcalendar.js"></script>
     <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxmaskedinput.js"></script>
+		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxmaskedinput.js"></script>
+		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxradiobutton.js"></script>
     <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>       <!-- commented out Angular components -->
 
 		<script type="text/javascript">
@@ -73,9 +114,11 @@ echo $response;
 			
 			$('#sendButton').jqxButton({ width: 120, height: 25});
 			$('#acceptInput').jqxCheckBox({ width: 130});
+			$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
+			$("#supplier").jqxRadioButton({ width: 250, height: 25});
 		
 			$("#phoneInput").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 22});
-			$("#zipInput").jqxMaskedInput({ mask: '###-##-####', width: 150, height: 22});
+			// $("#zipInput").jqxMaskedInput({ mask: '###-##-####', width: 150, height: 22});
 		
 			$('.text-input').addClass('jqx-input');
 			$('.text-input').addClass('jqx-rc-all');
@@ -87,38 +130,35 @@ echo $response;
 		
 			var date = new Date();
 			date.setFullYear(1985, 0, 1);
-			$('#birthInput').jqxDateTimeInput({ width: 150, height: 22, value: $.jqx._jqxDateTimeInput.getDateTime(date) });
+			// $('#birthInput').jqxDateTimeInput({ width: 150, height: 22, value: $.jqx._jqxDateTimeInput.getDateTime(date) });
 		
 			// initialize validator.
 			$('#form').jqxValidator({
 				rules: [
 				{ input: '#userInput', message: 'Username is required!', action: 'keyup, blur', rule: 'required' },
 				{ input: '#userInput', message: 'Your username must be between 3 and 12 characters!', action: 'keyup, blur', rule: 'length=3,12' },
+				/*
 				{ input: '#realNameInput', message: 'Real Name is required!', action: 'keyup, blur', rule: 'required' },
 				{ input: '#realNameInput', message: 'Your real name must contain only letters!', action: 'keyup', rule: 'notNumber' },
 				{ input: '#realNameInput', message: 'Your real name must be between 3 and 12 characters!', action: 'keyup', rule: 'length=3,12' },
-				{
-						input: '#birthInput', message: 'Your birth date must be between 1/1/1900 and 1/1/2012.', action: 'valueChanged', rule: function (input, commit) {
-					var date = $('#birthInput').jqxDateTimeInput('getDate');
-					$.ajax({
-					url: "create_account.php",
-					type: 'POST',
-					data: {birthInputYear: date.getFullYear()},
-					success: function(data)
-					{
-						if (data == "true")
-						{
-							commit(true);
-						}
-						else commit(false);
-					},
-					error: function()
-					{
-						commit(false);
+				{ input: '#birthInput', message: 'Your birth date must be between 1/1/1900 and 1/1/2012.', action: 'valueChanged', rule: function (input, commit) {
+						var date = $('#birthInput').jqxDateTimeInput('getDate');
+						$.ajax({
+							url: "create_account.php",
+							type: 'POST',
+							data: {birthInputYear: date.getFullYear()},
+							success: function(data) {
+								if (data == "true") {
+									commit(true);
+								} else commit(false);
+							},
+							error: function() {
+								commit(false);
+							}
+						});
 					}
-				});
-				}
 				},
+				*/
 				{ input: '#passwordInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
 				{ input: '#passwordInput', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' },
 				{ input: '#passwordConfirmInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
@@ -132,15 +172,34 @@ echo $response;
 				},
 				{ input: '#emailInput', message: 'E-mail is required!', action: 'keyup, blur', rule: 'required' },
 				{ input: '#emailInput', message: 'Invalid e-mail!', action: 'keyup', rule: 'email' },
-				{ input: '#phoneInput', message: 'Invalid phone number!', action: 'valuechanged, blur', rule: 'phone' },
-				{ input: '#zipInput', message: 'Invalid zip code!', action: 'valuechanged, blur', rule: 'zipCode' }]
+				{ input: '#phoneInput', message: 'Invalid phone number!', action: 'valuechanged, blur', rule: 'phone' }/*,
+			{ input: '#zipInput', message: 'Invalid zip code!', action: 'valuechanged, blur', rule: 'zipCode' }*/]
 			});
 		
 			// validate form.
 			$("#sendButton").click(function () {
 				var validationResult = function (isValid) {
 					if (isValid) {
-						$("#form").submit();
+						// $("#form").submit();
+						<?php
+						
+							$passwordhash = $formData['suppliertype']; // (NEED HASH FUNCTION)
+
+
+							$result = NULL;
+							$sql = 'INSERT INTO CraftLink.user (`username`, `email`, `passwordhash`, `product_dscpt`, `is_supplier`, `phonenumber`)
+							VALUES (\''
+							. $formData['username'] . '\',\''
+							. $formData['email'] . '\',\''
+							. $passwordhash . '\',\''
+							. $formData['suppliertype'] . '\',\''
+							. $formData['phone'] . '\')';
+							//$resultAddP = $conn->query($sqlAddP);
+							executePost($conn, $sql, $result);
+						
+						
+						
+						?>
 					}
 				}
 				$('#form').jqxValidator('validate', validationResult);
@@ -172,50 +231,56 @@ echo $response;
 
     <h2 class="centerMe" >Register with CraftLink Today!</h2>
     <div class="white-block">
-        <form class="form" id="form" target="form-iframe"  method="post" action="registration.php" style="font-size: 13px; font-family: Verdana; width: 650px;">
+      <form class="form" id="form" target="form-iframe"  method="post" action="create_account.php" style="font-size: 13px; font-family: Verdana; width: 650px;">
             
 	      <table class="register-table">
-                    <tr>
-                        <td>Username:</td>
-                        <td><input name="username" type="text" id="userInput" class="text-input" /></td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td><input name="password" type="password" id="passwordInput" class="text-input" /></td>
-                    </tr>
-                    <tr>
-                        <td>Confirm password:</td>
-                        <td><input type="password" id="passwordConfirmInput" class="text-input" /></td>
-                    </tr>
-                    <tr>
-                        <td>Real name:</td>
-                        <td><input name="realname" type="text" id="realNameInput" class="text-input" /></td>
-                    </tr>
-                    <tr>
-                        <td>Birth date:</td>
-                        <td><div name="birthdate" id="birthInput"></div></td>
-                    </tr>
-                    <tr>
-                        <td>E-mail:</td>
-                        <td><input name="email" type="text" id="emailInput" class="text-input" /></td>
-                    </tr>
-                    <tr>
-                        <td>Phone:</td>
-                        <td><div name="phone" id="phoneInput"></div></td>
-                    </tr>
-                    <tr>
-                        <td>Zip code:</td>
-                        <td><div name="zip" id="zipInput"></div></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: center;"><div name="acceptterms" id="acceptInput" class="rememberme_div">I accept terms</div></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align: center;"><input type="button" value="Create Account" id="sendButton" /></td>
-                    </tr>
-                </table>
-            <div class="prompt">*For successful registration, username=admin, password=admin123</div>
-        </form>
+					<tr>
+						<td>Username:</td>
+						<td><input name="username" type="text" id="userInput" class="text-input" /></td>
+					</tr>
+					<tr>
+						<td>Password:</td>
+						<td><input name="password" type="password" id="passwordInput" class="text-input" /></td>
+					</tr>
+					<tr>
+						<td>Confirm password:</td>
+						<td><input type="password" id="passwordConfirmInput" class="text-input" /></td>
+					</tr>
+					<!-- <tr>
+						<td>Real name:</td>
+						<td><input name="realname" type="text" id="realNameInput" class="text-input" /></td>
+					</tr> -->
+					<!-- <tr>
+						<td>Birth date:</td>
+						<td><div name="birthdate" id="birthInput"></div></td>
+					</tr> -->
+					<tr>
+						<td>E-mail:</td>
+						<td><input name="email" type="text" id="emailInput" class="text-input" /></td>
+					</tr>
+					<tr>
+						<td>Phone:</td>
+						<td><div name="phone" id="phoneInput"></div></td>
+					</tr>
+					<!-- <tr>
+						<td>Zip code:</td>
+						<td><div name="zip" id="zipInput"></div></td>
+					</tr> -->
+					<tr>
+						<td colspan="2" style="text-align: left;">
+							<div name="suppliertype" id="supplier">Supplier</div>
+							<div name="consumertype" id="consumer">Consumer</div>
+						</td>
+					</tr>
+					<tr>
+							<td colspan="2" style="text-align: ;"><div name="acceptterms" id="acceptInput" class="rememberme_div">I accept terms</div></td>
+					</tr>
+					<tr>
+							<td colspan="2" style="text-align: center;"><input type="button" value="Create Account" id="sendButton" /></td>
+					</tr>
+				</table>
+				<div class="prompt">*For successful registration, username=admin, password=admin123</div>
+			</form>
         <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
     </div>
 
