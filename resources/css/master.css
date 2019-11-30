@@ -197,3 +197,16 @@ table{
 td{
   text-align: left;
 }
+
+.form_reg table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.form_reg td, .form_reg th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+.form_reg tr:nth-child(even) {
+  background-color: darkslategray;
+}

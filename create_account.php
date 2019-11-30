@@ -31,33 +31,17 @@ if ($conn->connect_error) {
 	 die("Connection failed: " . $conn->connect_error);
 }
 
-/*
-if (isset($_POST["birthInputYear"]))
-	{
-	$year = $_POST["birthInputYear"];
-	// validate year.
-	if ($year > "2012" || $year < "1900")
-		{
-		echo "false";
-		}
-	  else
-		{
-		echo "true";
-		}
-	return;
-	}*/
+$valid = false;
+//$submitting = false;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['realname'])
-		&& /*isset($_POST['birthdate']) &&*/ isset($_POST['email']) && isset($_POST['phone']) /*&& isset($_POST['zip'])*/) {
+		&& isset($_POST['email']) && isset($_POST['phone']) ) {
 
 	$formData = array(
 		"username" => $_POST["username"],
 		"password" => $_POST["password"],
-		// "realname" => $_POST["realname"],
-		"birthdate" => $_POST["birthdate"],
 		"email" => $_POST["email"],
 		"phone" => $_POST["phone"],
-		//"zip" => $_POST["zip"],
 		"acceptterms" => $_POST["acceptterms"],
 		"suppliertype" => $_POST["suppliertype"],
 		"consumertype" => $_POST["consumertype"]
@@ -86,6 +70,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
 	}
 	echo $response;
 	*/
+
+	///$submitting = true;
+}
+
+echo $valid;
+if ($valid) {
+	echo "VALID";
+	echo $valid;
+	$passwordhash = password_hash($formData['suppliertype'], PASSWORD_DEFAULT);
+	echo $passwordhash;
+
+	$result = NULL;
+	$sql = 'INSERT INTO CraftLink.user (`username`, `email`, `passwordhash`, `product_dscpt`, `is_supplier`, `phonenumber`)
+	VALUES (\''
+	. $formData['username'] . '\',\''
+	. $formData['email'] . '\',\''
+	. $passwordhash . '\',\''
+	. $formData['suppliertype'] . '\',\''
+	. $formData['phone'] . '\')';
+	//$resultAddP = $conn->query($sqlAddP);
+	executePost($conn, $sql, $result);
 }
 
 ?>
@@ -130,35 +135,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
 		
 			var date = new Date();
 			date.setFullYear(1985, 0, 1);
-			// $('#birthInput').jqxDateTimeInput({ width: 150, height: 22, value: $.jqx._jqxDateTimeInput.getDateTime(date) });
 		
 			// initialize validator.
 			$('#form').jqxValidator({
 				rules: [
 				{ input: '#userInput', message: 'Username is required!', action: 'keyup, blur', rule: 'required' },
 				{ input: '#userInput', message: 'Your username must be between 3 and 12 characters!', action: 'keyup, blur', rule: 'length=3,12' },
-				/*
-				{ input: '#realNameInput', message: 'Real Name is required!', action: 'keyup, blur', rule: 'required' },
-				{ input: '#realNameInput', message: 'Your real name must contain only letters!', action: 'keyup', rule: 'notNumber' },
-				{ input: '#realNameInput', message: 'Your real name must be between 3 and 12 characters!', action: 'keyup', rule: 'length=3,12' },
-				{ input: '#birthInput', message: 'Your birth date must be between 1/1/1900 and 1/1/2012.', action: 'valueChanged', rule: function (input, commit) {
-						var date = $('#birthInput').jqxDateTimeInput('getDate');
-						$.ajax({
-							url: "create_account.php",
-							type: 'POST',
-							data: {birthInputYear: date.getFullYear()},
-							success: function(data) {
-								if (data == "true") {
-									commit(true);
-								} else commit(false);
-							},
-							error: function() {
-								commit(false);
-							}
-						});
-					}
-				},
-				*/
 				{ input: '#passwordInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
 				{ input: '#passwordInput', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' },
 				{ input: '#passwordConfirmInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
@@ -180,26 +162,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
 			$("#sendButton").click(function () {
 				var validationResult = function (isValid) {
 					if (isValid) {
-						// $("#form").submit();
-						<?php
-						
-							$passwordhash = $formData['suppliertype']; // (NEED HASH FUNCTION)
+						//$("#form").submit();
+						window.location.href = "create_account.php?valid=" + isValid;
 
-
-							$result = NULL;
-							$sql = 'INSERT INTO CraftLink.user (`username`, `email`, `passwordhash`, `product_dscpt`, `is_supplier`, `phonenumber`)
-							VALUES (\''
-							. $formData['username'] . '\',\''
-							. $formData['email'] . '\',\''
-							. $passwordhash . '\',\''
-							. $formData['suppliertype'] . '\',\''
-							. $formData['phone'] . '\')';
-							//$resultAddP = $conn->query($sqlAddP);
-							executePost($conn, $sql, $result);
-						
-						
-						
-						?>
 					}
 				}
 				$('#form').jqxValidator('validate', validationResult);
@@ -231,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
 
     <h2 class="centerMe" >Register with CraftLink Today!</h2>
     <div class="white-block">
-      <form class="form" id="form" target="form-iframe"  method="post" action="create_account.php" style="font-size: 13px; font-family: Verdana; width: 650px;">
+      <form class="form_reg" id="form" target="form-iframe"  method="post" action="create_account.php" style="font-size: 13px; font-family: Verdana; width: 650px;">
             
 	      <table class="register-table">
 					<tr>
@@ -246,14 +211,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
 						<td>Confirm password:</td>
 						<td><input type="password" id="passwordConfirmInput" class="text-input" /></td>
 					</tr>
-					<!-- <tr>
-						<td>Real name:</td>
-						<td><input name="realname" type="text" id="realNameInput" class="text-input" /></td>
-					</tr> -->
-					<!-- <tr>
-						<td>Birth date:</td>
-						<td><div name="birthdate" id="birthInput"></div></td>
-					</tr> -->
 					<tr>
 						<td>E-mail:</td>
 						<td><input name="email" type="text" id="emailInput" class="text-input" /></td>
@@ -262,10 +219,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
 						<td>Phone:</td>
 						<td><div name="phone" id="phoneInput"></div></td>
 					</tr>
-					<!-- <tr>
-						<td>Zip code:</td>
-						<td><div name="zip" id="zipInput"></div></td>
-					</tr> -->
 					<tr>
 						<td colspan="2" style="text-align: left;">
 							<div name="suppliertype" id="supplier">Supplier</div>
