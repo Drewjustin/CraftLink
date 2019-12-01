@@ -47,12 +47,11 @@ if ($conn->connect_error) {
   $password2 = '';
   $email = '';
   $phoneNum = '';
+  $userType = '';
+  $acceptterms = '';
 
 
 
-
-  $lastName = '';
-  $dob = '';
   // hold any error messages
   $errors = ''; 
   
@@ -68,23 +67,11 @@ if ($conn->connect_error) {
     $password2 = htmlspecialchars(trim($_POST["password2"]));
     $email = htmlspecialchars(trim($_POST["email"]));
     $phoneNum = htmlspecialchars(trim($_POST["phoneNum"]));
-    // $firstNames = htmlspecialchars(trim($_POST["firstNames"]));
-    // $firstNames = htmlspecialchars(trim($_POST["firstNames"])); 
+    $userType = htmlspecialchars(trim($_POST["userType"])); // "supplier" or "consumer"
+    if(isset($_POST["terms"])) $acceptterms = htmlspecialchars(trim($_POST["terms"]));
+    //echo $acceptterms;
 
-
-
-    //$lastName = htmlspecialchars(trim($_POST["lastName"]));
-    //$dob = htmlspecialchars(trim($_POST["dob"]));
     
-    // special handling for the date of birth
-    //$dobTime = strtotime($dob); // parse the date of birth into a Unix timestamp (seconds since Jan 1, 1970)
-    //$dateFormat = 'Y-m-d'; // the date format we expect, yyyy-mm-dd
-    // Now convert the $dobTime into a date using the specfied format.
-    // Does the outcome match the input the user supplied?  
-    // The right side will evaluate true or false, and this will be assigned to $dobOk
-    //$dobOk = (date($dateFormat, $dobTime) == $dob);  
-    
-    // Let's do some basic validation
     $focusId = ''; // trap the first field that needs updating, better would be to save errors in an array
     
     if ($firstNames == '') {
@@ -127,19 +114,11 @@ if ($conn->connect_error) {
       $errors .= '<li>Invalid phone number</li><br>';
       if ($focusId == '') $focusId = '#phoneNum';
 	}
-    // unused 
-    // if ($lastName == '') {
-    //   $errors .= '<li>Last name may not be blank</li>';
-    //   if ($focusId == '') $focusId = '#lastName';
-    // }
-    // if ($dob == '') {
-    //   $errors .= '<li>Date of birth may not be blank</li>';
-    //   if ($focusId == '') $focusId = '#dob';
-    // }
-    // if (!$dobOk) {
-    //   $errors .= '<li>Enter a valid date in yyyy-mm-dd format</li>';
-    //   if ($focusId == '') $focusId = '#dob';
-    // }
+	if ($acceptterms == '') {
+      $errors .= '<li>Please accept the terms and conditions</li><br>';
+      if ($focusId == '') $focusId = '#acceptterms';
+    }
+
   
     if ($errors != '') { ?>
       <div id="messages">
@@ -187,10 +166,10 @@ if ($conn->connect_error) {
 			
 			//$('#sendButton').jqxButton({ width: 120, height: 25});
 			//$('#acceptInput').jqxCheckBox({ width: 130});
-			$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
-			$("#supplier").jqxRadioButton({ width: 250, height: 25});
+			//$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
+			//$("#supplier").jqxRadioButton({ width: 250, height: 25});
 		
-			$("#phoneInput").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 22});
+			//$("#phoneInput").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 22});
 			// $("#zipInput").jqxMaskedInput({ mask: '###-##-####', width: 150, height: 22});
 		
 			//$('.text-input').addClass('jqx-input');
@@ -297,8 +276,13 @@ if ($conn->connect_error) {
 		      <label class="field" for="phoneNum">Phone (XXX-XXX-XXXX):</label>
 		      <div class="value"><input type="text" size="60" value="<?php echo $phoneNum; ?>" name="phoneNum" id="phoneNum"/></div>
 		      
+
+		      <input type="radio" id="supplier" name="userType" value="supplier" checked /> Supplier<br/>
+  			  <input type="radio" id="consumer" name="userType" value="consumer" /> Consumer<br/>
+
+
 		      <label class="field" for="acceptInput">Terms and Conditions:</label>
-		      <div name="acceptterms" id="acceptInput" class="rememberme_div">I accept terms</div>
+		      <div class="value"><input type="checkbox" id="acceptterms" name="terms" value="acceptterms" /> I accept the terms</div>
 
 		      
 
