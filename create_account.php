@@ -1,22 +1,22 @@
 <?php
 // check whether the entered year is in the range of 1900 - 2012
-function executePost(&$con,&$sql) {
-	if (mysqli_query($con,$sql)) {
-		echo "Success";
-	} else {
-		echo "Error" . mysqli_error($con);
-	}
-	echo("<br>");
-}
-function executeGet(&$con,&$sql,&$result) {
-	$result = mysqli_query($con,$sql);
-	if ($result) {
-		echo "Success";
-	} else {
-		echo "Error" . mysqli_error($con);
-	}
-	echo("<br>");
-}
+// function executePost(&$con,&$sql) {
+// 	if (mysqli_query($con,$sql)) {
+// 		echo "Success";
+// 	} else {
+// 		echo "Error" . mysqli_error($con);
+// 	}
+// 	echo("<br>");
+// }
+// function executeGet(&$con,&$sql,&$result) {
+// 	$result = mysqli_query($con,$sql);
+// 	if ($result) {
+// 		echo "Success";
+// 	} else {
+// 		echo "Error" . mysqli_error($con);
+// 	}
+// 	echo("<br>");
+// }
 
 
 $servername = "149.28.55.25";
@@ -29,13 +29,137 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
 	 die("Connection failed: " . $conn->connect_error);
+	 echo "connection failed";
+} else {
+	echo "connection successful";
 }
 
 //$submitting = false;
 
 ?>
 
+<?php 
+  /* some very basic form processing */
+  
+  // variables to hold our form values:
+  $firstNames = '';  
+  $password1 = '';
+  $password2 = '';
+  $email = '';
+  $phoneNum = '';
 
+
+
+
+  $lastName = '';
+  $dob = '';
+  // hold any error messages
+  $errors = ''; 
+  
+  // have we posted?
+  $havePost = isset($_POST["save"]);
+  
+  if ($havePost) {
+    // Get the input and clean it.
+    // First, let's get the input one param at a time.
+    // Could also output escape with htmlentities()
+    $firstNames = htmlspecialchars(trim($_POST["firstNames"])); 
+    $password1 = htmlspecialchars(trim($_POST["password1"]));
+    $password2 = htmlspecialchars(trim($_POST["password2"]));
+    $email = htmlspecialchars(trim($_POST["email"]));
+    $phoneNum = htmlspecialchars(trim($_POST["phoneNum"]));
+    // $firstNames = htmlspecialchars(trim($_POST["firstNames"]));
+    // $firstNames = htmlspecialchars(trim($_POST["firstNames"])); 
+
+
+
+    //$lastName = htmlspecialchars(trim($_POST["lastName"]));
+    //$dob = htmlspecialchars(trim($_POST["dob"]));
+    
+    // special handling for the date of birth
+    //$dobTime = strtotime($dob); // parse the date of birth into a Unix timestamp (seconds since Jan 1, 1970)
+    //$dateFormat = 'Y-m-d'; // the date format we expect, yyyy-mm-dd
+    // Now convert the $dobTime into a date using the specfied format.
+    // Does the outcome match the input the user supplied?  
+    // The right side will evaluate true or false, and this will be assigned to $dobOk
+    //$dobOk = (date($dateFormat, $dobTime) == $dob);  
+    
+    // Let's do some basic validation
+    $focusId = ''; // trap the first field that needs updating, better would be to save errors in an array
+    
+    if ($firstNames == '') {
+      $errors .= '<li>Username is required</li><br>';
+      if ($focusId == '') $focusId = '#firstNames';
+    }
+    if (strlen($firstNames) < 4 || strlen($firstNames) > 12) {
+      $errors .= '<li>Username must be between 4 and 12 characters long</li><br>';
+      if ($focusId == '') $focusId = '#firstNames';
+    }
+
+    if ($password1 == '') {
+      $errors .= '<li>Password is required</li><br>';
+      if ($focusId == '') $focusId = '#password1';
+    }
+    if (strlen($password1) < 4 || strlen($password1) > 12) {
+      $errors .= '<li>Password must be between 4 and 12 characters long</li><br>';
+      if ($focusId == '') $focusId = '#password1';
+    }
+
+    if ($password2 != $password1) {
+      $errors .= '<li>Passwords do not match</li><br>';
+      if ($focusId == '') $focusId = '#password2';
+    }
+
+    if ($email == '') {
+      $errors .= '<li>Email is required</li><br>';
+      if ($focusId == '') $focusId = '#email';
+    }
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+	  $errors .= '<li>Invalid email format</li><br>';
+      if ($focusId == '') $focusId = '#email';
+	}
+
+	if ($phoneNum == '') {
+      $errors .= '<li>Phone Number is required</li><br>';
+      if ($focusId == '') $focusId = '#phoneNum';
+    }
+	if(!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phoneNum)) {
+      $errors .= '<li>Invalid phone number</li><br>';
+      if ($focusId == '') $focusId = '#phoneNum';
+	}
+    // unused 
+    // if ($lastName == '') {
+    //   $errors .= '<li>Last name may not be blank</li>';
+    //   if ($focusId == '') $focusId = '#lastName';
+    // }
+    // if ($dob == '') {
+    //   $errors .= '<li>Date of birth may not be blank</li>';
+    //   if ($focusId == '') $focusId = '#dob';
+    // }
+    // if (!$dobOk) {
+    //   $errors .= '<li>Enter a valid date in yyyy-mm-dd format</li>';
+    //   if ($focusId == '') $focusId = '#dob';
+    // }
+  
+    if ($errors != '') { ?>
+      <div id="messages">
+        <h4>Please correct the following errors:</h4>
+        <ul>
+          <?php echo $errors; ?>
+        </ul>
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $("<?php echo $focusId ?>").focus();
+          });
+        </script>
+      </div>
+    <?php } else { ?>
+      <div id="messages">
+        <!-- <h4>submitted</h4> -->
+      </div>
+    <?php } 
+  }
+?>
 
 
 <!DOCTYPE html>
@@ -61,24 +185,24 @@ if ($conn->connect_error) {
 		<script type="text/javascript">
 			$(document).ready(function () {
 			
-			$('#sendButton').jqxButton({ width: 120, height: 25});
-			$('#acceptInput').jqxCheckBox({ width: 130});
+			//$('#sendButton').jqxButton({ width: 120, height: 25});
+			//$('#acceptInput').jqxCheckBox({ width: 130});
 			$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
 			$("#supplier").jqxRadioButton({ width: 250, height: 25});
 		
 			$("#phoneInput").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 22});
 			// $("#zipInput").jqxMaskedInput({ mask: '###-##-####', width: 150, height: 22});
 		
-			$('.text-input').addClass('jqx-input');
-			$('.text-input').addClass('jqx-rc-all');
-			if (theme.length > 0) {
-				$('.text-input').addClass('jqx-input-' + theme);
-				$('.text-input').addClass('jqx-widget-content-' + theme);
-				$('.text-input').addClass('jqx-rc-all-' + theme);
-			}
+			//$('.text-input').addClass('jqx-input');
+			//$('.text-input').addClass('jqx-rc-all');
+			// if (theme.length > 0) {
+			// 	$('.text-input').addClass('jqx-input-' + theme);
+			// 	$('.text-input').addClass('jqx-widget-content-' + theme);
+			// 	$('.text-input').addClass('jqx-rc-all-' + theme);
+			// }
 		
-			var date = new Date();
-			date.setFullYear(1985, 0, 1);
+			//var date = new Date();
+			//date.setFullYear(1985, 0, 1);
 
 
 
@@ -130,93 +254,7 @@ if ($conn->connect_error) {
 
   	<pre id="errors">
   		
- <?php
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['realname'])
-		&& isset($_POST['email']) && isset($_POST['phone']) ) {
-
-$valid = true;
-$errorJS = '<script type="text/javascript">';
-$errorMSG = "";
-
-	$formData = array(
-		"username" => $_POST["username"],
-		"password" => $_POST["password"],
-		"email" => $_POST["email"],
-		"phone" => $_POST["phone"],
-		"acceptterms" => $_POST["acceptterms"],
-		"suppliertype" => $_POST["suppliertype"],
-		"consumertype" => $_POST["consumertype"]
-	);
-
-	if(strlen($formData["username"]) > 12 || strlen($formData["username"]) < 4){
-		$valid = false;
-		$errorJS += '$("#userInput").focus(); alert();';
-		$errorMSG += "Username is invalid\n";
-	}
-
-	// check whether the terms are accepted.
-	if ($formData['acceptterms'] != 'true') {
-		$valid = false;
-		$response = "<p><h1>Registration Not Successful</h1></p><p>You need to accept the terms.</p>";
-		echo $response;
-		return;
-	}
-
-	//$errorJS += '$("#errors").append("' + $errorMSG + '");';
-	$errorJS += "</script>";
-
-	if($valid) { // all info is valid
-		// submit the form
-	} else {
-		echo $errorMSG;
-		echo $errorJS;
-	}
-
-	//if(strlen($formData["username"])  
-
-	// the registration is successful only if the username is 'admin' and the password is 'admin123'.
-	/*
-	if ($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
-		$response = "<p><h1>Registration Successful</h1></p><p></p>";
-		$response.= "Username:" . $formData['username'].= "<br/>";
-		$response.= "Password:" . $formData['password'].= "<br/>";
-		// $response.= "Real name:" . $formData['realname'].= "<br/>";
-		// $response.= "Birth date:" . $formData['birthdate'].= "<br/>";
-		$response.= "E-mail:" . $formData['email'].= "<br/>";
-		$response.= "Phone:" . $formData['phone'].= "<br/>";
-		// $response.= "Zip code:" . $formData['zip'].= "<br/>";
-		$response.= "Supplier?" . $formData['suppliertype'].= "<br/>";
-		$response.= "Consumer?" . $formData['consumertype'].= "<br/>";
-	} else {
-		$response = "<p><h1>Registration Not Successful</h1></p><p>Invalid username or password.</p>";
-	}
-	echo $response;
-	*/
-
-	///$submitting = true;
-}
-
-echo $valid;
-if ($valid) {
-	echo "VALID";
-	echo $valid;
-	$passwordhash = password_hash($formData['suppliertype'], PASSWORD_DEFAULT);
-	echo $passwordhash;
-
-	$result = NULL;
-	$sql = 'INSERT INTO CraftLink.user (`username`, `email`, `passwordhash`, `product_dscpt`, `is_supplier`, `phonenumber`)
-	VALUES (\''
-	. $formData['username'] . '\',\''
-	. $formData['email'] . '\',\''
-	. $passwordhash . '\',\''
-	. $formData['suppliertype'] . '\',\''
-	. $formData['phone'] . '\')';
-	//$resultAddP = $conn->query($sqlAddP);
-	executePost($conn, $sql, $result);
-}
-
-?>
 
 
 
@@ -239,8 +277,41 @@ if ($valid) {
     <h2 class="centerMe" >Register with CraftLink Today!</h2>
     <div class="white-block">
       <form class="form_reg" id="form" target="form-iframe"  method="post" action="create_account.php" style="font-size: 13px; font-family: Verdana; width: 650px;">
-            
-	      <table class="register-table">
+           <fieldset> 
+		    <legend>Register</legend>
+		    <div class="formData">
+		                    
+		      <label class="field" for="firstNames">Username:</label>
+		      <div class="value"><input type="text" size="60" value="<?php echo $firstNames; ?>" name="firstNames" id="firstNames"/></div>
+		      
+		      
+		      <label class="field" for="password1">Password:</label>
+		      <div class="value"><input type="password" size="60" value="<?php echo $password1; ?>" name="password1" id="password1"/></div>
+		      
+		      <label class="field" for="password2">Confirm Password:</label>
+		      <div class="value"><input type="password" size="60" value="<?php echo $password2; ?>" name="password2" id="password2"/></div>
+		      
+		      <label class="field" for="email">Email:</label>
+		      <div class="value"><input type="text" size="60" value="<?php echo $email; ?>" name="email" id="email"/></div>
+		      
+		      <label class="field" for="phoneNum">Phone (XXX-XXX-XXXX):</label>
+		      <div class="value"><input type="text" size="60" value="<?php echo $phoneNum; ?>" name="phoneNum" id="phoneNum"/></div>
+		      
+		      <label class="field" for="acceptInput">Terms and Conditions:</label>
+		      <div name="acceptterms" id="acceptInput" class="rememberme_div">I accept terms</div>
+
+		      
+
+
+
+
+		      <input type="submit" value="Create Account" id="save" name="save"/>
+		    </div>
+		  </fieldset>
+
+
+
+	     <!--  <table class="register-table">
 					<tr>
 						<td>Username:</td>
 						<td><input name="username" type="text" id="userInput" class="text-input" /></td>
@@ -273,12 +344,81 @@ if ($valid) {
 							<td colspan="2" style="text-align: ;"><div name="acceptterms" id="acceptInput" class="rememberme_div">I accept terms</div></td>
 					</tr>
 					<tr>
-							<td colspan="2" style="text-align: center;"><input type="button" value="Create Account" id="sendButton" /></td>
+							<td colspan="2" style="text-align: center;"><input type="submit" value="Create Account" id="sendButton" /></td>
 					</tr>
 				</table>
-				<div class="prompt">*For successful registration, username=admin, password=admin123</div>
-			</form>
+				<div class="prompt">*For successful registration, username=admin, password=admin123</div> -->
+			</form> 
         <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
+    </div>
+
+
+
+
+
+    <div id="bodyBlock">
+
+      <!-- <h1>Intro to ITWS - Forms with PHP</h1> -->
+            
+
+
+<?php 
+  // to include client-side validation to the form below, 
+  // add the following parameter:
+  // onsubmit="return validate(this);"
+?>
+
+
+<?php if($havePost && $errors == '') { 
+	// TODO: hash the password first
+	$createTime = time() + (7 * 24 * 60 * 60);
+	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ('$firstNames', '$email', '$password1', now(), NULL, '$phoneNum')";
+	$result0 = $conn->query($query);
+	if (!$result0) {
+    		trigger_error('Invalid query: ' . $conn->error);
+		}
+
+  if ($conn->connect_error) {
+    echo '<div class="messages">Error: ';
+    echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
+	}
+
+
+
+	$query1 = "SELECT * FROM `user`";
+    	$result = $conn->query($query1);
+
+    	if (!$result) {
+    		trigger_error('Invalid query: ' . $conn->error);
+		}
+
+    	if ($conn->connect_error) {
+		    echo '<div class="messages">Error: ';
+		    echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
+		}
+    	$numCourses = $result->num_rows;
+
+    	for($i = 0; $i < $numCourses; $i++){
+    		$course = $result->fetch_assoc();
+    		$title = $course['username'];
+
+    		$email = $course['email'];
+    		$pass = $course['passwordhash'];
+    		$phone = $course['phonenumber'];
+    		$uid = $course['user_id'];
+    		$time = $course['create_time'];
+
+
+    		echo '<div class="course_title">' . $title . ' ' . $email . ' ' . $pass . ' ' . $phone . ' ' . $uid . ' ' . $time . '</div><br>';
+    	}
+}
+
+?>
+
+
+
+
+      
     </div>
 
 
