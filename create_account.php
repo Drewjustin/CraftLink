@@ -1,23 +1,5 @@
 <?php
-// check whether the entered year is in the range of 1900 - 2012
-// function executePost(&$con,&$sql) {
-// 	if (mysqli_query($con,$sql)) {
-// 		echo "Success";
-// 	} else {
-// 		echo "Error" . mysqli_error($con);
-// 	}
-// 	echo("<br>");
-// }
-// function executeGet(&$con,&$sql,&$result) {
-// 	$result = mysqli_query($con,$sql);
-// 	if ($result) {
-// 		echo "Success";
-// 	} else {
-// 		echo "Error" . mysqli_error($con);
-// 	}
-// 	echo("<br>");
-// }
-
+// connect to db
 
 $servername = "149.28.55.25";
 $username = "websysroot";
@@ -34,14 +16,12 @@ if ($conn->connect_error) {
 	echo "connection successful";
 }
 
-//$submitting = false;
-
 ?>
 
 <?php 
-  /* some very basic form processing */
+  // form processing
   
-  // variables to hold our form values:
+  // variables to hold form values:
   $firstNames = '';  
   $password1 = '';
   $password2 = '';
@@ -55,13 +35,12 @@ if ($conn->connect_error) {
   // hold any error messages
   $errors = ''; 
   
-  // have we posted?
+
+  // is form submitted/posted 
   $havePost = isset($_POST["save"]);
   
   if ($havePost) {
-    // Get the input and clean it.
-    // First, let's get the input one param at a time.
-    // Could also output escape with htmlentities()
+    // get and clean form entries
     $firstNames = htmlspecialchars(trim($_POST["firstNames"])); 
     $password1 = htmlspecialchars(trim($_POST["password1"]));
     $password2 = htmlspecialchars(trim($_POST["password2"]));
@@ -120,6 +99,7 @@ if ($conn->connect_error) {
     }
 
   
+  	// post errors if there are any
     if ($errors != '') { ?>
       <div id="messages">
         <h4>Please correct the following errors:</h4>
@@ -132,9 +112,9 @@ if ($conn->connect_error) {
           });
         </script>
       </div>
-    <?php } else { ?>
+    <?php } else { ?> 
       <div id="messages">
-        <!-- <h4>submitted</h4> -->
+        <!-- <h4>submitted (no errors)</h4> -->
       </div>
     <?php } 
   }
@@ -164,6 +144,8 @@ if ($conn->connect_error) {
 		<script type="text/javascript">
 			$(document).ready(function () {
 			
+			// old jqx initialization stuff =============================
+
 			//$('#sendButton').jqxButton({ width: 120, height: 25});
 			//$('#acceptInput').jqxCheckBox({ width: 130});
 			//$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
@@ -239,7 +221,7 @@ if ($conn->connect_error) {
 
   	</pre>
 
-    <!--img src=LOGO -->
+
     <div class="nav">
       <a href="index.php">
         <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
@@ -296,6 +278,8 @@ if ($conn->connect_error) {
 
 
 	     <!--  <table class="register-table">
+					OLD JQX FORM =============================
+
 					<tr>
 						<td>Username:</td>
 						<td><input name="username" type="text" id="userInput" class="text-input" /></td>
@@ -333,7 +317,6 @@ if ($conn->connect_error) {
 				</table>
 				<div class="prompt">*For successful registration, username=admin, password=admin123</div> -->
 			</form> 
-        <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
     </div>
 
 
@@ -342,15 +325,6 @@ if ($conn->connect_error) {
 
     <div id="bodyBlock">
 
-      <!-- <h1>Intro to ITWS - Forms with PHP</h1> -->
-            
-
-
-<?php 
-  // to include client-side validation to the form below, 
-  // add the following parameter:
-  // onsubmit="return validate(this);"
-?>
 
 
 <?php if($havePost && $errors == '') { 
