@@ -31,38 +31,13 @@ if ($conn->connect_error) {
 }
 
 //Grab everything from the craflink table
-$sql = "SELECT * FROM CraftLink.product";
+// $sql = "SELECT * FROM CraftLink.product";
 
 
-// ADD PRODUCT BUTTON
-$resultAddP = NULL;
-if(isset($_POST['addProduct'])){
-   $addProduct = $_POST['addProduct'];
-   if($addProduct == "Submit"){
-      $p_id = $_POST['p_id'];
-      $s_id = $_POST['s_id'];
-      $name = $_POST['name'];
-      $dscpt = $_POST['description'];
-      $price = $_POST['price'];
-      $unit = $_POST['unit_sold'];
-      // echo $name . '<br>';
-      // echo $dscpt . '<br>';
-      // echo $price . '<br>';
-      // echo $unit . '<br>';
-      $sqlAddP = 'INSERT INTO CraftLink.product (`product_id`, `supplier_id`, `product_name`, `product_dscpt`, `product_price`,`product_unitInWhichSold`)
-      VALUES (\''
-      . $p_id . '\',\''
-      . $s_id . '\',\''
-      . $name . '\',\''
-      . $dscpt . '\',\''
-      . $price . '\',\''
-      . $unit . '\')';
-      //$resultAddP = $conn->query($sqlAddP);
-      executePost($conn, $sqlAddP, $resultAddP);
-   }
-}
+
+
 //$result = $conn->query($sql);
-executeGet($conn, $sql, $result);
+
 
  ?>
  
@@ -78,6 +53,13 @@ executeGet($conn, $sql, $result);
     <link rel="stylesheet" href="resources/css/master.css">
     <title>CraftLink.rootbeer</title>
   </head>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var drinks = new Array("Root Beer", "Rooty Roots", "Birch Beer", "Ginger Beer");
+      //$("#input").jqxInput({placeHolder: "Search Product", height: 30, width: 250, minLength: 1, dropDownWidth: 150, source: drinks });
+    });
+  </script>
 
   <body class="landing_page">
     <!-- NAVBAR -->
@@ -96,17 +78,60 @@ executeGet($conn, $sql, $result);
     <div class="logo">
       <img class="logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">
     </div>
-    <div id='searchbar'>
-        <script type="text/javascript">
-            $(document).ready(function () {
-              
+    <form id='searchbarcenter' method="post" action="index.php">
+      <span id='searchbar'>
+        <input type="text" id="input" name="search" value=""/>
+        <input type="submit" name="searchbutton" value="Search">
+      </span>
+    </form>
+    <?php
+      // ADD PRODUCT BUTTON
+      $result = NULL;
+      if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        try {
+          if (isset($_GET['searchbutton']) && $_GET['searchbutton'] == "Search") {
+            echo "Searching for " . $_GET['search'] . ":<br>";
+            if(isset($_GET['search']) && $_GET['search'] != "" ) {
+              $name = $_GET['search'];
+              $sql = 'SELECT `product_name`, `product_price`, `product_dscpt`, `product_unitInWhichSold` 
+                      FROM CraftLink.product
+                      WHERE ( `product_name` LIKE \'%' . $name . '%\')';
+              //$resultAddP = $conn->query($sql);
+              executeGet($conn, $sql, $result);
+            }
+          }
+        }
+        catch (Exception $e) {
+          $err[] = $e->getMessage();
+        }
+        $err = Array();
+        $_GET = NULL;
+      }
+      
+      
 
-                var drinks = new Array("Root Beer", "Rooty Roots", "Birch Beer", "Ginger Beer");
-                $("#input").jqxInput({placeHolder: "Search Product", height: 30, width: 250, minLength: 1, dropDownWidth: 150, source: drinks });
-
-            });
-        </script>
-       <input type="text" id="input"/>
-    </div>
+      if (!empty($result) && $result->num_rows > 0) {
+        echo "Results for " . $_GET['search'] . ":<br>";
+        echo "<table><tr><th>Name</th><th>Description</th><th>Price</th><th>Units Sold As</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+          echo "<tr>"
+          . "<td>". $row['product_name'] . "</td>"
+          . "<td>". $row['product_price'] . "</td>"
+          . "<td>". $row['product_dscpt'] . "</td>"
+          . "<td>". $row['product_unitInWhichSold'] . "</td>"
+          
+          ."</tr>";
+        }
+        echo "</table>";
+      } else {
+        echo "No Results";
+      }
+      
+      
+      
+      
+      
+      mysqli_close($conn);
+    ?>
   </body>
 </html>
