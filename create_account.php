@@ -340,6 +340,8 @@ if($usersAdded > 0){
 	}
 
 
+/*
+// PRINT ALL USERS for error checking
 
 	$query1 = "SELECT * FROM `user`";
 	$result = $conn->query($query1);
@@ -368,6 +370,7 @@ if($usersAdded > 0){
 		echo '<div class="course_title">' . $title . ' ' . $email . ' ' . $pass . ' ' . $phone . ' ' . $uid . ' ' . $time . '</div><br>';
 	}
 }
+*/
 
 ?>
 
