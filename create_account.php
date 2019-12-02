@@ -16,6 +16,13 @@ if ($conn->connect_error) {
 	echo "connection successful";
 }
 
+	$queryChangeUsers = "ALTER TABLE `user` ADD `usertype` char(1) NOT NULL;";
+	$resultChangeUsers = $conn->query($queryChangeUsers);
+
+	if (!$resultChangeUsers) {
+		trigger_error('Invalid query: ' . $conn->error);
+	}
+
 ?>
 
 <?php 
