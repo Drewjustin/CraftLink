@@ -26,7 +26,7 @@ $dbname = "CraftLink";
 
 // check if session is active, if not, user is not logged in and is redirected home
 if(!$_SESSION['logon']){
-   header("Location: index.php?logout");
+   header("Location: index.php");
    die();
 }
 
@@ -125,7 +125,7 @@ executeGet($conn, $sql, $result);
     <body>
 
       <div class="nav">
-         <a href="index.php">
+         <a href="index.php?logout">   <!-- if supplier tries to go to landing page they will be logged out (security purposes)-->
          <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
          </a>
          <ul>
@@ -135,24 +135,21 @@ executeGet($conn, $sql, $result);
          <li><a href="#">ABOUT</a></li>
          </ul>
       </div>
-      <h2 class="centerMe">Rooty Roots Inventory</h2>
-      <div id="grid" style="width:50%; margin:auto;">
-      </div>
        <section class="main">
-          <h1>Brewer Home</h1>
+          <h2 class="centerMe">Brewer Home</h1>
 
-          <section id="product_table">
+          <section class="product_table">
              <?php
              if (!empty($result) && $result->num_rows > 0) {
                  echo "<table>
                  <tr>
-                 <th>Supplier ID</th>
-                 <th>Product ID</th>
-                 <th>Name</th>
-                 <th>Description</th>
-                 <th>Price</th>
-                 <th>Unit Sold</th>
-                 <th>In Stock</th>";
+                 <th width='5%'>Supplier ID</th>
+                 <th width='5%'>Product ID</th>
+                 <th width='15%'>Name</th>
+                 <th width='50%'>Description</th>
+                 <th width='10%'>Price</th>
+                 <th width='10%'>Unit Sold</th>
+                 <th width='5%'>In Stock</th>";
                  // output data of each row
                  while($row = $result->fetch_assoc()) {
                      echo "<tr>"

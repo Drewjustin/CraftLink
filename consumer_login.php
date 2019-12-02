@@ -34,7 +34,7 @@
             session_start();
             $_SESSION['username'] = $formData['username'];
             $_SESSION['logon'] = true;                      // now user is logged in
-            header("Location: index.php");                 // redirect to supplier home when logged in
+            header("Location: index.php?consumer_home");                 // redirect to supplier home when logged in
         }
         else {
           echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";

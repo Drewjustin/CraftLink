@@ -266,7 +266,7 @@ if($usersAdded > 0){
         <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
       </a>
       <ul>
-        <li><a class="active" href="index.php?logout">HOME</a></li>
+        <li><a class="active" href="index.php">HOME</a></li>
         <li class="right"><a href="#">SIGN UP</a></li>
         <li class="right"><a href="supplier_login.php">LOGIN ROOT BREWERS</a></li>
         <li class="right"><a href="consumer_login.php">LOGIN CONSUMERS</a></li>

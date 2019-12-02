@@ -25,11 +25,14 @@ $dbname = "CraftLink";
 
 // if logout link was clicked on the suppier.php page the session is destroyed
 session_start();
-$navLogin = true;
+$navLogout = true;               // assumes user is logged out upon entering page
 if(isset($_GET['logout'])){      // check that logout is in URL
    $_SESSION = array();          //clears array
    session_destroy();
-   $navLogin = false;
+   $navLogout = true;
+}
+if(isset($_GET['consumer_home'])){     // when the user is logged in as a consumer url is specified
+   $navLogout = false;
 }
 
 // Create connection
@@ -78,11 +81,11 @@ if ($conn->connect_error) {
       </a>
 
       <?php
-         if(!$navLogin){
+         if($navLogout){
             // check to see if the user is logged in, if not, show signup links
       ?>
          <ul>
-           <li><a class="active" href="#">HOME</a></li>
+           <li><a class="active" href="index.php">HOME</a></li>
            <li class="right"><a href="create_account.php">SIGN UP</a></li>
            <li class="right"><a href="supplier_login.php">LOGIN ROOT BREWERS</a></li>
            <li class="right"><a href="consumer_login.php">LOGIN CONSUMERS</a></li>
@@ -93,7 +96,7 @@ if ($conn->connect_error) {
             // otherwise, show the logout link
       ?>
          <ul>
-           <li><a class="active" href="#">HOME</a></li>
+           <li><a class="active" href="index.php?consumer_home">HOME</a></li>
            <li class="right"><a href="index.php?logout">LOGOUT</a></li>
            <li><a href="#">ABOUT</a></li>
          </ul>
