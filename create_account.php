@@ -325,7 +325,8 @@ if($usersAdded > 0){
 
 
 
-<?php if($havePost && $errors == '') { 
+<?php 
+	if($havePost && $errors == '') { 
 	// TODO: hash the password first
 	$createTime = time() + (7 * 24 * 60 * 60);
 	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ('$userName', '$email', '$password1', now(), NULL, '$phoneNum')";
@@ -338,7 +339,7 @@ if($usersAdded > 0){
     echo '<div class="messages">Error: ';
     echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
 	}
-
+}
 
 /*
 // PRINT ALL USERS for error checking
@@ -382,4 +383,4 @@ if($usersAdded > 0){
 
 
   </body>
-</html>
+</html> 
