@@ -11,15 +11,15 @@
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
   }
-  if (isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST'){ 
+  if (isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
 
 $formData = array(
 		"username" => $_POST["username"],
 		"password" => $_POST["password"]
 	);
-	
+
 	if($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
-      // get the checked state of the checkbox with name - "rememberme". The value could be true - 
+      // get the checked state of the checkbox with name - "rememberme". The value could be true -
       // if($formData['rememberme'] == 'true') {
       //   $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
       //   }
@@ -51,17 +51,17 @@ $formData = array(
     <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>
 
 		<title>Supplier Login</title>
-		
+
 		<script type="text/javascript">
 			$(document).ready(function () {
-            
+
 				$("#username, #password").addClass('jqx-input');
 				if (theme != '') {
 						$("#username, #password").addClass('jqx-input-' + theme);
 				}
 				$("#rememberme").jqxCheckBox({ width: 130});
 				$("#loginButton").jqxButton({theme: theme});
-			
+
 				// add validation rules.
 				$('#form').jqxValidator({
 						rules: [
@@ -71,13 +71,13 @@ $formData = array(
 										{ input: '#password', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
 										{ input: '#password', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' }
 						]
-										
+
 				});
 				// validate form.
 				$("#loginButton").click(function () {
 						$('#form').jqxValidator('validate');
 				});
-			
+
 				$("#form").on('validationSuccess', function () {
 						$("#form-iframe").fadeIn('fast');
 				});
@@ -118,8 +118,6 @@ $formData = array(
           </div>
           <div>
               <input id="loginButton" type="submit" value="Login" />
-              <!-- ADDED BUTTON FOR DEMO PURPOSES -->
-              <button type="button" name="button" onclick="window.location.href='supplier.php'">Demo login</button>
           </div>
           <div class="prompt">*For successful login, username=admin, password=admin123</div>
       </form>
