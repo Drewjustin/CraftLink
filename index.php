@@ -25,9 +25,11 @@ $dbname = "CraftLink";
 
 // if logout link was clicked on the suppier.php page the session is destroyed
 session_start();
+$navLogin = true;
 if(isset($_GET['logout'])){      // check that logout is in URL
    $_SESSION = array();          //clears array
    session_destroy();
+   $navLogin = false;
 }
 
 // Create connection
@@ -74,13 +76,28 @@ if ($conn->connect_error) {
       <a href="index.php">
         <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
       </a>
-      <ul>
-        <li><a class="active" href="#">HOME</a></li>
-        <li class="right"><a href="create_account.php">SIGN UP</a></li>
-        <li class="right"><a href="supplier_login.php">Login Root Brewers</a></li>
-        <li class="right"><a href="consumer_login.php">Login Customers</a></li>
-        <li><a href="#">ABOUT</a></li>
-      </ul>
+
+      <?php
+         if(!$navLogin){
+            // check to see if the user is logged in, if not, show signup links
+      ?>
+         <ul>
+           <li><a class="active" href="#">HOME</a></li>
+           <li class="right"><a href="create_account.php">SIGN UP</a></li>
+           <li class="right"><a href="supplier_login.php">Login Root Brewers</a></li>
+           <li class="right"><a href="consumer_login.php">Login Consumers</a></li>
+           <li><a href="#">ABOUT</a></li>
+         </ul>
+      <?php
+         } else{
+            // otherwise, show the logout link
+      ?>
+         <ul>
+           <li><a class="active" href="#">HOME</a></li>
+           <li class="right"><a href="index.php?logout">LOGOUT</a></li>
+           <li><a href="#">ABOUT</a></li>
+         </ul>
+      <?php } ?>
     </div>
     <div class="logo">
       <img class="logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">

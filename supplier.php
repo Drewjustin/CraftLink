@@ -26,7 +26,7 @@ $dbname = "CraftLink";
 
 // check if session is active, if not, user is not logged in and is redirected home
 if(!$_SESSION['logon']){
-   header("Location: index.php");
+   header("Location: index.php?logout");
    die();
 }
 
