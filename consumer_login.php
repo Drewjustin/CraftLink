@@ -16,26 +16,27 @@
       "username" => $_POST["username"],
       "password" => $_POST["password"]
     );
-    //to make sure the username exsists the sql statement is:
-    //SELECT username from User where username = $_POST["username"];
-    //The sql statement to get the hashed password once you have the username is:
-    //SELECT hashedPassword from User where username = $_POST["username"];
-    if($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
-      // get the checked state of the checkbox with name - "rememberme". The value could be true - 
-      // if($formData['rememberme'] == 'true') {
-      //   $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
-      //   }
-      // else {
-         $response = "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
-         session_start();
-         $_SESSION['username'] = $formData['username'];
-      // }
-    }
+    $sql = "SELECT passwordhash, username FROM user WHERE username = '" . $_POST["username"] . "';";
+    $result = $conn->query($sql);
+    //echo mysqli_error($conn);
+    if ($result !== NULL && $formData['username'] !== NULL && $formData['password'] !== NULL){
+      while($entry = $result->fetch_assoc()){
+        if($formData['username'] === $entry["username"] && $formData['password'] === $entry["passwordhash"]) {
+          // get the checked state of the checkbox with name - "rememberme". The value could be true - 
+          // if($formData['rememberme'] == 'true') {
+          //   $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
+          //   }
+          // else {
+            echo "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
+            session_start();
+            $_SESSION['username'] = $formData['username'];
+          // }
+        }
+      }
+    }    
     else {
-      $response = "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
+      echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
     }
-
-    echo $response;
   }
 ?>
 
