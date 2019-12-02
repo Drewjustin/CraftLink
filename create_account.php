@@ -16,6 +16,8 @@ if ($conn->connect_error) {
 	//echo "connection successful";
 }
 
+
+
 ?>
 
 <?php 
@@ -122,10 +124,6 @@ if ($conn->connect_error) {
           });
         </script>
       </div>
-    <?php } else { ?> 
-      <div id="messages">
-        <!-- submitted (no errors) -->
-      </div>
     <?php } 
   }
 ?>
@@ -143,13 +141,7 @@ if ($conn->connect_error) {
   </head>
   <body>
 
-  	<pre id="errors">
-  		
-
-
-
-
-  	</pre>
+  	<pre id="errors"></pre>
 
 
     <div class="nav">
