@@ -16,10 +16,42 @@ if ($conn->connect_error) {
 	//echo "connection successful";
 }
 
+/*
+// DELETE DUPLICATE TABLE ENTRIES
 
 // create query
 $queryAddUsers = 'INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ';
 $uniqueUsers = array(); // list of unique usernames
+$usersAdded = 0;
+
+// find all users that can't be deleted due to foreign key constraints in product table
+$queryFindDependencies = "SELECT * FROM `user` LEFT JOIN `product` ON `user`.`user_id` = `product`.`supplier_id` WHERE `product`.`supplier_id` IS NOT NULL";
+$resultFindDependencies = $conn->query($queryFindDependencies);
+if(!$resultFindDependencies) { // print if there are issues
+	trigger_error('Invalid query: ' . $conn->error);
+}
+// loop through users
+$num_users = $resultFindDependencies->num_rows;
+for($i = 0;  $i < $num_users; $i++){
+	$userExists = false;
+
+	// get user info
+	$currentUser = $resultFindDependencies->fetch_assoc();
+	$currentUsername = $currentUser['username'];
+
+	// check if username matches any of the previous unique usernames
+	for($j = 0; $j < count($uniqueUsers); $j++){ 
+		if($uniqueUsers[$j] == $currentUsername) {
+			$userExists = true;
+		}
+	}
+
+	// of it doesn't, add it to the query and the list of unique usernames
+	if($userExists == false){
+		$uniqueUsers[] = $currentUsername;
+	}
+}
+
 
 // get info for all users currently in the table
 $queryFindUsers = "SELECT * FROM `user`";
@@ -51,26 +83,31 @@ for($i = 0;  $i < $num_users; $i++){
 	if($userExists == false){
 		$queryAddUsers .= "('$currentUsername', '$c_email', '$c_pass', '$c_time', NULL, '$c_phone'), ";
 		$uniqueUsers[] = $currentUsername;
+		$usersAdded++;
 	}
 }
 $queryAddUsers = substr($queryAddUsers, 0, -2);
 $queryAddUsers .= ';';
 
 // clear the table
-$queryClearTable = "DELETE FROM `user`";
+$queryClearTable = "DELETE `user` FROM `user` LEFT JOIN `product` ON `user`.`user_id` = `product`.`supplier_id` WHERE `product`.`supplier_id` IS NULL";
 $resultClearTable = $conn->query($queryClearTable);
 if(!$resultClearTable){
 	trigger_error('Invalid query: ' . $conn->error);
 }
 
 // add all the users to the table
-$resultAddUsers = $conn->query($queryAddUsers);
-if(!$resultAddUsers){ // print if there is an error
-	trigger_error('Invalid query: ' . $conn->error);
-	echo $queryAddUsers;
+if($usersAdded > 0){
+	$resultAddUsers = $conn->query($queryAddUsers);
+	if(!$resultAddUsers){ // print if there is an error
+		trigger_error('Invalid query: ' . $conn->error);
+		echo $queryAddUsers;
+	}
 }
 
-		$query1 = "SELECT * FROM `user`";
+
+// print all users in table for error checking
+	$query1 = "SELECT * FROM `user`";
 	$result = $conn->query($query1);
 
 	if (!$result) {
@@ -97,7 +134,7 @@ if(!$resultAddUsers){ // print if there is an error
 		echo '<div class="course_title">' . $title . ' ' . $email . ' ' . $pass . ' ' . $phone . ' ' . $uid . ' ' . $time . '</div><br>';
 	
 	}
-
+*/
 ?>
 
 <?php 
