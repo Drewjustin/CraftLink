@@ -1,4 +1,5 @@
 <?php
+session_start();
   function executePost(&$con,&$sql) {
    if (mysqli_query($con,$sql)) {
      echo "Success";
@@ -16,12 +17,18 @@
    }
    echo("<br>");
  }
- 
+
 
 $servername = "149.28.55.25";
 $username = "websysroot";
 $password = "craftlink.rootbeer";
 $dbname = "CraftLink";
+
+// check if session is active, if not, user is not logged in and is redirected home
+if(!$_SESSION['logon']){
+   header("Location: index.php");
+   die();
+}
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -104,7 +111,7 @@ executeGet($conn, $sql, $result);
       <script type="text/javascript">
          $(document).ready(function () {
             $("#add_product").hide();
-            
+
             $("#add_product_button").click(function () {
                $("#add_product").toggle();
             });
@@ -124,7 +131,7 @@ executeGet($conn, $sql, $result);
          <ul>
          <li><a class="active" href="#">HOME</a></li>
          <!-- LOGOUT TAKES YOU BACK TO INDEX LANDING PAGE -->
-         <li class="right"><a href="index.php">LOG OUT</a></li>
+         <li class="right"> <a href="index.php?logout">LOG OUT</a></li>
          <li><a href="#">ABOUT</a></li>
          </ul>
       </div>
@@ -133,7 +140,7 @@ executeGet($conn, $sql, $result);
       </div>
        <section class="main">
           <h1>Brewer Home</h1>
-          
+
           <section id="product_table">
              <?php
              if (!empty($result) && $result->num_rows > 0) {

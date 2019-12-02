@@ -47,6 +47,17 @@ h3
   margin-top: 10px; font-size: 10px;
 }
 
+/* login pages forms css styling */
+
+/* login button */
+.form #loginButton {
+  padding: 8px;
+  background-color:rgb(253, 193, 0);
+  border-radius: 5px;
+  border: 5px;
+  color: black;
+  font-size: 1em;
+}
 
 .form #password, .form #username {
   height: 24px;
@@ -54,6 +65,8 @@ h3
   margin-top: 5px;
   width: 150px;
   color: white;
+  border: 1.5px solid;
+  background-color: #222;
 }
 .form #rememberme {
   margin-top: 5px;
@@ -65,6 +78,7 @@ h3
 .form #password:focus, .form #username:focus {
    background-color: lightblue;
    color: black;
+   border: 1.5px solid grey;
 }
 
 #form
@@ -146,6 +160,7 @@ li a:hover {
 /* Centering H2 tags */
 h2.centerMe {
   text-align: center;
+  color:#FDC100;
 }
 
 /***** consumer.html styling ****/

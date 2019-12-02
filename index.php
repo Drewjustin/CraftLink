@@ -16,12 +16,19 @@
    }
    echo("<br>");
  }
- 
+
 
 $servername = "149.28.55.25";
 $username = "websysroot";
 $password = "craftlink.rootbeer";
 $dbname = "CraftLink";
+
+// if logout link was clicked on the suppier.php page the session is destroyed
+session_start();
+if(isset($_GET['logout'])){      // check that logout is in URL
+   $_SESSION = array();          //clears array
+   session_destroy();
+}
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -40,7 +47,7 @@ if ($conn->connect_error) {
 
 
  ?>
- 
+
  <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -93,7 +100,7 @@ if ($conn->connect_error) {
             echo "Searching for " . $_GET['search'] . ":<br>";
             if(isset($_GET['search']) && $_GET['search'] != "" ) {
               $name = $_GET['search'];
-              $sql = 'SELECT `product_name`, `product_price`, `product_dscpt`, `product_unitInWhichSold` 
+              $sql = 'SELECT `product_name`, `product_price`, `product_dscpt`, `product_unitInWhichSold`
                       FROM CraftLink.product
                       WHERE ( `product_name` LIKE \'%' . $name . '%\')';
               //$resultAddP = $conn->query($sql);
@@ -107,8 +114,8 @@ if ($conn->connect_error) {
         $err = Array();
         $_GET = NULL;
       }
-      
-      
+
+
 
       if (!empty($result) && $result->num_rows > 0) {
         echo "Results for " . $_GET['search'] . ":<br>";
@@ -119,18 +126,18 @@ if ($conn->connect_error) {
           . "<td>". $row['product_price'] . "</td>"
           . "<td>". $row['product_dscpt'] . "</td>"
           . "<td>". $row['product_unitInWhichSold'] . "</td>"
-          
+
           ."</tr>";
         }
         echo "</table>";
       } else {
         echo "No Results";
       }
-      
-      
-      
-      
-      
+
+
+
+
+
       mysqli_close($conn);
     ?>
   </body>
