@@ -84,8 +84,8 @@ if ($conn->connect_error) {
          <ul>
            <li><a class="active" href="#">HOME</a></li>
            <li class="right"><a href="create_account.php">SIGN UP</a></li>
-           <li class="right"><a href="supplier_login.php">Login Root Brewers</a></li>
-           <li class="right"><a href="consumer_login.php">Login Consumers</a></li>
+           <li class="right"><a href="supplier_login.php">LOGIN ROOT BREWERS</a></li>
+           <li class="right"><a href="consumer_login.php">LOGIN CONSUMERS</a></li>
            <li><a href="#">ABOUT</a></li>
          </ul>
       <?php
