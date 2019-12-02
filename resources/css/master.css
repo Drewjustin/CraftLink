@@ -53,11 +53,18 @@ h3
   margin: auto;
   margin-top: 5px;
   width: 150px;
+  color: white;
 }
 .form #rememberme {
   margin-top: 5px;
   margin-bottom: 8px;
   color: white;
+}
+
+/* background text for username and password */
+.form #password:focus, .form #username:focus {
+   background-color: lightblue;
+   color: black;
 }
 
 #form
@@ -128,7 +135,7 @@ li a:hover {
 } */
 #searchbarcenter{
   overflow:hidden;
-  text-align: center; 
+  text-align: center;
 }
 #searchbar{
   display:inline-block;
@@ -194,7 +201,7 @@ body {
 
 .rememberme_div{
   text-align: center;
-  margin: auto; 
+  margin: auto;
   padding-top: 10px;
    display: inline-block;
   color: white;
@@ -230,5 +237,3 @@ td{
   position: absolute;
   z-index: -1;
 }
-
-
