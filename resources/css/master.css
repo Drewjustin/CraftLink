@@ -215,7 +215,20 @@ td{
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;
+  color: black;
 }
 .form_reg tr:nth-child(even) {
   background-color: darkslategray;
 }
+
+#testpls{
+  background-color: purple;
+  color: white;
+}
+
+#phone_back{
+  position: absolute;
+  z-index: -1;
+}
+
+
