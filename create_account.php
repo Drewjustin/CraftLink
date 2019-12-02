@@ -11,18 +11,137 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
 	 die("Connection failed: " . $conn->connect_error);
-	 echo "connection failed";
+	 //echo "connection failed";
 } else {
-	echo "connection successful";
+	//echo "connection successful";
 }
 
+/*
+// DELETE DUPLICATE TABLE ENTRIES
+
+// create query
+$queryAddUsers = 'INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ';
+$uniqueUsers = array(); // list of unique usernames
+$usersAdded = 0;
+
+// find all users that can't be deleted due to foreign key constraints in product table
+$queryFindDependencies = "SELECT * FROM `user` LEFT JOIN `product` ON `user`.`user_id` = `product`.`supplier_id` WHERE `product`.`supplier_id` IS NOT NULL";
+$resultFindDependencies = $conn->query($queryFindDependencies);
+if(!$resultFindDependencies) { // print if there are issues
+	trigger_error('Invalid query: ' . $conn->error);
+}
+// loop through users
+$num_users = $resultFindDependencies->num_rows;
+for($i = 0;  $i < $num_users; $i++){
+	$userExists = false;
+
+	// get user info
+	$currentUser = $resultFindDependencies->fetch_assoc();
+	$currentUsername = $currentUser['username'];
+
+	// check if username matches any of the previous unique usernames
+	for($j = 0; $j < count($uniqueUsers); $j++){ 
+		if($uniqueUsers[$j] == $currentUsername) {
+			$userExists = true;
+		}
+	}
+
+	// of it doesn't, add it to the query and the list of unique usernames
+	if($userExists == false){
+		$uniqueUsers[] = $currentUsername;
+	}
+}
+
+
+// get info for all users currently in the table
+$queryFindUsers = "SELECT * FROM `user`";
+$resultFindUsers = $conn->query($queryFindUsers);
+if(!$resultFindUsers) { // print if there are issues
+	trigger_error('Invalid query: ' . $conn->error);
+}
+// loop through all users
+$num_users = $resultFindUsers->num_rows;
+for($i = 0;  $i < $num_users; $i++){
+	$userExists = false;
+
+	// get user info
+	$currentUser = $resultFindUsers->fetch_assoc();
+	$currentUsername = $currentUser['username'];
+		$c_email = $currentUser['email'];
+		$c_pass = $currentUser['passwordhash'];
+		$c_phone = $currentUser['phonenumber'];
+		$c_time = $currentUser['create_time'];
+
+	// check if username matches any of the previous unique usernames
+	for($j = 0; $j < count($uniqueUsers); $j++){ 
+		if($uniqueUsers[$j] == $currentUsername) {
+			$userExists = true;
+		}
+	}
+
+	// of it doesn't, add it to the query and the list of unique usernames
+	if($userExists == false){
+		$queryAddUsers .= "('$currentUsername', '$c_email', '$c_pass', '$c_time', NULL, '$c_phone'), ";
+		$uniqueUsers[] = $currentUsername;
+		$usersAdded++;
+	}
+}
+$queryAddUsers = substr($queryAddUsers, 0, -2);
+$queryAddUsers .= ';';
+
+// clear the table
+$queryClearTable = "DELETE `user` FROM `user` LEFT JOIN `product` ON `user`.`user_id` = `product`.`supplier_id` WHERE `product`.`supplier_id` IS NULL";
+$resultClearTable = $conn->query($queryClearTable);
+if(!$resultClearTable){
+	trigger_error('Invalid query: ' . $conn->error);
+}
+
+// add all the users to the table
+if($usersAdded > 0){
+	$resultAddUsers = $conn->query($queryAddUsers);
+	if(!$resultAddUsers){ // print if there is an error
+		trigger_error('Invalid query: ' . $conn->error);
+		echo $queryAddUsers;
+	}
+}
+
+
+// print all users in table for error checking
+	$query1 = "SELECT * FROM `user`";
+	$result = $conn->query($query1);
+
+	if (!$result) {
+		trigger_error('Invalid query: ' . $conn->error);
+	}
+
+	if ($conn->connect_error) {
+	    echo '<div class="messages">Error: ';
+	    echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
+	}
+	$numCourses = $result->num_rows;
+
+	for($i = 0; $i < $numCourses; $i++){
+		$course = $result->fetch_assoc();
+		$title = $course['username'];
+
+		$email = $course['email'];
+		$pass = $course['passwordhash'];
+		$phone = $course['phonenumber'];
+		$uid = $course['user_id'];
+		$time = $course['create_time'];
+
+
+		echo '<div class="course_title">' . $title . ' ' . $email . ' ' . $pass . ' ' . $phone . ' ' . $uid . ' ' . $time . '</div><br>';
+	
+	}
+*/
 ?>
 
 <?php 
   // form processing
   
   // variables to hold form values:
-  $firstNames = '';  
+  $userName = '';  
   $password1 = '';
   $password2 = '';
   $email = '';
@@ -41,7 +160,7 @@ if ($conn->connect_error) {
   
   if ($havePost) {
     // get and clean form entries
-    $firstNames = htmlspecialchars(trim($_POST["firstNames"])); 
+    $userName = htmlspecialchars(trim($_POST["userName"])); 
     $password1 = htmlspecialchars(trim($_POST["password1"]));
     $password2 = htmlspecialchars(trim($_POST["password2"]));
     $email = htmlspecialchars(trim($_POST["email"]));
@@ -53,14 +172,24 @@ if ($conn->connect_error) {
     
     $focusId = ''; // trap the first field that needs updating, better would be to save errors in an array
     
-    if ($firstNames == '') {
+    if ($userName == '') {
       $errors .= '<li>Username is required</li><br>';
-      if ($focusId == '') $focusId = '#firstNames';
+      if ($focusId == '') $focusId = '#userName';
     }
-    if (strlen($firstNames) < 4 || strlen($firstNames) > 12) {
+    if (strlen($userName) < 4 || strlen($userName) > 12) {
       $errors .= '<li>Username must be between 4 and 12 characters long</li><br>';
-      if ($focusId == '') $focusId = '#firstNames';
+      if ($focusId == '') $focusId = '#userName';
     }
+
+    // check if username exists in table
+    $checkUsername = "SELECT * FROM `user` WHERE `username` = '" . $userName ."';"; 
+    $resultUsername = $conn->query($checkUsername);
+	if (!$resultUsername) { // print if there's an error w/ the query
+		trigger_error('Invalid query: ' . $conn->error);
+	} else if ($resultUsername->num_rows != 0){ // add error if the username is duplicate
+	  $errors .= '<li>Username is already taken</li><br>';
+      if ($focusId == '') $focusId = '#userName';
+	}
 
     if ($password1 == '') {
       $errors .= '<li>Password is required</li><br>';
@@ -112,10 +241,6 @@ if ($conn->connect_error) {
           });
         </script>
       </div>
-    <?php } else { ?> 
-      <div id="messages">
-        <!-- <h4>submitted (no errors)</h4> -->
-      </div>
     <?php } 
   }
 ?>
@@ -126,100 +251,14 @@ if ($conn->connect_error) {
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="resources/css/master.css">
-    <link rel="stylesheet" href="jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
-    <script type="text/javascript" src="jqwidgets/scripts/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxvalidator.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxbuttons.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcheckbox.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/globalization/globalize.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcalendar.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
-		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxmaskedinput.js"></script>
-		<script type="text/javascript" src="jqwidgets/jqwidgets/jqxradiobutton.js"></script>
-    <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>       <!-- commented out Angular components -->
-   <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
-   
-    <script type="text/javascript" src="create_account.js"></script>  
-		<script type="text/javascript">
-			$(document).ready(function () {
-			
-			// old jqx initialization stuff =============================
 
-			//$('#sendButton').jqxButton({ width: 120, height: 25});
-			//$('#acceptInput').jqxCheckBox({ width: 130});
-			//$('#consumer').jqxRadioButton({ width: 250, height: 25, checked: true});
-			//$("#supplier").jqxRadioButton({ width: 250, height: 25});
-		
-			//$("#phoneInput").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 22});
-			// $("#zipInput").jqxMaskedInput({ mask: '###-##-####', width: 150, height: 22});
-		
-			//$('.text-input').addClass('jqx-input');
-			//$('.text-input').addClass('jqx-rc-all');
-			// if (theme.length > 0) {
-			// 	$('.text-input').addClass('jqx-input-' + theme);
-			// 	$('.text-input').addClass('jqx-widget-content-' + theme);
-			// 	$('.text-input').addClass('jqx-rc-all-' + theme);
-			// }
-		
-			//var date = new Date();
-			//date.setFullYear(1985, 0, 1);
-
-
-
-		
-			// initialize validator.
-			// $('#form').jqxValidator({
-			// 	rules: [
-			// 	{ input: '#userInput', message: 'Username is required!', action: 'keyup, blur', rule: 'required' },
-			// 	{ input: '#userInput', message: 'Your username must be between 3 and 12 characters!', action: 'keyup, blur', rule: 'length=3,12' },
-			// 	{ input: '#passwordInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
-			// 	{ input: '#passwordInput', message: 'Your password must be between 4 and 12 characters!', action: 'keyup, blur', rule: 'length=4,12' },
-			// 	{ input: '#passwordConfirmInput', message: 'Password is required!', action: 'keyup, blur', rule: 'required' },
-			// 	{ input: '#passwordConfirmInput', message: 'Passwords doesn\'t match!', action: 'keyup, focus', rule: function (input, commit) {
-			// 		// call commit with false, when you are doing server validation and you want to display a validation error on this field. 
-			// 		if (input.val() === $('#passwordInput').val()) {
-			// 			return true;
-			// 		}
-			// 			return false;
-			// 		}
-			// 	},
-			// 	{ input: '#emailInput', message: 'E-mail is required!', action: 'keyup, blur', rule: 'required' },
-			// 	{ input: '#emailInput', message: 'Invalid e-mail!', action: 'keyup', rule: 'email' },
-			// 	{ input: '#phoneInput', message: 'Invalid phone number!', action: 'valuechanged, blur', rule: 'phone' }/*,
-			// { input: '#zipInput', message: 'Invalid zip code!', action: 'valuechanged, blur', rule: 'zipCode' }*/]
-			// });
-		
-			// // validate form.
-			// $("#sendButton").click(function () {
-			// 	var validationResult = function (isValid) {
-			// 		if (isValid) {
-			// 			//$("#form").submit();
-			// 			window.location.href = "create_account.php?valid=" + isValid;
-
-			// 		}
-			// 	}
-			// 	$('#form').jqxValidator('validate', validationResult);
-			// });
-		
-			// $("#form").on('validationSuccess', function () {
-			// 	$("#form-iframe").fadeIn('fast');
-			// });
-		});
-		</script>
     <title>Create Account</title>
 
 
   </head>
   <body>
 
-  	<pre id="errors">
-  		
-
-
-
-
-  	</pre>
+  	<pre id="errors"></pre>
 
 
     <div class="nav">
@@ -242,8 +281,8 @@ if ($conn->connect_error) {
 		    <legend>Register</legend>
 		    <div class="formData">
 		                    
-		      <label class="field" for="firstNames">Username:</label>
-		      <div class="value"><input type="text" size="60" value="<?php echo $firstNames; ?>" name="firstNames" id="firstNames"/></div>
+		      <label class="field" for="userName">Username:</label>
+		      <div class="value"><input type="text" size="60" value="<?php echo $userName; ?>" name="userName" id="userName"/></div>
 		      
 		      
 		      <label class="field" for="password1">Password:</label>
@@ -275,47 +314,6 @@ if ($conn->connect_error) {
 		    </div>
 		  </fieldset>
 
-
-
-	     <!--  <table class="register-table">
-					OLD JQX FORM =============================
-
-					<tr>
-						<td>Username:</td>
-						<td><input name="username" type="text" id="userInput" class="text-input" /></td>
-					</tr>
-					<tr>
-						<td>Password:</td>
-						<td><input name="password" type="password" id="passwordInput" class="text-input" /></td>
-					</tr>
-					<tr>
-						<td>Confirm password:</td>
-						<td><input type="password" id="passwordConfirmInput" class="text-input" /></td>
-					</tr>
-					<tr>
-						<td>E-mail:</td>
-						<td><input name="email" type="text" id="emailInput" class="text-input" /></td>
-					</tr>
-					<tr>
-						<td>Phone:</td>
-						<td><div name="phone" id="phoneInput"></div></td>
-					</tr>
-					<tr><td>
-							<br><div id="testpls" onclick="phoneTest()">test</div></td></tr>
-					<tr>
-						<td colspan="2" style="text-align: left;">
-							<div name="suppliertype" id="supplier">Supplier</div>
-							<div name="consumertype" id="consumer">Consumer</div>
-						</td>
-					</tr>
-					<tr>
-							<td colspan="2" style="text-align: ;"><div name="acceptterms" id="acceptInput" class="rememberme_div">I accept terms</div></td>
-					</tr>
-					<tr>
-							<td colspan="2" style="text-align: center;"><input type="submit" value="Create Account" id="sendButton" /></td>
-					</tr>
-				</table>
-				<div class="prompt">*For successful registration, username=admin, password=admin123</div> -->
 			</form> 
     </div>
 
@@ -327,10 +325,11 @@ if ($conn->connect_error) {
 
 
 
-<?php if($havePost && $errors == '') { 
+<?php 
+	if($havePost && $errors == '') { 
 	// TODO: hash the password first
 	$createTime = time() + (7 * 24 * 60 * 60);
-	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ('$firstNames', '$email', '$password1', now(), NULL, '$phoneNum')";
+	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ('$userName', '$email', '$password1', now(), NULL, '$phoneNum')";
 	$result0 = $conn->query($query);
 	if (!$result0) {
     		trigger_error('Invalid query: ' . $conn->error);
@@ -340,36 +339,39 @@ if ($conn->connect_error) {
     echo '<div class="messages">Error: ';
     echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
 	}
+}
 
-
+/*
+// PRINT ALL USERS for error checking
 
 	$query1 = "SELECT * FROM `user`";
-    	$result = $conn->query($query1);
+	$result = $conn->query($query1);
 
-    	if (!$result) {
-    		trigger_error('Invalid query: ' . $conn->error);
-		}
+	if (!$result) {
+		trigger_error('Invalid query: ' . $conn->error);
+	}
 
-    	if ($conn->connect_error) {
-		    echo '<div class="messages">Error: ';
-		    echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
-		}
-    	$numCourses = $result->num_rows;
+	if ($conn->connect_error) {
+	    echo '<div class="messages">Error: ';
+	    echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
+	}
+	$numCourses = $result->num_rows;
 
-    	for($i = 0; $i < $numCourses; $i++){
-    		$course = $result->fetch_assoc();
-    		$title = $course['username'];
+	for($i = 0; $i < $numCourses; $i++){
+		$course = $result->fetch_assoc();
+		$title = $course['username'];
 
-    		$email = $course['email'];
-    		$pass = $course['passwordhash'];
-    		$phone = $course['phonenumber'];
-    		$uid = $course['user_id'];
-    		$time = $course['create_time'];
+		$email = $course['email'];
+		$pass = $course['passwordhash'];
+		$phone = $course['phonenumber'];
+		$uid = $course['user_id'];
+		$time = $course['create_time'];
 
 
-    		echo '<div class="course_title">' . $title . ' ' . $email . ' ' . $pass . ' ' . $phone . ' ' . $uid . ' ' . $time . '</div><br>';
-    	}
+		echo '<div class="course_title">' . $title . ' ' . $email . ' ' . $pass . ' ' . $phone . ' ' . $uid . ' ' . $time . '</div><br>';
+	}
 }
+*/
 
 ?>
 
@@ -381,4 +383,4 @@ if ($conn->connect_error) {
 
 
   </body>
-</html>
+</html> 

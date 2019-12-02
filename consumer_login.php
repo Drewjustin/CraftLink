@@ -16,26 +16,36 @@
       "username" => $_POST["username"],
       "password" => $_POST["password"]
     );
-    //to make sure the username exsists the sql statement is:
-    //SELECT username from User where username = $_POST["username"];
-    //The sql statement to get the hashed password once you have the username is:
-    //SELECT hashedPassword from User where username = $_POST["username"];
-    if($formData['username'] == 'admin' && $formData['password'] == 'admin123') {
-      // get the checked state of the checkbox with name - "rememberme". The value could be true -
-      // if($formData['rememberme'] == 'true') {
-      //   $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
-      //   }
-      // else {
-         $response = "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
-         session_start();
-         $_SESSION['username'] = $formData['username'];
-      // }
-    }
+    
+    //create SQL statement and then call the query on the database checking for username and the matching password
+    $sql = "SELECT passwordhash, username FROM user WHERE username = '" . $_POST["username"] . "';";
+    $result = $conn->query($sql);
+    //checking to see that everything exists before compairing values
+    $fires = 0;
+    if ($result !== NULL && $formData['username'] !== NULL && $formData['password'] !== NULL){
+      //looping through all possible matches 
+      while($entry = $result->fetch_assoc()){
+        //checking the username and password are a real user
+        $fires = 1;
+        if(strtolower($formData['username']) === strtolower($entry["username"]) && $formData['password'] === $entry["passwordhash"]) {
+            echo "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
+            //starting a session for the now logged in user
+            session_start();
+            $_SESSION['username'] = $formData['username'];
+        }
+        else {
+          echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
+        }
+      }
+      //flag variable to create error for invalid usernames 
+      if ($fires === 0){
+        echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
+      }
+    }    
+    //what is printed if the user does not enter a proper account
     else {
-      $response = "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
+      echo "<p><h1>Login Not Successful</h1></p><p>Blank Field</p>.</p>";
     }
-
-    echo $response;
   }
 ?>
 
