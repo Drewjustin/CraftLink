@@ -16,24 +16,23 @@
       "username" => $_POST["username"],
       "password" => $_POST["password"]
     );
+    //create SQL statement and then call the query on the database checking for username and the matching password
     $sql = "SELECT passwordhash, username FROM user WHERE username = '" . $_POST["username"] . "';";
     $result = $conn->query($sql);
-    //echo mysqli_error($conn);
+    //checking to see that everything exists before compairing values
     if ($result !== NULL && $formData['username'] !== NULL && $formData['password'] !== NULL){
+      //looping through all possible matches 
       while($entry = $result->fetch_assoc()){
+        //checking the username and password are a real user
         if($formData['username'] === $entry["username"] && $formData['password'] === $entry["passwordhash"]) {
-          // get the checked state of the checkbox with name - "rememberme". The value could be true - 
-          // if($formData['rememberme'] == 'true') {
-          //   $response = "<p><h1>Login Successful</h1></p><p>We'll keep you logged in on this computer.</p>";
-          //   }
-          // else {
             echo "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
+            //starting a session for the now logged in user
             session_start();
             $_SESSION['username'] = $formData['username'];
-          // }
         }
       }
     }    
+    //what is printed if the user does not enter a proper account
     else {
       echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
     }
