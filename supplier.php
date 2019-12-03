@@ -146,9 +146,9 @@ executeGet($conn, $sql, $result);
                  <th width='5%'>Supplier ID</th>
                  <th width='5%'>Product ID</th>
                  <th width='15%'>Name</th>
-                 <th width='50%'>Description</th>
-                 <th width='10%'>Price</th>
-                 <th width='10%'>Unit Sold</th>
+                 <th width='40%'>Description</th>
+                 <th width='15%'>Price Per Unit</th>
+                 <th width='15%'>Volume Sold In</th>
                  <th width='5%'>In Stock</th>";
                  // output data of each row
                  while($row = $result->fetch_assoc()) {
@@ -172,12 +172,18 @@ executeGet($conn, $sql, $result);
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
                <form id="add_product" action="supplier.php" method="post">
-                  Product ID:<input type="text" name="p_id" value="">
-                  Supplier ID:<input type="text" name="s_id" value="">
-                  Name:<input type="text" name="name" value="">
-                  Description:<input type="text" name="description" value="">
-                  Price:<input type="int"  name="price" value="">
-                  Unit Sold:<input type="text" name="unit_sold" value="">
+                  <label for="p_id">Product ID:</label>
+                  <input type="text" name="p_id" value="">
+                  <label for="s_id">Supplier ID:</label>
+                  <input type="text" name="s_id" value="">
+                  <label for="name">Product Name:</label>
+                  <input type="text" name="name" value="">
+                  <label for="description">Description:</label>
+                  <input type="text" name="description" maxlength="500"value="">
+                  <label for="price">Price Per Unit:</label>
+                  <input type="int"  name="price" value="">
+                  <label for="unit_sold">Unit Sold:</label>
+                  <input type="text" name="unit_sold" value="">
                   <input type="submit" name="addProduct" value="Submit">
                </form>
             </article>
