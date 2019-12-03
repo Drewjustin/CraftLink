@@ -33,8 +33,8 @@ if(isset($_GET['logout'])){      // check that logout is in URL
    session_destroy();
    $navLogout = true;
 }
-if (session_status() == PHP_SESSION_ACTIVE) {  // when the user is logged in as a consumer url is specified
-// if(isset($_GET['consumer_home'])){    
+// if (session_status() == PHP_SESSION_ACTIVE) {  // when the user is logged in as a consumer url is specified
+if(isset($_GET['userid'])){    
   $navLogout = false;
 }
 

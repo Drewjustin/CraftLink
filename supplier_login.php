@@ -16,10 +16,10 @@
   if (isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
     $formData = array(
       "username" => $_POST["username"],
-      "password" => $_POST["password"]
+      "password" => $_POST["password"],
     );
     //create SQL statement and then call the query on the database checking for username and the matching password
-    $sql = "SELECT passwordhash, username FROM user WHERE username = '" . $_POST["username"] . "';";
+    $sql = "SELECT `passwordhash`,` username`,`user_id` FROM `user` WHERE `username` = '" . $_POST["username"] . "';";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
@@ -34,6 +34,7 @@
             session_start();
             $_SESSION['username'] = $formData['username'];
             $_SESSION['logon'] = true;                      // now user is logged in
+            $_SESSION['userid'] =$entry["user_id"];
             header("Location: supplier.php");               // redirect to supplier home when logged in
         }
         else {
