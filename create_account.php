@@ -40,7 +40,7 @@ for($i = 0;  $i < $num_users; $i++){
 	$currentUsername = $currentUser['username'];
 
 	// check if username matches any of the previous unique usernames
-	for($j = 0; $j < count($uniqueUsers); $j++){ 
+	for($j = 0; $j < count($uniqueUsers); $j++){
 		if($uniqueUsers[$j] == $currentUsername) {
 			$userExists = true;
 		}
@@ -73,7 +73,7 @@ for($i = 0;  $i < $num_users; $i++){
 		$c_time = $currentUser['create_time'];
 
 	// check if username matches any of the previous unique usernames
-	for($j = 0; $j < count($uniqueUsers); $j++){ 
+	for($j = 0; $j < count($uniqueUsers); $j++){
 		if($uniqueUsers[$j] == $currentUsername) {
 			$userExists = true;
 		}
@@ -132,16 +132,16 @@ if($usersAdded > 0){
 
 
 		echo '<div class="course_title">' . $title . ' ' . $email . ' ' . $pass . ' ' . $phone . ' ' . $uid . ' ' . $time . '</div><br>';
-	
+
 	}
 */
 ?>
 
-<?php 
+<?php
   // form processing
-  
+
   // variables to hold form values:
-  $userName = '';  
+  $userName = '';
   $password1 = '';
   $password2 = '';
   $email = '';
@@ -152,15 +152,15 @@ if($usersAdded > 0){
 
 
   // hold any error messages
-  $errors = ''; 
-  
+  $errors = '';
 
-  // is form submitted/posted 
+
+  // is form submitted/posted
   $havePost = isset($_POST["save"]);
-  
+
   if ($havePost) {
     // get and clean form entries
-    $userName = htmlspecialchars(trim($_POST["userName"])); 
+    $userName = htmlspecialchars(trim($_POST["userName"]));
     $password1 = htmlspecialchars(trim($_POST["password1"]));
     $password2 = htmlspecialchars(trim($_POST["password2"]));
     $email = htmlspecialchars(trim($_POST["email"]));
@@ -169,9 +169,9 @@ if($usersAdded > 0){
     if(isset($_POST["terms"])) $acceptterms = htmlspecialchars(trim($_POST["terms"]));
     //echo $acceptterms;
 
-    
+
     $focusId = ''; // trap the first field that needs updating, better would be to save errors in an array
-    
+
     if ($userName == '') {
       $errors .= '<li>Username is required</li><br>';
       if ($focusId == '') $focusId = '#userName';
@@ -182,7 +182,7 @@ if($usersAdded > 0){
     }
 
     // check if username exists in table
-    $checkUsername = "SELECT * FROM `user` WHERE `username` = '" . $userName ."';"; 
+    $checkUsername = "SELECT * FROM `user` WHERE `username` = '" . $userName ."';";
     $resultUsername = $conn->query($checkUsername);
 	if (!$resultUsername) { // print if there's an error w/ the query
 		trigger_error('Invalid query: ' . $conn->error);
@@ -227,7 +227,7 @@ if($usersAdded > 0){
       if ($focusId == '') $focusId = '#acceptterms';
     }
 
-  
+
   	// post errors if there are any
     if ($errors != '') { ?>
       <div id="messages">
@@ -241,7 +241,7 @@ if($usersAdded > 0){
           });
         </script>
       </div>
-    <?php } 
+    <?php }
   }
 ?>
 
@@ -268,8 +268,8 @@ if($usersAdded > 0){
       <ul>
         <li><a class="active" href="index.php">HOME</a></li>
         <li class="right"><a href="#">SIGN UP</a></li>
-        <li class="right"><a href="supplier_login.php">Login Root Brewers</a></li>
-        <li class="right"><a href="consumer_login.php">Login Customers</a></li>
+        <li class="right"><a href="supplier_login.php">LOGIN ROOT BREWERS</a></li>
+        <li class="right"><a href="consumer_login.php">LOGIN CONSUMERS</a></li>
         <li><a href="#">ABOUT</a></li>
       </ul>
     </div>
@@ -277,26 +277,26 @@ if($usersAdded > 0){
     <h2 class="centerMe" >Register with CraftLink Today!</h2>
     <div class="white-block">
       <form class="form_reg" id="form" target="form-iframe"  method="post" action="create_account.php" style="font-size: 13px; font-family: Verdana; width: 650px;">
-           <fieldset> 
+           <fieldset>
 		    <legend>Register</legend>
 		    <div class="formData">
-		                    
+
 		      <label class="field" for="userName">Username:</label>
 		      <div class="value"><input type="text" size="60" value="<?php echo $userName; ?>" name="userName" id="userName"/></div>
-		      
-		      
+
+
 		      <label class="field" for="password1">Password:</label>
 		      <div class="value"><input type="password" size="60" value="<?php echo $password1; ?>" name="password1" id="password1"/></div>
-		      
+
 		      <label class="field" for="password2">Confirm Password:</label>
 		      <div class="value"><input type="password" size="60" value="<?php echo $password2; ?>" name="password2" id="password2"/></div>
-		      
+
 		      <label class="field" for="email">Email:</label>
 		      <div class="value"><input type="text" size="60" value="<?php echo $email; ?>" name="email" id="email"/></div>
-		      
+
 		      <label class="field" for="phoneNum">Phone (XXX-XXX-XXXX):</label>
 		      <div class="value"><input type="text" size="60" value="<?php echo $phoneNum; ?>" name="phoneNum" id="phoneNum"/></div>
-		      
+
 
 		      <input type="radio" id="supplier" name="userType" value="supplier" checked /> Supplier<br/>
   			  <input type="radio" id="consumer" name="userType" value="consumer" /> Consumer<br/>
@@ -305,7 +305,7 @@ if($usersAdded > 0){
 		      <label class="field" for="acceptInput">Terms and Conditions:</label>
 		      <div class="value"><input type="checkbox" id="acceptterms" name="terms" value="acceptterms" /> I accept the terms</div>
 
-		      
+
 
 
 
@@ -314,7 +314,7 @@ if($usersAdded > 0){
 		    </div>
 		  </fieldset>
 
-			</form> 
+			</form>
     </div>
 
 
@@ -325,8 +325,8 @@ if($usersAdded > 0){
 
 
 
-<?php 
-	if($havePost && $errors == '') { 
+<?php
+	if($havePost && $errors == '') {
 	// TODO: hash the password first
 	$createTime = time() + (7 * 24 * 60 * 60);
 	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ('$userName', '$email', '$password1', now(), NULL, '$phoneNum')";
@@ -378,9 +378,9 @@ if($usersAdded > 0){
 
 
 
-      
+
     </div>
 
 
   </body>
-</html> 
+</html>

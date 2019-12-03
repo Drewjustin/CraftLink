@@ -125,7 +125,7 @@ executeGet($conn, $sql, $result);
     <body>
 
       <div class="nav">
-         <a href="index.php">
+         <a href="index.php?logout">   <!-- if supplier tries to go to landing page they will be logged out (security purposes)-->
          <img class="nav-logo" src="resources/logoPic.png" alt="Craftlink Logo">
          </a>
          <ul>
@@ -135,24 +135,21 @@ executeGet($conn, $sql, $result);
          <li><a href="#">ABOUT</a></li>
          </ul>
       </div>
-      <h2 class="centerMe">Rooty Roots Inventory</h2>
-      <div id="grid" style="width:50%; margin:auto;">
-      </div>
        <section class="main">
-          <h1>Brewer Home</h1>
+          <h2 class="centerMe">Brewer Home</h1>
 
-          <section id="product_table">
+          <section class="product_table">
              <?php
              if (!empty($result) && $result->num_rows > 0) {
                  echo "<table>
                  <tr>
-                 <th>Supplier ID</th>
-                 <th>Product ID</th>
-                 <th>Name</th>
-                 <th>Description</th>
-                 <th>Price</th>
-                 <th>Unit Sold</th>
-                 <th>In Stock</th>";
+                 <th width='5%'>Supplier ID</th>
+                 <th width='5%'>Product ID</th>
+                 <th width='15%'>Name</th>
+                 <th width='40%'>Description</th>
+                 <th width='15%'>Price Per Unit</th>
+                 <th width='15%'>Volume Sold In</th>
+                 <th width='5%'>In Stock</th>";
                  // output data of each row
                  while($row = $result->fetch_assoc()) {
                      echo "<tr>"
@@ -175,12 +172,19 @@ executeGet($conn, $sql, $result);
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
                <form id="add_product" action="supplier.php" method="post">
-                  Product ID:<input type="text" name="p_id" value="">
-                  Supplier ID:<input type="text" name="s_id" value="">
-                  Name:<input type="text" name="name" value="">
-                  Description:<input type="text" name="description" value="">
-                  Price:<input type="int"  name="price" value="">
-                  Unit Sold:<input type="text" name="unit_sold" value="">
+                  <label for="p_id">Product ID:</label>
+                  <input type="text" name="p_id" value="">
+                  <label for="s_id">Supplier ID:</label>
+                  <input type="text" name="s_id" value="">
+                  <label for="name">Product Name:</label>
+                  <input type="text" name="name" value="">
+                  <label for="description">Description:</label>
+                  <textarea name="description" rows="4" cols="17" maxlength="250"></textarea>
+                  <!-- <input type="text" name="description" maxlength="500"value=""> -->
+                  <label for="price">Price Per Unit:</label>
+                  <input type="int"  name="price" value="">
+                  <label for="unit_sold">Unit Sold:</label>
+                  <input type="text" name="unit_sold" value="">
                   <input type="submit" name="addProduct" value="Submit">
                </form>
             </article>

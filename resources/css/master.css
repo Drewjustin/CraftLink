@@ -57,6 +57,10 @@ h3
   border: 5px;
   color: black;
   font-size: 1em;
+  opacity: 0.8;
+}
+.form #loginButton:hover{
+   opacity: 1;
 }
 
 .form #password, .form #username {
@@ -183,6 +187,103 @@ body {
   color: white;
   font-family: 'Work Sans', sans-serif;
 }
+
+/******** supplier.php css stling **********/
+/* table for printing results */
+.product_table {
+   width:90%;
+   margin: auto;
+   padding: 10px;
+   overflow-x:auto;
+}
+table{
+   width: 100%;
+   margin: auto;
+   background-color: #111;
+   border: 1px solid #FDC100;
+   padding: 0px;
+   border-radius: 2px;
+}
+
+th, td{
+   margin: auto;
+   text-align: left;
+   padding: 10px;
+   border-radius: 2px;
+   /* background-color: #222; */
+   color: white;
+}
+tr:nth-child(even){background-color: #333;}
+tr:nth-child(odd){background-color: #222;}
+
+/* adding product form */
+article#add_products{
+   width:35%;
+   margin: auto;
+}
+button#add_product_button{
+   display: block;
+   width: 120px;
+   padding: 5px;
+   margin: auto;
+   background-color: white;
+   border: 1px solid white;
+   border-radius: 2px;
+   color:black;
+   font-size: 1em;
+   transition: 0.3s;
+}
+button#add_product_button:hover{
+   background-color: #FDC100;
+   border: 1px solid #FDC100;
+}
+form#add_product{
+   width: 50%;
+   margin: auto;
+   padding: 10px;
+}
+/* input boxes for adding product */
+#add_product input[type=text], textarea, #add_product input[type=int]{
+   margin: auto;
+   padding: 5px;
+   border-radius: 5px;
+   display: block;
+   background-color: #222;
+   border: 2px solid white;
+   color: white;
+   font-size: 1em;
+}
+#add_product input[type=text]:focus, textarea:focus, #add_product input[type=int]:focus{
+   border: 2px solid #555;
+   background-color: lightblue;
+   border-radius: 5px;
+   color: black;
+}
+/* form lables for add product form */
+#add_product label{
+   display: block;
+   padding: 5px;
+   text-align:left;
+   font-size: 1em;
+}
+/* submit add product button */
+input[name=addProduct]{
+   display: block;
+   width: 70px;
+   margin: auto;
+   margin-top: 10px;
+   padding: 5px;
+   border: 1px solid #FDC100;
+   border-radius: 5px;
+   background-color: #FDC100;
+   color:black;
+   opacity: 0.8;
+   font-size: 1em;
+}
+input[name=addProduct]:hover{
+   opacity: 1;
+}
+
 
 /* billing.html */
 .form-label

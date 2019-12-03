@@ -5,6 +5,7 @@
   $password = "craftlink.rootbeer";
   $dbname = "CraftLink";
 
+  $_SESSION['logon'] = false;             // logon is false until correct credentials are input
   // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
   // Check connection
@@ -16,14 +17,14 @@
       "username" => $_POST["username"],
       "password" => $_POST["password"]
     );
-    
+
     //create SQL statement and then call the query on the database checking for username and the matching password
     $sql = "SELECT passwordhash, username FROM user WHERE username = '" . $_POST["username"] . "';";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
     if ($result !== NULL && $formData['username'] !== NULL && $formData['password'] !== NULL){
-      //looping through all possible matches 
+      //looping through all possible matches
       while($entry = $result->fetch_assoc()){
         //checking the username and password are a real user
         $fires = 1;
@@ -32,16 +33,18 @@
             //starting a session for the now logged in user
             session_start();
             $_SESSION['username'] = $formData['username'];
+            $_SESSION['logon'] = true;                      // now user is logged in
+            header("Location: index.php?consumer_home");                 // redirect to supplier home when logged in
         }
         else {
           echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
         }
       }
-      //flag variable to create error for invalid usernames 
+      //flag variable to create error for invalid usernames
       if ($fires === 0){
         echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
       }
-    }    
+    }
     //what is printed if the user does not enter a proper account
     else {
       echo "<p><h1>Login Not Successful</h1></p><p>Blank Field</p>.</p>";
@@ -108,8 +111,8 @@
       <ul>
         <li><a class="active" href="index.php">HOME</a></li>
         <li class="right"><a href="create_account.php">SIGN UP</a></li>
-        <li class="right"><a href="supplier_login.php">Login Root Brewers</a></li>
-        <li class="right"><a href="#">Login Customers</a></li>
+        <li class="right"><a href="supplier_login.php">LOGIN ROOT BREWERS</a></li>
+        <li class="right"><a href="#">LOGIN CONSUMERS</a></li>
         <li><a href="#">ABOUT</a></li>
       </ul>
     </div>
