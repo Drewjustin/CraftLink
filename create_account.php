@@ -257,10 +257,9 @@ if($usersAdded > 0){
 
 
   </head>
+
   <body>
-
   	<pre id="errors"></pre>
-
 
     <div class="nav">
       <a href="index.php">
@@ -276,10 +275,9 @@ if($usersAdded > 0){
     </div>
 
     <h2 class="centerMe" >Register with CraftLink Today!</h2>
-    <div class="white-block">
+    <div class="">
       <form class="form_reg" id="form" target="form-iframe"  method="post" action="create_account.php" style="font-size: 13px; font-family: Verdana; width: 650px;">
            <fieldset>
-		    <legend>Register</legend>
 		    <div class="formData">
 
 		      <label class="field" for="userName">Username:</label>
@@ -299,8 +297,8 @@ if($usersAdded > 0){
 		      <div class="value"><input type="text" size="60" value="<?php echo $phoneNum; ?>" name="phoneNum" id="phoneNum"/></div>
 
 
-		      <input type="radio" id="supplier" name="userType" value="supplier"  /> Supplier<br/>
-  			  <input type="radio" id="consumer" name="userType" value="consumer" checked/> Consumer<br/>
+		      <input type="radio" class="radio" id="supplier" name="userType" value="supplier"  /> Supplier<br/>
+  			  <input type="radio" class="radio" id="consumer" name="userType" value="consumer" checked/> Consumer<br/>
 
 
 		      <label class="field" for="acceptInput">Terms and Conditions:</label>

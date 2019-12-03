@@ -118,17 +118,22 @@ $sql = "SELECT * FROM CraftLink.product";
     <form id='searchbarcenter' method="get" action="index.php?consumer_home">
       <span id='searchbar'>
         <input type="text" id="input" name="search" value=""/>
-        <input type="submit" name="searchbutton" value="Search">
+        <input type="submit" id="search_button" name="searchbutton" value="Search">
       </span>
     </form>
 
+    <div id="search_results">
     <?php
       // ADD PRODUCT BUTTON
       $result = NULL;
+      $search = "";
+      $isSearching = "";
       if($_SERVER['REQUEST_METHOD'] == 'GET') {
         try {
           if (isset($_GET['searchbutton']) && $_GET['searchbutton'] == "Search") { //only process when search query string included
-            echo "Searching for " . $_GET['search'] . ":<br>";
+            $search = $_GET['search'];
+            $isSearching = $_GET['searchbutton'];
+            echo '<span class="search_title">Searching for "<b>' . $search . '</b>" . . .</span><br>';
             if(isset($_GET['search']) ) {
               $namekeyword = $_GET['search']; //fixme pre-process (sanitize) the keyword
               $sql = 'SELECT * FROM CraftLink.product WHERE ( `product_name` LIKE \'%' . $namekeyword . '%\')';
@@ -141,24 +146,27 @@ $sql = "SELECT * FROM CraftLink.product";
         }
         $err = Array();
         $_GET = NULL; //nullify request
-      }
-      //render the products, assumes $result contains some query result
-      if (!empty($result) && $result->num_rows > 0) {
-        echo "Results for " . $_GET['search'] . " is:<br>";
-        echo "<table><tr><th>Name</th><th>Price</th><th>Description</th><th>Units Sold As</th></tr>";
-        while ($row = $result->fetch_assoc()) { //iterate the next row and fill the table
-          echo "<tr>"
-          . "<td>". $row['product_name'] . "</td>"
-          . "<td>". $row['product_price'] . "</td>"
-          . "<td>". $row['product_dscpt'] . "</td>"
-          . "<td>". $row['product_unitInWhichSold'] . "</td>"
-          ."</tr>";
+
+        //render the products, assumes $result contains some query result
+        if (!empty($result) && $result->num_rows > 0) {
+          //echo "<span class='search_title'>Results for '<b>" . $search . "</b>':</span><br>";
+          echo "<table id='products_table'><tr><th>Name</th><th>Price</th><th>Description</th><th>Units Sold As</th></tr>";
+          while ($row = $result->fetch_assoc()) { //iterate the next row and fill the table
+            echo "<tr>"
+            . "<td class='name_td'>". $row['product_name'] . "</td>"
+            . "<td class='name_td'>". $row['product_price'] . "</td>"
+            . "<td class='desc_td'>". $row['product_dscpt'] . "</td>"
+            . "<td class='name_td'>". $row['product_unitInWhichSold'] . "</td>"
+            ."</tr>";
+          }
+          echo "</table>";
+          echo '<script type="text/javascript">$("#product_table").focus();</script>';
+        } else if($isSearching) {
+          echo "No Results";
         }
-        echo "</table>";
-      } else {
-        echo "No Results";
+        mysqli_close($conn);
       }
-      mysqli_close($conn);
     ?>
+  </div>
   </body>
 </html>

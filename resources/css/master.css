@@ -142,7 +142,7 @@ li a {
 }
 /* changes color on hover */
 li a:hover {
-  background-color: #edc421;
+  background-color: #FDC100;
   color: black;
 }
 
@@ -176,6 +176,7 @@ body {
   background-color: #000;
   color: white;
   font-family: 'Work Sans', sans-serif;
+  text-align: center;
 }
 
 /******** supplier.php css stling **********/
@@ -244,7 +245,6 @@ form#add_product{
    font-size: 1em;
 }
 #add_product input[type=text]:focus, textarea:focus, #add_product input[type=int]:focus{
-   border: 2px solid #555;
    background-color: lightblue;
    border-radius: 5px;
    color: black;
@@ -306,7 +306,9 @@ input[name=addProduct]:hover{
   padding-left: 3px;
   padding-right: 3px;
   line-height: 30px;
-  font-size: 25px;
+  font-size: 20px;
+  border: 0;
+  padding: 2px;
 }
 
 .rememberme_div{
@@ -338,12 +340,106 @@ td{
   background-color: darkslategray;
 }
 
-#testpls{
+#testpls {
   background-color: purple;
   color: white;
 }
 
-#phone_back{
+#phone_back {
   position: absolute;
   z-index: -1;
+}
+
+
+pre {
+  margin: 0;
+}
+
+#products_table {
+  width: 70vw;
+  margin: auto;
+  border: 0;
+  margin-bottom: 75px;
+}
+#products_table th{
+  color: #FDC100;
+}
+#search_results {
+  margin-top: 50px;}
+
+.name_td{
+  width: 8vw;
+}
+
+.search_title{
+  font-size: 2em;
+  line-height: 3em;
+}
+
+#search_button{
+  background-color: white;
+  color: black;
+  border: 0;
+  padding: 2px;
+  font-size: 20px;
+}
+#search_button:hover{
+  background-color: #FDC100;
+}
+
+.value input[type=text], .value input[type=password]{
+  width: 20vw;
+  height: 20px;
+  margin-bottom: 10px;
+  margin-top: 2px;
+  border: 1px solid white;
+  padding: 3px;
+  padding-left: 5px;
+  background-color: #222;
+  color: white;
+}
+
+
+.value input[type=text]:focus, .value input[type=password]:focus{
+  border-color: #FDC100;
+}
+
+
+fieldset{
+  border: 0;
+}
+
+.field{
+  line-height: 25px;
+}
+
+
+.value input[type=checkbox]{
+  margin-top: 15px;
+}
+
+.formData input[type=submit]{
+  margin-top: 20px;
+  background-color:rgb(253, 193, 0);
+  opacity: 0.8;
+  color: black;
+  border: 0;
+  padding: 2px;
+  font-size: 18px;
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.formData input[type=submit]:hover{
+  opacity: 1;
+}
+
+.radio{
+  color: #FDC100;
+  border: 1px solid pink;
+}
+
+.formData{
+  background-color: black;
+  color: white;
 }
