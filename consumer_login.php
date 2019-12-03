@@ -19,7 +19,7 @@
     );
 
     //create SQL statement and then call the query on the database checking for username and the matching password
-    $sql = "SELECT passwordhash, username FROM user WHERE username = '" . $_POST["username"] . "';";
+    $sql = "SELECT `passwordhash`, `username`,`user_id` FROM `user` WHERE `username` = '" . $_POST["username"] . "';";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
@@ -33,6 +33,7 @@
             //starting a session for the now logged in user
             session_start();
             $_SESSION['username'] = $formData['username'];
+            $_SESSION['userid'] =$entry["user_id"];
             $_SESSION['logon'] = true;                      // now user is logged in
             header("Location: index.php?consumer_home");                 // redirect to supplier home when logged in
         }
@@ -135,7 +136,7 @@
           <div>
               <input id="loginButton" type="submit" value="Login" />
           </div>
-          <div class="prompt">*For successful login, username=admin, password=admin123</div>
+
       </form>
       <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
     </div>

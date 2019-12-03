@@ -165,7 +165,8 @@ if($usersAdded > 0){
     $password2 = htmlspecialchars(trim($_POST["password2"]));
     $email = htmlspecialchars(trim($_POST["email"]));
     $phoneNum = htmlspecialchars(trim($_POST["phoneNum"]));
-    $userType = htmlspecialchars(trim($_POST["userType"])); // "supplier" or "consumer"
+	$userType = htmlspecialchars(trim($_POST["userType"])); // "supplier" or "consumer"
+	$userTypeCode = ($userType=="supplier")?1:0; 
     if(isset($_POST["terms"])) $acceptterms = htmlspecialchars(trim($_POST["terms"]));
     //echo $acceptterms;
 
@@ -298,8 +299,8 @@ if($usersAdded > 0){
 		      <div class="value"><input type="text" size="60" value="<?php echo $phoneNum; ?>" name="phoneNum" id="phoneNum"/></div>
 
 
-		      <input type="radio" id="supplier" name="userType" value="supplier" checked /> Supplier<br/>
-  			  <input type="radio" id="consumer" name="userType" value="consumer" /> Consumer<br/>
+		      <input type="radio" id="supplier" name="userType" value="supplier"  /> Supplier<br/>
+  			  <input type="radio" id="consumer" name="userType" value="consumer" checked/> Consumer<br/>
 
 
 		      <label class="field" for="acceptInput">Terms and Conditions:</label>
@@ -329,7 +330,7 @@ if($usersAdded > 0){
 	if($havePost && $errors == '') {
 	// TODO: hash the password first
 	$createTime = time() + (7 * 24 * 60 * 60);
-	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`) VALUES ('$userName', '$email', '$password1', now(), NULL, '$phoneNum')";
+	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`,`issupplier`) VALUES ('$userName', '$email', '$password1', now(), NULL, '$phoneNum',$userTypeCode)";
 	$result0 = $conn->query($query);
 	if (!$result0) {
     		trigger_error('Invalid query: ' . $conn->error);
