@@ -19,7 +19,7 @@
       "password" => $_POST["password"],
     );
     //create SQL statement and then call the query on the database checking for username and the matching password
-    $sql = "SELECT `passwordhash`,` username`,`user_id` FROM `user` WHERE `username` = '" . $_POST["username"] . "';";
+    $sql = "SELECT `passwordhash`,`username`,`user_id` FROM `user` WHERE `username` = '" . $_POST["username"] . "';";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
