@@ -2,21 +2,21 @@
  //NOT HTTP POST
  function executePost(&$con,&$sql) { //helper method for SQL queries WITHOUT result
    if (mysqli_query($con,$sql)) {
-     echo "Success";
+    //  echo "Success";
    } else {
-     echo "Error" . mysqli_error($con);
+    //  echo "Error" . mysqli_error($con);
    }
-   echo("<br>");
+  //  echo("<br>");
  }
  //NOT HTTP GET
  function executeGet(&$con,&$sql,&$result) { //helper method for SQL queries WITH result
    $result = mysqli_query($con,$sql);
    if ($result) {
-     echo "Success";
+    //  echo "Success";
    } else {
-     echo "Error" . mysqli_error($con);
+    //  echo "Error" . mysqli_error($con);
    }
-   echo("<br>");
+  //  echo("<br>");
  }
 
 

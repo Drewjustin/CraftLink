@@ -2,20 +2,20 @@
 session_start();
   function executePost(&$con,&$sql) {
    if (mysqli_query($con,$sql)) {
-     echo "Success";
+   //   echo "Success";
    } else {
-     echo "Error" . mysqli_error($con);
+   //   echo "Error" . mysqli_error($con);
    }
-   echo("<br>");
+   // echo("<br>");
  }
  function executeGet(&$con,&$sql,&$result) {
    $result = mysqli_query($con,$sql);
    if ($result) {
-     echo "Success";
+   //   echo "Success";
    } else {
-     echo "Error" . mysqli_error($con);
+   //   echo "Error" . mysqli_error($con);
    }
-   echo("<br>");
+   // echo("<br>");
  }
 
 
@@ -57,7 +57,7 @@ if(isset($_POST['addProduct'])){
    $addProduct = $_POST['addProduct'];
    if($addProduct == "Submit"){
       // $p_id = $_POST['p_id'];
-      $s_id = $_POST['s_id'];
+      $s_id = $_SESSION['userid'];
       $name = $_POST['name'];
       $dscpt = $_POST['description'];
       $price_dollars = $_POST['price_dollars'];
@@ -143,10 +143,10 @@ executeGet($conn, $sql, $result);
           <section class="product_table">
              <?php
              if (!empty($result) && $result->num_rows > 0) {
-                //<th width='5%'>Product ID</th>
+                //<th width='5%'>Supplier ID</th>
                  echo "<table>
                  <tr>
-                 <th width='5%'>Supplier ID</th>
+                 <th width='5%'>Product ID</th>
                  <th width='15%'>Name</th>
                  <th width='40%'>Description</th>
                  <th width='15%'>Price Per Unit</th>
@@ -155,7 +155,7 @@ executeGet($conn, $sql, $result);
                  // output data of each row
                  while($row = $result->fetch_assoc()) {
                      echo "<tr>"
-                     . "<td>" . $row["supplier_id"] . "</td>"
+                     // . "<td>" . $row["supplier_id"] . "</td>"
                      . "<td>" . $row["product_id"] . "</td>"
                      . "<td>" . $row["product_name"] . "</td>"
                      . "<td>" . $row["product_dscpt"] . "</td>"
@@ -174,10 +174,10 @@ executeGet($conn, $sql, $result);
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
                <form id="add_product" action="supplier.php" method="post">
-                  <label for="p_id">Product ID:</label>
-                  <input type="text" name="p_id" value="">
-                  <label for="s_id">Supplier ID:</label>
-                  <input type="text" name="s_id" value="">
+                  <!-- <label for="p_id">Product ID:</label>
+                  <input type="text" name="p_id" value=""> -->
+                  <!-- <label for="s_id">Supplier ID:</label>
+                  <input type="text" name="s_id" value=""> -->
                   <label for="name">Product Name:</label>
                   <input type="text" name="name" value="">
                   <label for="description">Description:</label>
