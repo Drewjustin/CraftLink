@@ -25,17 +25,22 @@ $username = "websysroot";
 $password = "craftlink.rootbeer";
 $dbname = "CraftLink";
 
-// if logout link was clicked on the suppier.php page the session is destroyed
-session_start();
-$navLogout = true;               // assumes user is logged out upon entering page
+// check if a login has occured, if so the $session[logon] array will exist
+// if it does then check the value, if it is true, the user is logged in, otherwise they are not
+if(array_key_exists("logon", $_SESSION)){
+   if($_SESSION["logon"]){
+      $navLogout = false;
+   }
+}
+else{
+   $navLogout = true;
+}
+
+// check if logout keyword is in the search bar
 if(isset($_GET['logout'])){      // check that logout is in URL
    $_SESSION = array();          //clears array
    session_destroy();
    $navLogout = true;
-}
-// if (session_status() == PHP_SESSION_ACTIVE) {  // when the user is logged in as a consumer url is specified
-if(isset($_GET['userid'])){    
-  $navLogout = false;
 }
 
 // Create connection
