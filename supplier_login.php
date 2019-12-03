@@ -133,8 +133,8 @@
           </div>
           <div>
               <input id="loginButton" type="submit" value="Login" />
-          </div>
-          <div class="prompt">*For successful login, username=admin, password=admin123</div>
+        </div>
+        
       </form>
       <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
   </div>

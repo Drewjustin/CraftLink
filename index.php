@@ -1,5 +1,6 @@
 <?php
-  function executePost(&$con,&$sql) {
+ //NOT HTTP POST
+ function executePost(&$con,&$sql) { //helper method for SQL queries WITHOUT result
    if (mysqli_query($con,$sql)) {
      echo "Success";
    } else {
@@ -7,7 +8,8 @@
    }
    echo("<br>");
  }
- function executeGet(&$con,&$sql,&$result) {
+ //NOT HTTP GET
+ function executeGet(&$con,&$sql,&$result) { //helper method for SQL queries WITH result
    $result = mysqli_query($con,$sql);
    if ($result) {
      echo "Success";
@@ -31,8 +33,9 @@ if(isset($_GET['logout'])){      // check that logout is in URL
    session_destroy();
    $navLogout = true;
 }
-if(isset($_GET['consumer_home'])){     // when the user is logged in as a consumer url is specified
-   $navLogout = false;
+if (session_status() == PHP_SESSION_ACTIVE) {  // when the user is logged in as a consumer url is specified
+// if(isset($_GET['consumer_home'])){    
+  $navLogout = false;
 }
 
 // Create connection
@@ -43,7 +46,7 @@ if ($conn->connect_error) {
 }
 
 //Grab everything from the craflink table
-// $sql = "SELECT * FROM CraftLink.product";
+$sql = "SELECT * FROM CraftLink.product";
 
 
 
@@ -105,25 +108,23 @@ if ($conn->connect_error) {
     <div class="logo">
       <img class="logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">
     </div>
-    <form id='searchbarcenter' method="post" action="index.php">
+    <form id='searchbarcenter' method="get" action="index.php?consumer_home">
       <span id='searchbar'>
         <input type="text" id="input" name="search" value=""/>
         <input type="submit" name="searchbutton" value="Search">
       </span>
     </form>
+
     <?php
       // ADD PRODUCT BUTTON
       $result = NULL;
       if($_SERVER['REQUEST_METHOD'] == 'GET') {
         try {
-          if (isset($_GET['searchbutton']) && $_GET['searchbutton'] == "Search") {
+          if (isset($_GET['searchbutton']) && $_GET['searchbutton'] == "Search") { //only process when search query string included
             echo "Searching for " . $_GET['search'] . ":<br>";
-            if(isset($_GET['search']) && $_GET['search'] != "" ) {
-              $name = $_GET['search'];
-              $sql = 'SELECT `product_name`, `product_price`, `product_dscpt`, `product_unitInWhichSold`
-                      FROM CraftLink.product
-                      WHERE ( `product_name` LIKE \'%' . $name . '%\')';
-              //$resultAddP = $conn->query($sql);
+            if(isset($_GET['search']) ) {
+              $namekeyword = $_GET['search']; //fixme pre-process (sanitize) the keyword
+              $sql = 'SELECT * FROM CraftLink.product WHERE ( `product_name` LIKE \'%' . $namekeyword . '%\')';
               executeGet($conn, $sql, $result);
             }
           }
@@ -132,32 +133,24 @@ if ($conn->connect_error) {
           $err[] = $e->getMessage();
         }
         $err = Array();
-        $_GET = NULL;
+        $_GET = NULL; //nullify request
       }
-
-
-
+      //render the products, assumes $result contains some query result
       if (!empty($result) && $result->num_rows > 0) {
-        echo "Results for " . $_GET['search'] . ":<br>";
-        echo "<table><tr><th>Name</th><th>Description</th><th>Price</th><th>Units Sold As</th></tr>";
-        while ($row = $result->fetch_assoc()) {
+        echo "Results for " . $_GET['search'] . " is:<br>";
+        echo "<table><tr><th>Name</th><th>Price</th><th>Description</th><th>Units Sold As</th></tr>";
+        while ($row = $result->fetch_assoc()) { //iterate the next row and fill the table
           echo "<tr>"
           . "<td>". $row['product_name'] . "</td>"
           . "<td>". $row['product_price'] . "</td>"
           . "<td>". $row['product_dscpt'] . "</td>"
           . "<td>". $row['product_unitInWhichSold'] . "</td>"
-
           ."</tr>";
         }
         echo "</table>";
       } else {
         echo "No Results";
       }
-
-
-
-
-
       mysqli_close($conn);
     ?>
   </body>
