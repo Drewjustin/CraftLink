@@ -179,7 +179,8 @@ executeGet($conn, $sql, $result);
                   <label for="name">Product Name:</label>
                   <input type="text" name="name" value="">
                   <label for="description">Description:</label>
-                  <input type="text" name="description" maxlength="500"value="">
+                  <textarea name="description" rows="4" cols="17" maxlength="250"></textarea>
+                  <!-- <input type="text" name="description" maxlength="500"value=""> -->
                   <label for="price">Price Per Unit:</label>
                   <input type="int"  name="price" value="">
                   <label for="unit_sold">Unit Sold:</label>

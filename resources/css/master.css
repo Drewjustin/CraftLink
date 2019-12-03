@@ -243,7 +243,7 @@ form#add_product{
    padding: 10px;
 }
 /* input boxes for adding product */
-#add_product input[type=text], #add_product input[type=int]{
+#add_product input[type=text], textarea, #add_product input[type=int]{
    margin: auto;
    padding: 5px;
    border-radius: 5px;
@@ -253,7 +253,7 @@ form#add_product{
    color: white;
    font-size: 1em;
 }
-#add_product input[type=text]:focus, #add_product input[type=int]:focus{
+#add_product input[type=text]:focus, textarea:focus, #add_product input[type=int]:focus{
    border: 2px solid #555;
    background-color: lightblue;
    border-radius: 5px;
