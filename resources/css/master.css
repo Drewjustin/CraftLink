@@ -414,8 +414,13 @@ fieldset{
 }
 
 
+.terms_label{
+  height: 30px;
+  display: block;
+  padding-top: 15px;
+}
+
 .value input[type=checkbox]{
-  margin-top: 15px;
 }
 
 .formData input[type=submit]{

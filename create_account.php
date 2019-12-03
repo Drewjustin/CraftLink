@@ -301,7 +301,7 @@ if($usersAdded > 0){
   			  <input type="radio" class="radio" id="consumer" name="userType" value="consumer" checked/> Consumer<br/>
 
 
-		      <label class="field" for="acceptInput">Terms and Conditions:</label>
+		      <label class="field terms_label" for="acceptInput">Terms and Conditions:</label>
 		      <div class="value"><input type="checkbox" id="acceptterms" name="terms" value="acceptterms" /> I accept the terms</div>
 
 
