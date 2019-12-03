@@ -27,6 +27,8 @@ $dbname = "CraftLink";
 
 // check if a login has occured, if so the $session[logon] array will exist
 // if it does then check the value, if it is true, the user is logged in, otherwise they are not
+session_start();
+$navLogout = true;
 if(array_key_exists("logon", $_SESSION)){
    if($_SESSION["logon"]){
       $navLogout = false;
