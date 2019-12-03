@@ -38,8 +38,8 @@ if ($conn->connect_error) {
 }
 
 //Grab everything from the craflink table
-$sql = "SELECT * FROM CraftLink.product";
-
+// $sql = "SELECT * FROM CraftLink.product";
+$sql = 'SELECT * FROM CraftLink.product WHERE supplier_id = \'' . $_SESSION['userid'] . '\'';
 
 // if($_SERVER['REQUEST_METHOD'] == 'POST'){
 //    if (isset($_POST["Submit"]) && $_POST['Submit'] =='Submit'){
@@ -56,19 +56,21 @@ $resultAddP = NULL;
 if(isset($_POST['addProduct'])){
    $addProduct = $_POST['addProduct'];
    if($addProduct == "Submit"){
-      $p_id = $_POST['p_id'];
+      // $p_id = $_POST['p_id'];
       $s_id = $_POST['s_id'];
       $name = $_POST['name'];
       $dscpt = $_POST['description'];
-      $price = $_POST['price'];
+      $price_dollars = $_POST['price_dollars'];
+      $price_cents = $_POST['price_cents'];
+      $price = strval(intval($price_dollars)*100 + intval($price_cents));
       $unit = $_POST['unit_sold'];
       // echo $name . '<br>';
       // echo $dscpt . '<br>';
       // echo $price . '<br>';
       // echo $unit . '<br>';
-      $sqlAddP = 'INSERT INTO CraftLink.product (`product_id`, `supplier_id`, `product_name`, `product_dscpt`, `product_price`,`product_unitInWhichSold`)
+      $sqlAddP = 'INSERT INTO CraftLink.product ( `supplier_id`, `product_name`, `product_dscpt`, `product_price`,`product_unitInWhichSold`)
       VALUES (\''
-      . $p_id . '\',\''
+      // . $p_id . '\',\''
       . $s_id . '\',\''
       . $name . '\',\''
       . $dscpt . '\',\''
@@ -141,10 +143,10 @@ executeGet($conn, $sql, $result);
           <section class="product_table">
              <?php
              if (!empty($result) && $result->num_rows > 0) {
+                //<th width='5%'>Product ID</th>
                  echo "<table>
                  <tr>
                  <th width='5%'>Supplier ID</th>
-                 <th width='5%'>Product ID</th>
                  <th width='15%'>Name</th>
                  <th width='40%'>Description</th>
                  <th width='15%'>Price Per Unit</th>
@@ -179,10 +181,14 @@ executeGet($conn, $sql, $result);
                   <label for="name">Product Name:</label>
                   <input type="text" name="name" value="">
                   <label for="description">Description:</label>
-                  <textarea name="description" rows="4" cols="17" maxlength="250"></textarea>
+                  <textarea name="description" rows="4" cols="25" maxlength="250"></textarea>
                   <!-- <input type="text" name="description" maxlength="500"value=""> -->
                   <label for="price">Price Per Unit:</label>
-                  <input type="int"  name="price" value="">
+                  <span id="price_input">
+                     <input type="int"  name="price_dollars" value="0" placeholder="$">
+                     .
+                     <input type="int"  name="price_cents" value="00" placeholder="¢">
+                  </span>
                   <label for="unit_sold">Unit Sold:</label>
                   <input type="text" name="unit_sold" value="">
                   <input type="submit" name="addProduct" value="Submit">
