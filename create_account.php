@@ -159,14 +159,15 @@ if($usersAdded > 0){
   $havePost = isset($_POST["save"]);
 
   if ($havePost) {
-    // get and clean form entries
+    // get and clean form entries, not cleanining passwords as they will be hashed and
+	 // user could have password with special chars
     $userName = htmlspecialchars(trim($_POST["userName"]));
-    $password1 = htmlspecialchars(trim($_POST["password1"]));
-    $password2 = htmlspecialchars(trim($_POST["password2"]));
+    $password1 = $_POST["password1"];
+    $password2 = $_POST["password2"];
     $email = htmlspecialchars(trim($_POST["email"]));
     $phoneNum = htmlspecialchars(trim($_POST["phoneNum"]));
 	$userType = htmlspecialchars(trim($_POST["userType"])); // "supplier" or "consumer"
-	$userTypeCode = ($userType=="supplier")?1:0; 
+	$userTypeCode = ($userType=="supplier")?1:0;
     if(isset($_POST["terms"])) $acceptterms = htmlspecialchars(trim($_POST["terms"]));
     //echo $acceptterms;
 
@@ -326,7 +327,8 @@ if($usersAdded > 0){
 
 <?php
 	if($havePost && $errors == '') {
-	// TODO: hash the password first
+	// hashing the password first
+	$password1 = hash("sha256", $password1);
 	$createTime = time() + (7 * 24 * 60 * 60);
 	$query = "INSERT INTO `user` (`username`, `email`, `passwordhash`, `create_time`, `user_id`, `phonenumber`,`issupplier`) VALUES ('$userName', '$email', '$password1', now(), NULL, '$phoneNum',$userTypeCode)";
 	$result0 = $conn->query($query);
@@ -338,6 +340,7 @@ if($usersAdded > 0){
     echo '<div class="messages">Error: ';
     echo $conn->connect_errno . ' - ' . $db->connect_error . '</div>';
 	}
+	header("Location: index.php");
 }
 
 /*

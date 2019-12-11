@@ -15,20 +15,22 @@
 
   if (isset($_POST['username']) && isset($_POST['password']) && $_SERVER['REQUEST_METHOD'] == 'POST'){
     $formData = array(
-      "username" => $_POST["username"],
+      "username" => htmlspecialchars(trim($_POST["username"])),      // trim username to avoid sql injection
       "password" => $_POST["password"],
     );
     //create SQL statement and then call the query on the database checking for username and the matching password
-    $sql = "SELECT `passwordhash`,`username`,`user_id` FROM `user` WHERE `username` = '" . $_POST["username"] . "';";
+    $sql = "SELECT `passwordhash`,`username`,`user_id` FROM `user` WHERE `username` = $formData['username']";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
-    if ($result !== NULL && $formData['username'] !== NULL && $formData['password'] !== NULL){
-      //looping through all possible matches
-      while($entry = $result->fetch_assoc()){
+    if ($result){
+      //store entry
+      $entry = $result->fetch_assoc();
         //checking the username and password are a real user
         $fires = 1;
-        if(strtolower($formData['username']) === strtolower($entry["username"]) && $formData['password'] === $entry["passwordhash"]) {
+        //hashing password entered
+        $hash = hash("sha256", $formData['password']);
+        if(strtolower($formData['username']) === strtolower($entry["username"]) && $hash === $entry["passwordhash"]) {
             echo "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
             //starting a session for the now logged in user
             session_start();
@@ -135,9 +137,8 @@
           <div>
               <input id="loginButton" type="submit" value="Login" />
         </div>
-        
+
       </form>
-      <!--iframe id="form-iframe" name="form-iframe" class="demo-iframe" frameborder="0"></iframe-->
   </div>
   </body>
 </html>
