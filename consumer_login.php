@@ -18,29 +18,36 @@
       "password" => $_POST["password"]
     );
 
+    $user = $formData['username'];
     //create SQL statement and then call the query on the database checking for username and the matching password
-    $sql = "SELECT `passwordhash`, `username`,`user_id` FROM `user` WHERE `username` = '" . $_POST["username"] . "';";
+    $sql = "SELECT `passwordhash`, `username`,`user_id`, 'issupplier' FROM `user` WHERE `username` = '$user'";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
-    if ($result !== NULL && $formData['username'] !== NULL && $formData['password'] !== NULL){
-      //looping through all possible matches
-      while($entry = $result->fetch_assoc()){
-        //checking the username and password are a real user
-        $fires = 1;
-        if(strtolower($formData['username']) === strtolower($entry["username"]) && $formData['password'] === $entry["passwordhash"]) {
-            echo "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
-            //starting a session for the now logged in user
-            session_start();
-            $_SESSION['username'] = $formData['username'];
-            $_SESSION['userid'] =$entry["user_id"];
-            $_SESSION['logon'] = true;                      // now user is logged in
-            header("Location: index.php?consumer_home");                 // redirect to supplier home when logged in
-        }
-        else {
-          echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
-        }
+    if ($result){
+      //storing the one match, if there are duplicates we have a bigger problem
+      $entry = $result->fetch_assoc();
+      //checking the username and password are a real user
+      $fires = 1;
+      // hashing password to check match
+      $hash = hash("sha256", $formData['password']);
+      if(!$entry['issupplier'] && strtolower($formData['username']) === strtolower($entry["username"]) && $hash === $entry["passwordhash"]) {
+         echo "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
+         //starting a session for the now logged in user
+         session_start();
+         $_SESSION['username'] = $formData['username'];
+         $_SESSION['userid'] =$entry["user_id"];
+         $_SESSION['logon'] = true;                      // now user is logged in
+         header("Location: index.php?consumer_home");                 // redirect to supplier home when logged in
       }
+      // in the event that they tried to log in with the wrong account type
+      else if($entry['issupplier'] && strtolower($formData['username']) === strtolower($entry["username"]) && $hash === $entry["passwordhash"]) {
+         echo "<p><h1>Login Not Successful</h1></p><p>You are a supplier! <a class='loginLink' href='supplier_login.php'>Login here</a></p>";
+      }
+      else{
+         echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
+      }
+
       //flag variable to create error for invalid usernames
       if ($fires === 0){
         echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";

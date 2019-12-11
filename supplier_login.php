@@ -19,7 +19,8 @@
       "password" => $_POST["password"],
     );
     //create SQL statement and then call the query on the database checking for username and the matching password
-    $sql = "SELECT `passwordhash`,`username`,`user_id` FROM `user` WHERE `username` = $formData['username']";
+    $user = $formData['username'];
+    $sql = "SELECT `passwordhash`,`username`,`user_id`, `issupplier` FROM `user` WHERE `username` = '$user'";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
@@ -30,7 +31,7 @@
         $fires = 1;
         //hashing password entered
         $hash = hash("sha256", $formData['password']);
-        if(strtolower($formData['username']) === strtolower($entry["username"]) && $hash === $entry["passwordhash"]) {
+        if($entry['issupplier'] && strtolower($formData['username']) === strtolower($entry["username"]) && $hash === $entry["passwordhash"]) {
             echo "<p><h1>Login Successful</h1></p><p>We won't keep you logged in on this computer.</p>";
             //starting a session for the now logged in user
             session_start();
@@ -39,10 +40,14 @@
             $_SESSION['userid'] =$entry["user_id"];
             header("Location: supplier.php");               // redirect to supplier home when logged in
         }
-        else {
+        // in the event that they tried to log in with the wrong account type
+       else if(!$entry['issupplier'] && strtolower($formData['username']) === strtolower($entry["username"]) && $hash === $entry["passwordhash"]) {
+          echo "<p><h1>Login Not Successful</h1></p><p>You are a consumer! <a class='loginLink' href='consumer_login.php'>Login here</a></p>";
+       }
+       else{
           echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";
-        }
-      }
+       }
+
       //flag variable to create error for invalid usernames
       if ($fires === 0){
         echo "<p><h1>Login Not Successful</h1></p><p>Invalid username or password.</p>";

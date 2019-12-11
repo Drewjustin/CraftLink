@@ -133,15 +133,26 @@ li {
 li.right{
   float: right;
 }
-li a {
+li a{
   display: block;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
+a.loginLink {
+  opacity: 0.7;
+  display: block;
+  color: #FDC100;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+a.loginLink:hover{
+   opacity: 1;
+   text-decoration: underline;
+}
 /* changes color on hover */
-li a:hover {
+li a:hover{
   background-color: #FDC100;
   color: black;
 }
@@ -275,7 +286,7 @@ input[name=addProduct]:hover{
 }
 #price_input input{
   width: 60px;
-} 
+}
 
 
 
