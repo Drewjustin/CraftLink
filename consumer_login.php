@@ -20,13 +20,14 @@
 
     $user = $formData['username'];
     //create SQL statement and then call the query on the database checking for username and the matching password
-    $sql = "SELECT `passwordhash`, `username`,`user_id`, 'issupplier' FROM `user` WHERE `username` = '$user'";
+    $sql = "SELECT * FROM `user` WHERE username = '$user'";
     $result = $conn->query($sql);
     //checking to see that everything exists before compairing values
     $fires = 0;
     if ($result){
       //storing the one match, if there are duplicates we have a bigger problem
       $entry = $result->fetch_assoc();
+
       //checking the username and password are a real user
       $fires = 1;
       // hashing password to check match

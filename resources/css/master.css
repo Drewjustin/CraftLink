@@ -102,6 +102,11 @@ h3
   border-radius: 5px;
   text-align: center;
 }
+#messages{
+   width:50%
+   margin: auto;
+   color: red;
+}
 
 /***** index.html styling ******/
 .landing_page {
