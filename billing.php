@@ -155,17 +155,19 @@
     </div>
 
     <br/>
-
+<div style="font-size: 8px;"> <p>Debug output from mail-sending</p>
 <?php
  
-    
+ use PHPMailer\PHPMailer\PHPMailer;
+ use PHPMailer\PHPMailer\SMTP;
+ use PHPMailer\PHPMailer\Exception;
     $purchased = isset($_POST['sendEmail']);
 
     if($purchased){
         try{
-            require_once("phpmailer/PHPMailer.php"); 
-            require_once("phpmailer/Exception.php"); 
-            require_once("phpmailer/SMTP.php"); 
+            include("phpmailer/PHPMailer.php"); 
+            include("phpmailer/Exception.php"); 
+            include("phpmailer/SMTP.php"); 
             $mail = new PHPMailer();
             $mail->SMTPDebug = SMTP::DEBUG_SERVER;
             $mail->isSMTP();
@@ -180,7 +182,7 @@
             $mail->Password = 'Cr@ftlink1';
             
             $mail->addAddress('craftlinktesting@gmail.com','CraftLinkConsumer');
-            $mail->addAddress('craftlinktesting@gmail.com','CraftLinkSupplier');
+            $mail->addAddress('martinpaulsen7@gmail.com','CraftLinkSupplier');
         
             $mail->isHTML(false); 
             $mail->Subject = 'The intention of purchasing rootbeer';
@@ -190,9 +192,7 @@
              
             
             if($status) {
-             echo 'mail sent';
-            }else{
-             echo 'mail sent fail, error info is:<br>'.$mail->ErrorInfo;
+             echo '<h2>Email sent to consumer and supplier.</h2>';
             }
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
@@ -208,11 +208,11 @@
         // mail($to, $subject, $message, $headers);
 
     } else {
-        echo '<h1>test</h1>';
+        echo '<h1 style="font-size:16px;">test</h1>';
     }
 
 ?>
-    
+  </div>  
   </body>
 </html>
 
