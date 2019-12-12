@@ -155,29 +155,64 @@
     </div>
 
     <br/>
-
+<div style="font-size: 8px;"> <p>Debug output from mail-sending</p>
 <?php
-
+ 
+ use PHPMailer\PHPMailer\PHPMailer;
+ use PHPMailer\PHPMailer\SMTP;
+ use PHPMailer\PHPMailer\Exception;
     $purchased = isset($_POST['sendEmail']);
 
     if($purchased){
-        echo '<h1>hi</h1>';
+        try{
+            include("phpmailer/PHPMailer.php"); 
+            include("phpmailer/Exception.php"); 
+            include("phpmailer/SMTP.php"); 
+            $mail = new PHPMailer();
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->SMTPAuth=true;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+        
+            $mail->setFrom('craftlinktesting@gmail.com', 'CraftLink Server');
+            // $mail->CharSet = 'UTF-8';
+            $mail->Username ='craftlinktesting';
+            $mail->Password = 'Cr@ftlink1';
+            
+            $mail->addAddress('craftlinktesting@gmail.com','CraftLinkConsumer');
+            $mail->addAddress('martinpaulsen7@gmail.com','CraftLinkSupplier');
+        
+            $mail->isHTML(false); 
+            $mail->Subject = 'The intention of purchasing rootbeer';
+            $mail->Body = "Test message sent from PHPMailer"; 
+             
+            $status = $mail->send();
+             
+            
+            if($status) {
+             echo '<h2>Email sent to consumer and supplier.</h2>';
+            }
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
 
-        $to      = 'martinpaulsen7@gmail.com';
-        $subject = 'the subject';
-        $message = 'hello';
-        $headers = 'From: martinpaulsen7@gmail.com' . "\r\n" .
-            'Reply-To: martinpaulsen7@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+        // $to      = 'martinpaulsen7@gmail.com';
+        // $subject = 'the subject';
+        // $message = 'hello';
+        // $headers = 'From: martinpaulsen7@gmail.com' . "\r\n" .
+        //     'Reply-To: martinpaulsen7@gmail.com' . "\r\n" .
+        //     'X-Mailer: PHP/' . phpversion();
 
-        mail($to, $subject, $message, $headers);
+        // mail($to, $subject, $message, $headers);
 
     } else {
-        echo '<h1>test</h1>';
+        echo '<h1 style="font-size:16px;">test</h1>';
     }
 
 ?>
-    
+  </div>  
   </body>
 </html>
 
