@@ -155,7 +155,7 @@
     </div>
 
     <br/>
-<div style="font-size: 8px;"> <p>Debug output from mail-sending</p>
+<!-- <div style="font-size: 8px;"> <p>Debug output from mail-sending</p> -->
 <?php
  
  use PHPMailer\PHPMailer\PHPMailer;
@@ -208,7 +208,7 @@
         // mail($to, $subject, $message, $headers);
 
     } else {
-        echo '<h1 style="font-size:16px;">test</h1>';
+        // echo '<h1 style="font-size:16px;">test</h1>';
     }
 
 ?>

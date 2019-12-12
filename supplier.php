@@ -174,7 +174,7 @@ executeGet($conn, $sql, $result);
             <form id="searchbarcenter" class="form" action="supplier.php" method="post">
                <label>Set your company name here:</label><br>
                <input type="text" id="username" name="new_name" placeholder="Company Name"/>
-               <input type="submit" id="search_button" name="set_name" value="Submit"/>
+               <input type="submit" id="set_name_button" class="checkout_button" name="set_name" value="Submit"/>
             </form>
          </div>
 
@@ -208,10 +208,10 @@ executeGet($conn, $sql, $result);
                      . "<td>" . $row["product_unitInWhichSold"] . "</td>"
                      //. "<td>" . $row["product_inStock"] . "</td>"
                      . "<td><a href='supplier.php?id=".$row["product_id"]."&status=".$row["product_inStock"]."'>"
-                     . "<input type=\"submit\" name=\"stock\" value=\"" . $stock_status . "\"  >"
+                     . "<input type=\"submit\" class='checkout_button' name=\"stock\" value=\"" . $stock_status . "\"  >"
                      . "</a></td>"
                      . "<td><a href='supplier.php?id=".$row["product_id"]."&delete=1'>"
-                     . "<input type=\"submit\" name=\"delete\" value=\"Delete\"  >"
+                     . "<input type=\"submit\" class='checkout_button' name=\"delete\" value=\"Delete\"  >"
                      . "</a></td>"
                      // . "<a href='edit.php?'>edit</a>;"
                      . "</tr>";

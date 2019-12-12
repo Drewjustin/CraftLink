@@ -551,3 +551,21 @@ fieldset{
   border-top: 1px solid rgba(231,189,116,.8);
   border-bottom: 1px solid rgba(231,189,116,.8);
 }
+
+
+.checkout_button{
+  font-size: 1.2em;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  padding: 3px 7px;
+  transition: 0.2s;
+  border: 0;
+}
+.checkout_button:hover{
+  background-color: #FDC100;
+}
+
+#set_name_button{
+  margin-bottom: 5vh;
+}

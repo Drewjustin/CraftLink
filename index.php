@@ -162,7 +162,7 @@ $sql = "SELECT * FROM CraftLink.product";
             . "<td class='desc_td'>". $row['product_dscpt'] . "</td>"
             . "<td class='name_td'>". $row['product_unitInWhichSold'] . "</td>"
             . "<td class='name_td'><a href='billing.php?item=".$row["product_id"]."'>"
-            . "<input type='submit' name='item' value='Checkout'  >"
+            . "<input type='submit' class='checkout_button' name='item' value='Checkout'  >"
             . "</a></td>"
             ."</tr>";
 
