@@ -74,9 +74,9 @@
     $units = '';
     $instock = '';
 
-    $submitted = isset($_GET['buy']);
+    // $submitted = isset($_GET['buy']);
 
-    if($submitted && isset($_GET['item'])){
+    if(isset($_GET['item'])){
         $product_id = $_GET['item'];
         $findItemQuery = "SELECT * FROM `product` WHERE `product_id` = " . $product_id;
         $findItemResult = $conn->query($findItemQuery);

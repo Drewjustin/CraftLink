@@ -126,8 +126,7 @@ $sql = "SELECT * FROM CraftLink.product";
   </div>
 
     <div id="search_results">
-      <form id="purchase_form" action="billing.php" method="GET">
-        <input type="text" class="hide" name="buy" value="yes"/>
+      <div id="purchase_form">
     <?php
       // ADD PRODUCT BUTTON
       $result = NULL;
@@ -162,8 +161,11 @@ $sql = "SELECT * FROM CraftLink.product";
             . "<td class='name_td'>". $row['product_price'] . "</td>"
             . "<td class='desc_td'>". $row['product_dscpt'] . "</td>"
             . "<td class='name_td'>". $row['product_unitInWhichSold'] . "</td>"
-            . "<td class='name_td'><input type='submit' name='item' value='" . $row['product_id'] . "'/></td>"
+            . "<td class='name_td'><a href='billing.php?item=".$row["product_id"]."'>"
+            . "<input type='submit' name='item' value='Checkout'  >"
+            . "</a></td>"
             ."</tr>";
+
           }
           echo "</table>";
           echo '<script type="text/javascript">$("#product_table").focus();</script>';
@@ -173,6 +175,7 @@ $sql = "SELECT * FROM CraftLink.product";
         mysqli_close($conn);
       }
     ?>
+    </div>
   </div>
   </body>
 </html>
