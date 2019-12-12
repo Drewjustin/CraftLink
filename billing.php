@@ -157,20 +157,55 @@
     <br/>
 
 <?php
-
+ 
+    
     $purchased = isset($_POST['sendEmail']);
 
     if($purchased){
-        echo '<h1>hi</h1>';
+        try{
+            require_once("phpmailer/PHPMailer.php"); 
+            require_once("phpmailer/Exception.php"); 
+            require_once("phpmailer/SMTP.php"); 
+            $mail = new PHPMailer();
+            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+            $mail->isSMTP();
+            $mail->SMTPAuth=true;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+        
+            $mail->setFrom('craftlinktesting@gmail.com', 'CraftLink Server');
+            // $mail->CharSet = 'UTF-8';
+            $mail->Username ='craftlinktesting';
+            $mail->Password = 'Cr@ftlink1';
+            
+            $mail->addAddress('craftlinktesting@gmail.com','CraftLinkConsumer');
+            $mail->addAddress('craftlinktesting@gmail.com','CraftLinkSupplier');
+        
+            $mail->isHTML(false); 
+            $mail->Subject = 'The intention of purchasing rootbeer';
+            $mail->Body = "Test message sent from PHPMailer"; 
+             
+            $status = $mail->send();
+             
+            
+            if($status) {
+             echo 'mail sent';
+            }else{
+             echo 'mail sent fail, error info is:<br>'.$mail->ErrorInfo;
+            }
+        } catch (Exception $e) {
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
 
-        $to      = 'martinpaulsen7@gmail.com';
-        $subject = 'the subject';
-        $message = 'hello';
-        $headers = 'From: martinpaulsen7@gmail.com' . "\r\n" .
-            'Reply-To: martinpaulsen7@gmail.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
+        // $to      = 'martinpaulsen7@gmail.com';
+        // $subject = 'the subject';
+        // $message = 'hello';
+        // $headers = 'From: martinpaulsen7@gmail.com' . "\r\n" .
+        //     'Reply-To: martinpaulsen7@gmail.com' . "\r\n" .
+        //     'X-Mailer: PHP/' . phpversion();
 
-        mail($to, $subject, $message, $headers);
+        // mail($to, $subject, $message, $headers);
 
     } else {
         echo '<h1>test</h1>';
