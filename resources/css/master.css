@@ -1,6 +1,6 @@
 /* ************ HEX COLOR OF LOGO: #FDC100 ************* */
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
-
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
 
 .demo-iframe {
   border: none;
@@ -110,8 +110,25 @@ h3
 
 /***** index.html styling ******/
 .landing_page {
+  background-image: url("../img.jpg");
+  background-repeat: no-repeat;
+  /*background-image: linear-gradient(transparent, black);*/
+  background-size: 100vw;
   background-color: #000;
   color: white;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  min-height: 100%;
+}
+.landing_img{
+  display: block;
+  padding: 1vh;
+  margin: 0px;
+  background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  min-height: 98vh;
 }
 .logo {
   width:600px;
@@ -119,7 +136,7 @@ h3
 }
 /*** Navbar css ***/
 .nav{
-  background-color: #111;
+  /*background-color: #111;*/
   height: 50px;
 }
 .nav-logo {
@@ -144,6 +161,7 @@ li a{
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  transition: 0.2s;
 }
 a.loginLink {
   opacity: 0.7;
@@ -151,6 +169,7 @@ a.loginLink {
   color: #FDC100;
   padding: 14px 16px;
   text-decoration: none;
+  transition: 0.2s;
 }
 a.loginLink:hover{
    opacity: 1;
@@ -274,17 +293,18 @@ form#add_product{
 }
 /* submit add product button */
 input[name=addProduct]{
-   display: block;
-   width: 70px;
-   margin: auto;
-   margin-top: 10px;
-   padding: 5px;
-   border: 1px solid #FDC100;
-   border-radius: 5px;
-   background-color: #FDC100;
-   color:black;
-   opacity: 0.8;
-   font-size: 1em;
+ display: block;
+ width: 70px;
+ margin: auto;
+ margin-top: 10px;
+ padding: 5px;
+ border: 1px solid #FDC100;
+ border-radius: 5px;
+ background-color: #FDC100;
+ color:black;
+ opacity: 0.8;
+ font-size: 1em;
+  transition: 0.2s;
 }
 input[name=addProduct]:hover{
    opacity: 1;
@@ -391,6 +411,10 @@ pre {
   width: 46vw;
 }
 
+.tr_hover{
+  transition: 0.2s;
+}
+
 
 .tr_hover:hover{
   background-color: #5d6d7c;
@@ -408,6 +432,7 @@ pre {
   border: 0;
   padding: 2px;
   font-size: 20px;
+  transition: 0.2s;
 }
 #search_button:hover{
   background-color: #FDC100;
@@ -459,6 +484,7 @@ fieldset{
   font-size: 18px;
   border-radius: 4px;
   padding: 6px;
+  transition: 0.2s;
 }
 
 .formData input[type=submit]:hover{
@@ -475,11 +501,51 @@ fieldset{
   color: white;
 }
 
-#bg{
+#bg{/*
   background-color: black;
-  background-image: 
+  background-image: */
 }
 
 #purchase_form{
   margin: auto;
+}
+
+.hide{
+  display: none;
+}
+
+.about{
+  width: 50vw;
+  margin: auto;
+  font-family: Lato;
+  color: rgba(255,255,255,.7);
+  margin-bottom: 20vh;
+  margin-top: 5vh;
+}
+
+.about h1{
+  font-weight: 900;
+  font-size: 2.2em;
+  letter-spacing: .015em;
+  text-decoration: none;
+  line-height: 1.25em;
+}
+.about p, .about ol{
+  margin: 0 5vw;
+  margin-bottom: 5vh;
+  font-style: normal;
+  font-weight: 100;
+  font-size: 16px;
+  text-align: justify;
+  line-height: 1.7em;
+}
+
+.about_section{
+  width: 50vw;
+  margin: 5vh 0;
+}
+
+.about_middle{
+  border-top: 1px solid rgba(231,189,116,.8);
+  border-bottom: 1px solid rgba(231,189,116,.8);
 }

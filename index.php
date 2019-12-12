@@ -84,6 +84,7 @@ $sql = "SELECT * FROM CraftLink.product";
   </script>
 
   <body class="landing_page">
+    <div class="landing_img">
     <!-- NAVBAR -->
     <div class="nav">
       <a href="index.php">
@@ -99,7 +100,7 @@ $sql = "SELECT * FROM CraftLink.product";
            <li class="right"><a href="create_account.php">SIGN UP</a></li>
            <li class="right"><a href="supplier_login.php">LOGIN ROOT BREWERS</a></li>
            <li class="right"><a href="consumer_login.php">LOGIN CONSUMERS</a></li>
-           <li><a href="#">ABOUT</a></li>
+           <li><a href="about.php">ABOUT</a></li>
          </ul>
       <?php
          } else{
@@ -108,13 +109,13 @@ $sql = "SELECT * FROM CraftLink.product";
          <ul>
            <li><a class="active" href="index.php?consumer_home">HOME</a></li>
            <li class="right"><a href="index.php?logout">LOGOUT</a></li>
-           <li><a href="#">ABOUT</a></li>
+           <li><a href="about.php">ABOUT</a></li>
          </ul>
       <?php } ?>
     </div>
     <div id="bg">
     <div class="logo">
-      <img class="logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">
+      <img class="logo" src="resources/logoTrans.png" alt="Craftlink Logo">
     </div>
     <form id='searchbarcenter' method="get" action="index.php?consumer_home">
       <span id='searchbar'>
@@ -126,7 +127,7 @@ $sql = "SELECT * FROM CraftLink.product";
 
     <div id="search_results">
       <form id="purchase_form" action="billing.php" method="GET">
-        <input type="text" name="buy" value="yes"/>
+        <input type="text" class="hide" name="buy" value="yes"/>
     <?php
       // ADD PRODUCT BUTTON
       $result = NULL;
