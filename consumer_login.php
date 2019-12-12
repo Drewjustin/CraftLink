@@ -122,7 +122,7 @@
         <li class="right"><a href="create_account.php">SIGN UP</a></li>
         <li class="right"><a href="supplier_login.php">LOGIN ROOT BREWERS</a></li>
         <li class="right"><a href="#">LOGIN CONSUMERS</a></li>
-        <li><a href="#">ABOUT</a></li>
+        <li><a href="about.php">ABOUT</a></li>
       </ul>
     </div>
 

@@ -41,7 +41,7 @@
         <!-- LOGOUT TAKES YOU BACK TO INDEX LANDING PAGE -->
         <li class="right"><a href="index.php">LOG OUT</a></li>
         <li class="right"><a href="billing.php">Checkout</a></li>
-        <li><a href="#">ABOUT</a></li>
+        <li><a href="about.php">ABOUT</a></li>
       </ul>
     </div>
     <!-- THIS IS ALL DUMMY DATA FOR PRESENTATION PURPOSES -->

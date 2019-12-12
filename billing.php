@@ -132,7 +132,7 @@
       <ul>
         <li><a class="active" href="index.php">Home</a></li>
         <li class="right"><a href="index.php">Logout</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="about.php">About</a></li>
       </ul>
     </div>
 

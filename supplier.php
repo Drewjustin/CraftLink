@@ -134,7 +134,7 @@ executeGet($conn, $sql, $result);
          <li><a class="active" href="#">HOME</a></li>
          <!-- LOGOUT TAKES YOU BACK TO INDEX LANDING PAGE -->
          <li class="right"> <a href="index.php?logout">LOG OUT</a></li>
-         <li><a href="#">ABOUT</a></li>
+         <li><a href="about.php">ABOUT</a></li>
          </ul>
       </div>
       <section class="main">
