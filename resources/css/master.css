@@ -387,6 +387,16 @@ pre {
   width: 8vw;
 }
 
+.desc_td{
+  width: 46vw;
+}
+
+
+.tr_hover:hover{
+  background-color: #5d6d7c;
+}
+
+
 .search_title{
   font-size: 2em;
   line-height: 3em;
@@ -463,4 +473,13 @@ fieldset{
 .formData{
   background-color: black;
   color: white;
+}
+
+#bg{
+  background-color: black;
+  background-image: 
+}
+
+#purchase_form{
+  margin: auto;
 }
