@@ -49,7 +49,32 @@ $sql = 'SELECT * FROM CraftLink.product WHERE supplier_id = \'' . $_SESSION['use
 //       . $_POST['price'] . ',' . $_POST['unit_sold'] . ')';
 //       $result2 = $conn->query($sql2);
 //    }
-// }
+// }\
+
+$uid = $_SESSION['userid'];
+
+  $submitName = isset($_POST['new_name']);
+
+
+   if($submitName){
+      $newName = $_POST['new_name'];
+      $queryResetName = "UPDATE `user` SET `businessname` = '$newName' WHERE `user_id` = '$uid'";
+      $resultResetName = $conn->query($queryResetName);
+      if(!$resultResetName){
+         trigger_error('Invalid query: ' . $conn->error);
+      }
+   }
+
+$companyName = '';
+
+$queryGetCompany = "SELECT `businessname` FROM `user` WHERE `user_id` = '$uid'";
+$resultGetCompany = $conn->query($queryGetCompany);
+if(!$resultGetCompany){
+   trigger_error('Invalid query: ' . $conn->error);
+} else {
+   $company = $resultGetCompany->fetch_assoc();
+   $companyName = $company['businessname'];
+}
 
 // ADD PRODUCT BUTTON
 $resultAddP = NULL;
@@ -82,6 +107,9 @@ if(isset($_POST['addProduct'])){
 }
 //$result = $conn->query($sql);
 executeGet($conn, $sql, $result);
+
+
+ 
 
  ?>
 
@@ -138,7 +166,17 @@ executeGet($conn, $sql, $result);
          </ul>
       </div>
       <section class="main">
-         <h2 class="centerMe">Brewer Home</h1>
+         <!-- <h2 class="centerMe">Brewer Home</h1> -->
+
+         <h2 class="centerMe"><?php echo $companyName ?> Home</h2>
+
+         <div id="add_company_name">
+            <form id="searchbarcenter" class="form" action="supplier.php" method="post">
+               <label>Set your company name here:</label><br>
+               <input type="text" id="username" name="new_name" placeholder="Company Name"/>
+               <input type="submit" id="search_button" name="set_name" value="Submit"/>
+            </form>
+         </div>
 
          <section class="product_table">
             <?php
