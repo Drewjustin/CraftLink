@@ -6,7 +6,7 @@ session_start();
    } else {
    //   echo "Error" . mysqli_error($con);
    }
-   // echo("<br>");
+   echo("<br>");
  }
  function executeGet(&$con,&$sql,&$result) {
    $result = mysqli_query($con,$sql);
@@ -137,23 +137,29 @@ executeGet($conn, $sql, $result);
          <li><a href="#">ABOUT</a></li>
          </ul>
       </div>
-       <section class="main">
-          <h2 class="centerMe">Brewer Home</h1>
+      <section class="main">
+         <h2 class="centerMe">Brewer Home</h1>
 
-          <section class="product_table">
-             <?php
-             if (!empty($result) && $result->num_rows > 0) {
-                //<th width='5%'>Supplier ID</th>
-                 echo "<table>
-                 <tr>
-                 <th width='5%'>Product ID</th>
-                 <th width='15%'>Name</th>
-                 <th width='40%'>Description</th>
-                 <th width='15%'>Price Per Unit</th>
-                 <th width='15%'>Volume Sold In</th>
-                 <th width='5%'>In Stock</th>";
-                 // output data of each row
-                 while($row = $result->fetch_assoc()) {
+         <section class="product_table">
+            <?php
+            if (!empty($result) && $result->num_rows > 0) {
+               $stock_status = "";
+               //<th width='5%'>Supplier ID</th>
+               echo "<table>
+               <tr>
+               <th width='5%'>Product ID</th>
+               <th width='15%'>Name</th>
+               <th width='40%'>Description</th>
+               <th width='15%'>Price Per Unit</th>
+               <th width='15%'>Volume Sold In</th>
+               <th width='5%'>Change Stock Status</th>";
+               // output data of each row
+               while($row = $result->fetch_assoc()) {
+                     if ($row["product_inStock"] == 0) {
+                        $stock_status = "Out of Stock";
+                     } else {
+                        $stock_status = "In Stock";
+                     }
                      echo "<tr>"
                      // . "<td>" . $row["supplier_id"] . "</td>"
                      . "<td>" . $row["product_id"] . "</td>"
@@ -161,15 +167,33 @@ executeGet($conn, $sql, $result);
                      . "<td>" . $row["product_dscpt"] . "</td>"
                      . "<td>" . $row["product_price"] . "</td>"
                      . "<td>" . $row["product_unitInWhichSold"] . "</td>"
-                     . "<td>" . $row["product_inStock"] . "</td>"
+                     //. "<td>" . $row["product_inStock"] . "</td>"
+                     . "<td><a href='supplier.php?id=".$row["product_id"]."&status=".$row["product_inStock"]."'>"
+                     . "<input type=\"submit\" name=\"stock\" value=\"" . $stock_status . "\"  >"
+                     . "</a></td>"
                      // . "<a href='edit.php?'>edit</a>;"
                      . "</tr>";
-                 }
-                 echo "</table>";
-             } else {
-                 echo "0 results";
-             }
-             ?>
+               }
+               echo "</table>";
+            } else {
+               echo "0 results";
+            }
+
+            if (isset($_GET['id']) && isset($_GET['status'])) {
+               if ($_GET['status'] == 0) {
+                  $newstatus = 1;
+               } else {
+                  $newstatus = 0;
+               }
+               if ($_GET['id'] != "") {
+                  $sqlStock = 'Update CraftLink.product SET `product_inStock` = '. $newstatus .' WHERE `product_id` = ' . $_GET['id'];
+                  executePost($conn, $sqlStock);
+                  header('Location: supplier.php');
+               }
+            }
+
+
+            ?>
           </section>
             <article id="add_products">
                <button type="button" id="add_product_button">Add Product</button>
