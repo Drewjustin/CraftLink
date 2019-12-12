@@ -152,7 +152,8 @@ executeGet($conn, $sql, $result);
                <th width='40%'>Description</th>
                <th width='15%'>Price Per Unit</th>
                <th width='15%'>Volume Sold In</th>
-               <th width='5%'>Change Stock Status</th>";
+               <th width='5%'>Change Stock Status</th>
+               <th width='5%'>Delete</th>";
                // output data of each row
                while($row = $result->fetch_assoc()) {
                      if ($row["product_inStock"] == 0) {
@@ -171,6 +172,9 @@ executeGet($conn, $sql, $result);
                      . "<td><a href='supplier.php?id=".$row["product_id"]."&status=".$row["product_inStock"]."'>"
                      . "<input type=\"submit\" name=\"stock\" value=\"" . $stock_status . "\"  >"
                      . "</a></td>"
+                     . "<td><a href='supplier.php?id=".$row["product_id"]."&delete=1'>"
+                     . "<input type=\"submit\" name=\"delete\" value=\"Delete\"  >"
+                     . "</a></td>"
                      // . "<a href='edit.php?'>edit</a>;"
                      . "</tr>";
                }
@@ -178,19 +182,32 @@ executeGet($conn, $sql, $result);
             } else {
                echo "0 results";
             }
+            
 
-            if (isset($_GET['id']) && isset($_GET['status'])) {
-               if ($_GET['status'] == 0) {
-                  $newstatus = 1;
-               } else {
-                  $newstatus = 0;
+            if (isset($_GET['id'])) {
+               if (isset($_GET['status'])) {
+                  if ($_GET['status'] == 0) {
+                     $newstatus = 1;
+                  } else {
+                     $newstatus = 0;
+                  }
+                  if ($_GET['id'] != "") {
+                     $sql = 'Update CraftLink.product SET `product_inStock` = '. $newstatus .' WHERE `product_id` = ' . $_GET['id'];
+                     executePost($conn, $sql);
+                     header('Location: supplier.php');
+                  }
                }
-               if ($_GET['id'] != "") {
-                  $sqlStock = 'Update CraftLink.product SET `product_inStock` = '. $newstatus .' WHERE `product_id` = ' . $_GET['id'];
-                  executePost($conn, $sqlStock);
-                  header('Location: supplier.php');
+               if (isset($_GET['delete'])) {
+                  if ($_GET['delete'] == 1) {
+                     if ($_GET['id'] != "") {
+                        $sql = 'Delete from CraftLink.product where `product_id` = ' . $_GET['id'];
+                        executePost($conn, $sql);
+                        header('Location: supplier.php');
+                     }
+                  }
                }
             }
+
 
 
             ?>
