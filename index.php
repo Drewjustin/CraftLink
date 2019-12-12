@@ -112,6 +112,7 @@ $sql = "SELECT * FROM CraftLink.product";
          </ul>
       <?php } ?>
     </div>
+    <div id="bg">
     <div class="logo">
       <img class="logo" src="resources/logoCrop.jpg" alt="Craftlink Logo">
     </div>
@@ -121,8 +122,11 @@ $sql = "SELECT * FROM CraftLink.product";
         <input type="submit" id="search_button" name="searchbutton" value="Search">
       </span>
     </form>
+  </div>
 
     <div id="search_results">
+      <form id="purchase_form" action="billing.php" method="GET">
+        <input type="text" name="buy" value="yes"/>
     <?php
       // ADD PRODUCT BUTTON
       $result = NULL;
@@ -150,13 +154,14 @@ $sql = "SELECT * FROM CraftLink.product";
         //render the products, assumes $result contains some query result
         if (!empty($result) && $result->num_rows > 0) {
           //echo "<span class='search_title'>Results for '<b>" . $search . "</b>':</span><br>";
-          echo "<table id='products_table'><tr><th>Name</th><th>Price</th><th>Description</th><th>Units Sold As</th></tr>";
+          echo "<table id='products_table'><tr><th>Name</th><th>Price</th><th>Description</th><th>Units Sold As</th><th>Purchase</th></tr>";
           while ($row = $result->fetch_assoc()) { //iterate the next row and fill the table
-            echo "<tr>"
+            echo "<tr class='tr_hover'>"
             . "<td class='name_td'>". $row['product_name'] . "</td>"
             . "<td class='name_td'>". $row['product_price'] . "</td>"
             . "<td class='desc_td'>". $row['product_dscpt'] . "</td>"
             . "<td class='name_td'>". $row['product_unitInWhichSold'] . "</td>"
+            . "<td class='name_td'><input type='submit' name='item' value='" . $row['product_id'] . "'/></td>"
             ."</tr>";
           }
           echo "</table>";
