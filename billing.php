@@ -22,7 +22,7 @@
         // "securityCode" => $_POST["securityCode"],
         // "cardType" => $_POST["cardType"]
  //);
-	
+
   // $response = "<table>";
   // $response .= "<tr><th>Customer Details</th></tr>";
   // $response .= "<tr><td>" . $formData['firstname'] . "</td><td>" .  $formData['middlename'] . "</td><td>" . $formData['lastname'] . "</td></tr>";
@@ -31,7 +31,7 @@
   // $response .= "<tr><td>" . $formData['billingAddressLine2'] . "</td></tr>";
   // $response .= "<tr><td>" . $formData['billingCity'] . "</td><td>" . $formData['billingState'] . "</td></tr>";
   // $response .= "<tr><td>" . $formData['billingZipCode'] . "</td><td>" . $formData['billingCountry'] . "</td></tr>";
-  
+
   // if (isset($_POST["shippingAddressCheckBox"]) && $_POST["shippingAddressCheckBox"] == 'true')
   // {
   //   $response .= "<tr><td>Shipping Address</td></tr>";
@@ -40,7 +40,7 @@
   //   $response .= "<tr><td>" . $formData['shippingCity'] . "</td></tr>";
   //   $response .= "<tr><td>" . $formData['shippingState'] . "</td></tr>";
   //   $response .= "<tr><td>" . $formData['shippingCity'] . "</td><td>" . $formData['shippingState'] . "</td></tr>";
-  //   $response .= "<tr><td>" . $formData['shippingZipCode'] . "</td><td>" . $formData['shippingCountry'] . "</td></tr>"; 
+  //   $response .= "<tr><td>" . $formData['shippingZipCode'] . "</td><td>" . $formData['shippingCountry'] . "</td></tr>";
   //  }
     // $response .= "<tr><td>Billing Information</td></tr>";
     // $response .= "<tr><td>" . $formData['cardType'] . "</td></tr>";
@@ -50,7 +50,11 @@
 
 
 //   echo $response;
-
+	session_start();
+	if(!$_SESSION['logon']){
+	   header("Location: index.php");
+	   die();
+	}
     $servername = "149.28.55.25";
     $username = "websysroot";
     $password = "craftlink.rootbeer";
@@ -104,26 +108,26 @@
     <script type="text/javascript" src="jqwidgets/scripts/jquery-1.11.1.min.js"></script>
 <!--     <link rel="stylesheet" href="jqwidgets/jqwidgets/styles/jqx.base.css" type="text/css" />
     <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcore.js"></script>
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxexpander.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxvalidator.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxbuttons.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcheckbox.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/globalization/globalize.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcalendar.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdatetimeinput.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxmaskedinput.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxlistbox.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcombobox.js"></script> 
-    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxscrollbar.js"></script> 
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxvalidator.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcheckbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/globalization/globalize.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcalendar.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxdatetimeinput.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxmaskedinput.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxlistbox.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxcombobox.js"></script>
+    <script type="text/javascript" src="jqwidgets/jqwidgets/jqxscrollbar.js"></script>
     <script type="text/javascript" src="jqwidgets/scripts/demos.js"></script>      -->  <!-- commented out Angular components -->
 
     <title>Checkout</title>
 
   </head>
-  
+
   <body>
 
-      
+
     <!--img src=LOGO -->
     <div class="nav">
       <a href="index.php">
@@ -138,7 +142,7 @@
 
     <div class="" >
         <h2>Checkout <?php echo "$name"; ?></h2>
-        <?php 
+        <?php
             if($instock == 0){
                 echo 'This item is out of stock<br><br>';
                 echo '<script type="text/javascript">$(document).ready(function(){$("#purchase_form").css({"display":"none"});});</script>';
@@ -157,7 +161,7 @@
     <br/>
 <!-- <div style="font-size: 8px;"> <p>Debug output from mail-sending</p> -->
 <?php
- 
+
  use PHPMailer\PHPMailer\PHPMailer;
  use PHPMailer\PHPMailer\SMTP;
  use PHPMailer\PHPMailer\Exception;
@@ -165,9 +169,9 @@
 
     if($purchased){
         try{
-            include("phpmailer/PHPMailer.php"); 
-            include("phpmailer/Exception.php"); 
-            include("phpmailer/SMTP.php"); 
+            include("phpmailer/PHPMailer.php");
+            include("phpmailer/Exception.php");
+            include("phpmailer/SMTP.php");
             $mail = new PHPMailer();
             $mail->SMTPDebug = SMTP::DEBUG_SERVER;
             $mail->isSMTP();
@@ -175,22 +179,22 @@
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
-        
+
             $mail->setFrom('craftlinktesting@gmail.com', 'CraftLink Server');
             // $mail->CharSet = 'UTF-8';
             $mail->Username ='craftlinktesting';
             $mail->Password = 'Cr@ftlink1';
-            
+
             $mail->addAddress('craftlinktesting@gmail.com','CraftLinkConsumer');
             $mail->addAddress('martinpaulsen7@gmail.com','CraftLinkSupplier');
-        
-            $mail->isHTML(false); 
+
+            $mail->isHTML(false);
             $mail->Subject = 'The intention of purchasing rootbeer';
-            $mail->Body = "Test message sent from PHPMailer"; 
-             
+            $mail->Body = "Test message sent from PHPMailer";
+
             $status = $mail->send();
-             
-            
+
+
             if($status) {
              echo '<h2>Email sent to consumer and supplier.</h2>';
             }
@@ -212,8 +216,6 @@
     }
 
 ?>
-  </div>  
+  </div>
   </body>
 </html>
-
-
